@@ -54,9 +54,9 @@ const kp_purpose: string[] = [
 
 
 const initialValues: FormValues = {
-  program: program,
+  program: [],
   title: '',
-  date: 0,
+  date: '',
   type: [],
   language: [],
   audience: [],
@@ -69,10 +69,50 @@ function Knowledge_Products() {
       <h1 className='text-5xl'>Knowledge Products</h1>
       <Formik
         initialValues={initialValues}
-        onSubmit={() => {
+        onSubmit={(values, actions) => {
+          actions.setSubmitting(false);
 
         }}
       >
+        <Form className='flex flex-col items-center justify-center'>
+          <div>
+            <label htmlFor='program'>Program:</label>
+            <Field id='program' name='program' />
+          </div>
+          
+          <div>
+            <label htmlFor='title'>Title of KP</label>
+            <Field id='title' name='title' />
+          </div>
+          
+          <div>
+            <label htmlFor='date'>Publication date of KP</label>
+            <Field id='date' name='date' />
+          </div>
+          
+          <div>
+            <label htmlFor='kp_type'>Type of KP</label>
+            <Field id='kp_type' name='kp_type' />
+          </div>
+          
+          <div>
+            <label htmlFor='language'>Language of KP</label>
+            <Field id='language' name='language' />
+          </div>
+
+          <div>
+            <label htmlFor='audience'>Target Audience</label>
+            <Field id='audience' name='audience' />
+          </div>
+          
+          <div>
+            <label htmlFor='purpose'>Primary purpose of KP</label>
+            <Field id='purpose' name='purpose' />
+          </div>
+         
+          <button type='submit'> Submit </button>
+          
+        </Form>
 
       </Formik>
     </div>
