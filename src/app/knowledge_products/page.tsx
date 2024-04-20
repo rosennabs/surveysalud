@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 //Define types for form values
 interface FormValues {
@@ -15,108 +15,144 @@ interface FormValues {
 }
 
 const program: string[] = [
-  'Rural health care',
-  'Leadership capacity building',
-  'Indigenous services',
-  'Long term care',
-  'Primary care intervention'
+  "Rural health care",
+  "Leadership capacity building",
+  "Indigenous services",
+  "Long term care",
+  "Primary care intervention",
 ];
 
-const kp_type: string[] = [
-  'Webinar',
-  'Poster',
-  'Article',
-  'Blog'
-];
+const kp_type: string[] = ["Webinar", "Poster", "Article", "Blog"];
 
-const language: string[] = [
-  'English',
-  'French',
-  'Both',
-  'Others'
-];
+const language: string[] = ["English", "French", "Both", "Others"];
 
 const kp_audience: string[] = [
-  'Frontline workers',
-  'Patients',
-  'General public',
-  'Caregivers'
-
+  "Frontline workers",
+  "Patients",
+  "General public",
+  "Caregivers",
 ];
 
 const kp_purpose: string[] = [
-  'Capacity building',
-  'Information dissemination',
-  'Public health campaign',
-  'Health promotion'
-
+  "Capacity building",
+  "Information dissemination",
+  "Public health campaign",
+  "Health promotion",
 ];
-
 
 const initialValues: FormValues = {
   program: [],
-  title: '',
-  date: '',
+  title: "",
+  date: "",
   type: [],
   language: [],
   audience: [],
-  purpose: []
+  purpose: [],
 };
 
 function Knowledge_Products() {
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen' >
-      <h1 className='text-5xl'>Knowledge Products</h1>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values, actions) => {
-          actions.setSubmitting(false);
+    <div className=" w-full pt-40 flex flex-col items-center">
+      <h1 className="text-5xl pb-16">Knowledge Products</h1>
 
-        }}
-      >
-        <Form className='flex flex-col items-center justify-center'>
-          <div>
-            <label htmlFor='program'>Program:</label>
-            <Field id='program' name='program' />
-          </div>
-          
-          <div>
-            <label htmlFor='title'>Title of KP</label>
-            <Field id='title' name='title' />
-          </div>
-          
-          <div>
-            <label htmlFor='date'>Publication date of KP</label>
-            <Field id='date' name='date' />
-          </div>
-          
-          <div>
-            <label htmlFor='kp_type'>Type of KP</label>
-            <Field id='kp_type' name='kp_type' />
-          </div>
-          
-          <div>
-            <label htmlFor='language'>Language of KP</label>
-            <Field id='language' name='language' />
-          </div>
+      <div className="flex flex-col items-center justify-center bg-green-200 p-16 w-5/6 shadow-xl rounded-xl">
+        <Formik
+          initialValues={initialValues}
+          onSubmit={(values, actions) => {
+            actions.setSubmitting(false);
+          }}
+        >
+          <Form className="flex flex-wrap text-2xl">
+            <div className="flex flex-col p-4 w-full">
+              <label htmlFor="program" className="pb-4">
+                Program
+              </label>
+              <Field
+                className="border-solid border-2 border-gray-300 w-full rounded-lg"
+                id="program"
+                name="program"
+              />
+            </div>
 
-          <div>
-            <label htmlFor='audience'>Target Audience</label>
-            <Field id='audience' name='audience' />
-          </div>
-          
-          <div>
-            <label htmlFor='purpose'>Primary purpose of KP</label>
-            <Field id='purpose' name='purpose' />
-          </div>
-         
-          <button type='submit'> Submit </button>
-          
-        </Form>
+            <div className="flex flex-col p-4 w-full">
+              <label htmlFor="title" className="pb-4">
+                Title of KP
+              </label>
+              <Field
+                className="border-solid border-2 border-gray-300 w-full rounded-lg"
+                id="title"
+                name="title"
+              />
+            </div>
 
-      </Formik>
+            <div className="flex felx-row w-full">
+              <div className="flex flex-col p-4 w-2/5">
+                <label htmlFor="date" className="pb-4">
+                  Publication date of KP
+                </label>
+                <Field
+                  className="border-solid border-2 border-gray-300 w-full rounded-lg"
+                  id="date"
+                  name="date"
+                />
+              </div>
+
+              <div className="flex flex-col p-4 w-3/5">
+                <label htmlFor="kp_type" className="pb-4">
+                  Type of KP
+                </label>
+                <Field
+                  className="border-solid border-2 border-gray-300 w-full rounded-lg"
+                  id="kp_type"
+                  name="kp_type"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col p-4 w-full">
+              <label htmlFor="purpose" className="pb-4">
+                Primary purpose of KP
+              </label>
+              <Field
+                className="border-solid border-2 border-gray-300 w-full rounded-lg"
+                id="purpose"
+                name="purpose"
+              />
+            </div>
+
+            <div className="flex felx-row w-full">
+              <div className="flex flex-col p-4 w-2/5">
+                <label htmlFor="language" className="pb-4">
+                  Language of KP
+                </label>
+                <Field
+                  className="border-solid border-2 border-gray-300 w-full rounded-lg"
+                  id="language"
+                  name="language"
+                />
+              </div>
+
+              <div className="flex flex-col p-4 w-3/5">
+                <label htmlFor="audience" className="pb-4">
+                  Target Audience
+                </label>
+                <Field
+                  className="border-solid border-2 border-gray-300 w-full rounded-lg"
+                  id="audience"
+                  name="audience"
+                />
+              </div>
+            </div>
+
+            <div className='flex w-full justify-center pt-16'>
+              <button className='py-2 px-6 bg-gray-300 rounded-xl shadow-xl' type="submit"> Submit </button>
+            </div>
+
+            
+          </Form>
+        </Formik>
+      </div>
     </div>
-
   );
 }
 

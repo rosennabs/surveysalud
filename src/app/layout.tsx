@@ -44,7 +44,7 @@ export default function RootLayout({
         {children}
 
         <footer>
-          <p className="text-sm mb-10">© 2024 Your Company. All rights reserved.</p>
+          <p className="text-sm my-10">© 2024 Your Company. All rights reserved.</p>
         </footer>
       </body>
     </html>
