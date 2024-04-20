@@ -79,18 +79,28 @@ function Knowledge_Products() {
 
             return errors
           }}
-          validateOnMount
+          validateOnMount //Ensures form is validated upon submission
         >
+
           <Form className="flex flex-wrap text-2xl">
             <div className="flex flex-col p-4 w-full">
               <label htmlFor="program" className="pb-4">
                 Program
               </label>
               <Field
-                className="border-solid border-2 border-gray-300 w-full rounded-lg"
+                className="border-solid border-2 border-gray-300 w-full rounded-lg p-2"
+                as="select"
                 id="program"
-                name="program"
-              />
+                name="program">
+                
+                <option value="">Select a program</option>
+
+                {program.map((program) => (
+                    <option key={program} value={program}>{program}</option>
+                ))}
+             
+
+            </Field>
               <ErrorMessage className='text-red-600' name='program'/>
             </div>
 
@@ -99,7 +109,7 @@ function Knowledge_Products() {
                 Title of KP
               </label>
               <Field
-                className="border-solid border-2 border-gray-300 w-full rounded-lg"
+                className="border-solid border-2 border-gray-300 w-full rounded-lg p-2"
                 id="title"
                 name="title"
               />
@@ -112,7 +122,7 @@ function Knowledge_Products() {
                   Publication date of KP
                 </label>
                 <Field
-                  className="border-solid border-2 border-gray-300 w-full rounded-lg"
+                  className="border-solid border-2 border-gray-300 w-full rounded-lg p-2"
                   id="date"
                   name="date"
                 />
@@ -124,10 +134,16 @@ function Knowledge_Products() {
                   Type of KP
                 </label>
                 <Field
-                  className="border-solid border-2 border-gray-300 w-full rounded-lg"
+                  className="border-solid border-2 border-gray-300 w-full rounded-lg p-2"
+                  as='select'
                   id="type"
-                  name="type"
-                />
+                  name="type">
+                  
+
+                  {kp_type.map((type) => (
+                    <option key={type} value={type}>{type}</option>
+                  ))}
+                  </Field>
                 <ErrorMessage name='type' />
               </div>
             </div>
@@ -137,10 +153,19 @@ function Knowledge_Products() {
                 Primary purpose of KP
               </label>
               <Field
-                className="border-solid border-2 border-gray-300 w-full rounded-lg"
+                className="border-solid border-2 border-gray-300 w-full rounded-lg p-2"
+                as='select'
                 id="purpose"
                 name="purpose"
-              />
+                >
+                <option value="">Select an option</option>
+              
+                {kp_purpose.map((purpose) => (
+                  <option key={purpose} value={purpose}>{purpose}</option>
+                ))}
+               </Field>
+               
+              
               <ErrorMessage name='purpose' />
             </div>
 
@@ -150,10 +175,16 @@ function Knowledge_Products() {
                   Language of KP
                 </label>
                 <Field
-                  className="border-solid border-2 border-gray-300 w-full rounded-lg"
+                  className="border-solid border-2 border-gray-300 w-full rounded-lg p-2"
+                  as='select'
                   id="language"
                   name="language"
-                />
+                >
+                 
+                  {language.map((language) => (
+                    <option key={language} value={language}>{language}</option>
+                  ))}
+                </Field>
                 <ErrorMessage name='language' />
               </div>
 
@@ -162,15 +193,22 @@ function Knowledge_Products() {
                   Target Audience
                 </label>
                 <Field
-                  className="border-solid border-2 border-gray-300 w-full rounded-lg"
+                  className="border-solid border-2 border-gray-300 w-full rounded-lg p-2"
+                  as='select'
                   id="audience"
                   name="audience"
-                />
+                >
+                  <option value="">Select an option</option>
+
+                  {kp_audience.map((audience) => (
+                    <option key={audience} value={audience}>{audience}</option>
+                  ))}
+                </Field>
                 <ErrorMessage name='audience' />
               </div>
             </div>
 
-            <div className='flex w-full justify-center pt-16'>
+            <div className='flex w-full justify-center py-16'>
               <button className='py-2 px-6 bg-gray-300 rounded-xl shadow-xl' type="submit"> Submit </button>
             </div>
 
