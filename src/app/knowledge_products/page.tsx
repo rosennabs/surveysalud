@@ -50,7 +50,9 @@ const initialValues: FormValues = {
   purpose: [],
 };
 
+
 function Knowledge_Products() {
+  
   return (
     <div className=" w-full pt-40 flex flex-col items-center">
       <h1 className="text-5xl pb-16">Knowledge Products</h1>
@@ -72,6 +74,7 @@ function Knowledge_Products() {
                 id="program"
                 name="program"
               />
+              <ErrorMessage name='program'/>
             </div>
 
             <div className="flex flex-col p-4 w-full">
@@ -83,6 +86,7 @@ function Knowledge_Products() {
                 id="title"
                 name="title"
               />
+              <ErrorMessage name='title' />
             </div>
 
             <div className="flex felx-row w-full">
@@ -95,6 +99,7 @@ function Knowledge_Products() {
                   id="date"
                   name="date"
                 />
+                <ErrorMessage name='date' />
               </div>
 
               <div className="flex flex-col p-4 w-3/5">
@@ -103,9 +108,10 @@ function Knowledge_Products() {
                 </label>
                 <Field
                   className="border-solid border-2 border-gray-300 w-full rounded-lg"
-                  id="kp_type"
-                  name="kp_type"
+                  id="type"
+                  name="type"
                 />
+                <ErrorMessage name='type' />
               </div>
             </div>
 
@@ -118,6 +124,7 @@ function Knowledge_Products() {
                 id="purpose"
                 name="purpose"
               />
+              <ErrorMessage name='purpose' />
             </div>
 
             <div className="flex felx-row w-full">
@@ -130,6 +137,7 @@ function Knowledge_Products() {
                   id="language"
                   name="language"
                 />
+                <ErrorMessage name='language' />
               </div>
 
               <div className="flex flex-col p-4 w-3/5">
@@ -141,6 +149,7 @@ function Knowledge_Products() {
                   id="audience"
                   name="audience"
                 />
+                <ErrorMessage name='audience' />
               </div>
             </div>
 
