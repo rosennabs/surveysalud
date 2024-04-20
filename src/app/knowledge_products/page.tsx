@@ -52,7 +52,7 @@ const initialValues: FormValues = {
 
 
 function Knowledge_Products() {
-  
+
   return (
     <div className=" w-full pt-40 flex flex-col items-center">
       <h1 className="text-5xl pb-16">Knowledge Products</h1>
@@ -60,9 +60,26 @@ function Knowledge_Products() {
       <div className="flex flex-col items-center justify-center bg-green-200 p-16 w-5/6 shadow-xl rounded-xl">
         <Formik
           initialValues={initialValues}
+          
           onSubmit={(values, actions) => {
+            console.log('Form values: ', values);
             actions.setSubmitting(false);
           }}
+          
+          validate={(values) => {
+            const errors = {};
+
+            for (const key of Object.keys(initialValues)) {
+              
+              if (!values[key]) {
+                errors[key] = 'Required';
+              }             
+
+            }
+
+            return errors
+          }}
+          validateOnMount
         >
           <Form className="flex flex-wrap text-2xl">
             <div className="flex flex-col p-4 w-full">
@@ -74,7 +91,7 @@ function Knowledge_Products() {
                 id="program"
                 name="program"
               />
-              <ErrorMessage name='program'/>
+              <ErrorMessage className='text-red-600' name='program'/>
             </div>
 
             <div className="flex flex-col p-4 w-full">
@@ -86,7 +103,7 @@ function Knowledge_Products() {
                 id="title"
                 name="title"
               />
-              <ErrorMessage name='title' />
+              <ErrorMessage name='title' className='text-red-600' />
             </div>
 
             <div className="flex felx-row w-full">
