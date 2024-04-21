@@ -51,6 +51,18 @@ const initialValues: FormValues = {
   purpose: "",
 };
 
+const validationSchema = Yup.object({
+  program: Yup.string().required('Required'),
+  title: Yup.string()
+    .min(5, 'Too short!')
+    .max(70, 'Too long!')
+    .required('Required'),
+  date: Yup.string().required('Required'),
+  type: Yup.string().required('Required'),
+  language: Yup.string().required('Required'),
+  audience: Yup.string().required('Required'),
+  purpose: Yup.string().required('Required')
+})
 
 function Knowledge_Products() {
 
@@ -61,28 +73,14 @@ function Knowledge_Products() {
       <div className="flex flex-col items-center justify-center bg-green-200 p-16 w-5/6 shadow-xl rounded-xl">
         <Formik
           initialValues={initialValues}
+
+          validationSchema={validationSchema}
           
           onSubmit={(values, actions) => {
             console.log('Submitted values: ', values);
             actions.setSubmitting(false);
           }}
           
-          validate={(values) => {
-            const errors = {};
-
-            for (const key of Object.keys(initialValues)) {
-              
-              if (!values[key] || values[key] === "Select a program") {
-                console.log(values);
-                
-                errors[key] = 'Required';
-              }             
-
-            }
-
-            return errors
-          }}
-          validateOnMount //Ensures form is validated upon submission
         >
 
           <Form className="flex flex-wrap text-2xl">
@@ -128,6 +126,7 @@ function Knowledge_Products() {
                   className="border-solid border-2 border-gray-300 w-full rounded-lg p-2"
                   id="date"
                   name="date"
+                  type='date'
                 />
                 <ErrorMessage name='date' />
               </div>
