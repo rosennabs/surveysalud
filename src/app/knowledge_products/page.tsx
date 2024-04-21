@@ -3,6 +3,8 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
+import TextError from './TextError';
+
 
 //Define types for form values
 interface FormValues {
@@ -13,6 +15,7 @@ interface FormValues {
   language: string;
   audience: string;
   purpose: string;
+  comments: string;
 }
 
 const programs: string[] = [
@@ -49,6 +52,7 @@ const initialValues: FormValues = {
   language: "",
   audience: "",
   purpose: "",
+  comments: ""
 };
 
 const validationSchema = Yup.object({
@@ -102,7 +106,7 @@ function Knowledge_Products() {
              
 
             </Field>
-              <ErrorMessage className='text-red-600' name='program'/>
+              <ErrorMessage component={TextError} name='program'/>
             </div>
 
             <div className="flex flex-col p-4 w-full">
@@ -113,8 +117,9 @@ function Knowledge_Products() {
                 className="border-solid border-2 border-gray-300 w-full rounded-lg p-2"
                 id="title"
                 name="title"
+                placeholder="Add your title here"
               />
-              <ErrorMessage name='title' className='text-red-600' />
+              <ErrorMessage name='title' component={TextError}/>
             </div>
 
             <div className="flex felx-row w-full">
@@ -128,7 +133,7 @@ function Knowledge_Products() {
                   name="date"
                   type='date'
                 />
-                <ErrorMessage name='date' />
+                <ErrorMessage name='date' component={TextError} />
               </div>
 
               <div className="flex flex-col p-4 w-3/5">
@@ -146,7 +151,7 @@ function Knowledge_Products() {
                     <option key={type} value={type}>{type}</option>
                   ))}
                   </Field>
-                <ErrorMessage name='type' />
+                <ErrorMessage name='type' component={TextError} />
               </div>
             </div>
 
@@ -168,7 +173,7 @@ function Knowledge_Products() {
                </Field>
                
               
-              <ErrorMessage name='purpose' />
+              <ErrorMessage name='purpose' component={TextError} />
             </div>
 
             <div className="flex felx-row w-full">
@@ -187,7 +192,7 @@ function Knowledge_Products() {
                     <option key={language} value={language}>{language}</option>
                   ))}
                 </Field>
-                <ErrorMessage name='language' />
+                <ErrorMessage name='language' component={TextError} />
               </div>
 
               <div className="flex flex-col p-4 w-3/5">
@@ -206,10 +211,24 @@ function Knowledge_Products() {
                     <option key={audience} value={audience}>{audience}</option>
                   ))}
                 </Field>
-                <ErrorMessage name='audience' />
+                <ErrorMessage name='audience' component={TextError} />
+              </div>
+
+              
+            </div>
+                    
+            <div className="w-full">
+              <div className="flex flex-col p-4">
+                <label htmlFor="comments">Comments (if any)</label>
+                <Field
+                  className='p-4 mt-4 border-solid border-2 border-gray-300 w-full rounded-lg'
+                  as='textarea'
+                  id='comments'
+                  name='comments'
+                  placeholder='Add any additional notes here' />
               </div>
             </div>
-
+            
             <div className='flex w-full justify-center py-16'>
               <button className='py-2 px-6 bg-gray-300 rounded-xl shadow-xl' type="submit"> Submit </button>
             </div>
