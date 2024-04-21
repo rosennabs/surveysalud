@@ -5,16 +5,16 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 
 //Define types for form values
 interface FormValues {
-  program: string[];
+  program: string;
   title: string;
   date: number | string;
-  type: string[];
-  language: string[];
-  audience: string[];
-  purpose: string[];
+  type: string;
+  language: string;
+  audience: string;
+  purpose: string;
 }
 
-const program: string[] = [
+const programs: string[] = [
   "Rural health care",
   "Leadership capacity building",
   "Indigenous services",
@@ -22,9 +22,9 @@ const program: string[] = [
   "Primary care intervention",
 ];
 
-const kp_type: string[] = ["Webinar", "Poster", "Article", "Blog"];
+const kp_types: string[] = ["Webinar", "Poster", "Article", "Blog"];
 
-const language: string[] = ["English", "French", "Both", "Others"];
+const languages: string[] = ["English", "French", "Both", "Others"];
 
 const kp_audience: string[] = [
   "Frontline workers",
@@ -41,13 +41,13 @@ const kp_purpose: string[] = [
 ];
 
 const initialValues: FormValues = {
-  program: [],
+  program: "",
   title: "",
   date: "",
-  type: [],
-  language: [],
-  audience: [],
-  purpose: [],
+  type: "",
+  language: "",
+  audience: "",
+  purpose: "",
 };
 
 
@@ -62,7 +62,7 @@ function Knowledge_Products() {
           initialValues={initialValues}
           
           onSubmit={(values, actions) => {
-            console.log('Form values: ', values);
+            console.log('Submitted values: ', values);
             actions.setSubmitting(false);
           }}
           
@@ -71,7 +71,9 @@ function Knowledge_Products() {
 
             for (const key of Object.keys(initialValues)) {
               
-              if (!values[key]) {
+              if (!values[key] || values[key] === "Select a program") {
+                console.log(values);
+                
                 errors[key] = 'Required';
               }             
 
@@ -95,8 +97,8 @@ function Knowledge_Products() {
                 
                 <option value="">Select a program</option>
 
-                {program.map((program) => (
-                    <option key={program} value={program}>{program}</option>
+                {programs.map((program) => (
+                  <option key={program} value={program}>{program}</option>
                 ))}
              
 
@@ -139,8 +141,8 @@ function Knowledge_Products() {
                   id="type"
                   name="type">
                   
-
-                  {kp_type.map((type) => (
+                  <option value="">Select an option</option>
+                  {kp_types.map((type) => (
                     <option key={type} value={type}>{type}</option>
                   ))}
                   </Field>
@@ -181,7 +183,7 @@ function Knowledge_Products() {
                   name="language"
                 >
                  
-                  {language.map((language) => (
+                  {languages.map((language) => (
                     <option key={language} value={language}>{language}</option>
                   ))}
                 </Field>
