@@ -1,7 +1,12 @@
 import { useField } from "formik";
 import React from "react";
 
-function FormField({ label, as, options, ...props }) {
+function FormField({ label, as, options, ...props } : {
+    label: string;
+    as: string;
+  options: string[];
+  [key: string]: any; //for additional attributes passed through props
+}) {
   const [field, meta] = useField(props);
 
   if (as === "select") {
@@ -60,6 +65,7 @@ function FormField({ label, as, options, ...props }) {
       </div>
     );
   }
+
 }
 
 export default FormField;

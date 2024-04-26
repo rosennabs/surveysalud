@@ -5,6 +5,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
 import Button from "../../components/Button";
+import { programs } from "@/helpers/globalOptions";
 
 //Define types for form values
 interface FormValues {
@@ -17,14 +18,6 @@ interface FormValues {
   purpose: string;
   comments: string;
 }
-
-const programs: string[] = [
-  "Rural health care",
-  "Leadership capacity building",
-  "Indigenous services",
-  "Long term care",
-  "Primary care intervention",
-];
 
 const kp_types: string[] = ["Webinar", "Poster", "Article", "Blog"];
 
