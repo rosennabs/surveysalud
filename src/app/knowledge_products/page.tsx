@@ -1,10 +1,8 @@
 "use client";
 
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import TextError from "./TextError";
-import "../globals.css";
 import FormField from "../../components/FormField";
 import Button from "../../components/Button";
 
@@ -81,12 +79,11 @@ function Knowledge_Products() {
           validationSchema={validationSchema}
 
           onSubmit={(values, actions) => {
-            console.log("Submitted values: ", values);
+            // console.log("Submitted values: ", values);
             
               actions.resetForm();
               actions.setSubmitting(false);
-            
-            
+
           }}
         >
           {(formikProps) => {
