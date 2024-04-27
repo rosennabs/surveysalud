@@ -81,7 +81,7 @@ function Clientele() {
           }}
         >
           {(formikProps) => {
-            //console.log(formikProps);
+            console.log("Formik props: ", formikProps);
             const { isSubmitting } = formikProps;
 
             return (

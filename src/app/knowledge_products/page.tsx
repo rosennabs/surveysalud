@@ -70,18 +70,15 @@ function Knowledge_Products() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-
           onSubmit={(values, actions) => {
             // console.log("Submitted values: ", values);
-            
-              actions.resetForm();
-              actions.setSubmitting(false);
 
+            actions.resetForm();
+            actions.setSubmitting(false);
           }}
         >
-          {(formikProps) => {
+          {({ isSubmitting, values }) => {
             //console.log(formikProps);
-            const { isSubmitting } = formikProps;
 
             return (
               <Form className="flex flex-wrap text-2xl">
@@ -123,7 +120,7 @@ function Knowledge_Products() {
                   options={kp_purpose}
                 />
 
-                <div className="flex felx-row w-full">
+                <div className="flex w-full">
                   <FormField
                     label="Language of KP"
                     as="select"
@@ -131,6 +128,15 @@ function Knowledge_Products() {
                     name="language"
                     options={languages}
                   />
+
+                  {values.language === "Others" && (
+                    <FormField
+                      label="Other languages"
+                      id="other_languages"
+                      name="other_languages"
+                      placeholder="Please specify"
+                    />
+                  )}
 
                   <FormField
                     label="Target Audience"
@@ -151,9 +157,7 @@ function Knowledge_Products() {
                   placeholder="Add any additional notes here"
                 />
 
-
-                 <Button isSubmitting={isSubmitting}/>
-            
+                <Button isSubmitting={isSubmitting} />
               </Form>
             );
           }}
