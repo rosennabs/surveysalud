@@ -50,7 +50,7 @@ const initialValues: FormValues = {
   gender: "",
   organization: "",
   occupation: "",
-  province: ""
+  province: "",
 };
 
 const validationSchema = Yup.object({
@@ -80,10 +80,7 @@ function Clientele() {
             actions.setSubmitting(false);
           }}
         >
-          {(formikProps) => {
-            console.log("Formik props: ", formikProps);
-            const { isSubmitting } = formikProps;
-
+          {({ isSubmitting, values }) => {
             return (
               <Form className="flex flex-wrap text-2xl">
                 <FormField
@@ -107,8 +104,16 @@ function Clientele() {
                     id="gender"
                     name="gender"
                     options={gender}
-
                   />
+
+                  {values.gender === "Others" && (
+                    <FormField
+                      label="Please specify"
+                      id="gender_diverse"
+                      name="gender_diverse"
+                      placeholder="Other gender"
+                    />
+                  )}
 
                   <FormField
                     label="Region"
@@ -117,15 +122,12 @@ function Clientele() {
                     name="province"
                     options={province}
                   />
-                  
                 </div>
 
                 <FormField
                   label="Organization/Affiliation"
-
                   id="organization"
                   name="organization"
-
                 />
 
                 <FormField
@@ -136,17 +138,17 @@ function Clientele() {
                   options={occupation}
                 />
 
-                  <FormField
-                    label="Comments (if any)"
-                    as="textarea"
-                    id="comments"
-                    name="comments"
-                    wrap="soft"
-                    rows="6"
-                    placeholder="Add any additional notes here"
-                  />
+                <FormField
+                  label="Comments (if any)"
+                  as="textarea"
+                  id="comments"
+                  name="comments"
+                  wrap="soft"
+                  rows="6"
+                  placeholder="Add any additional notes here"
+                />
 
-                  <Button isSubmitting={isSubmitting} />
+                <Button isSubmitting={isSubmitting} />
               </Form>
             );
           }}

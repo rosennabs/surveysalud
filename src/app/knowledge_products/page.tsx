@@ -78,7 +78,6 @@ function Knowledge_Products() {
           }}
         >
           {({ isSubmitting, values }) => {
-            //console.log(formikProps);
 
             return (
               <Form className="flex flex-wrap text-2xl">
