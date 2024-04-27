@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from "react";
@@ -6,6 +5,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
 import Button from "../../components/Button";
+import { programs } from "@/helpers/globalOptions";
 
 //Define types for form values
 interface FormValues {
@@ -15,58 +15,59 @@ interface FormValues {
   primary_perspective: string;
   engagement_date: number | string;
   engagement_method: string;
-  hours_spent: string;
-  dollar_gifted: string;
+  hours_spent: number;
+  dollar_gifted: number;
+  comments: string;
 }
 
-const programs: string[] = [
-  "Rural health care",
-  "Leadership capacity building",
-  "Indigenous services",
-  "Long term care",
-  "Primary care intervention",
+const primary_perspective: string[] = [
+  "Indigenous perspective",
+  "Patient perspective",
+  "Leadership perspective",
+  "Frontline worker perspective",
+  "Caregiver perspective",
 ];
 
-const kp_types: string[] = ["Webinar", "Poster", "Article", "Blog"];
-
-const languages: string[] = ["English", "French", "Both", "Others"];
-
-const kp_audience: string[] = [
-  "Frontline workers",
-  "Patients",
-  "General public",
-  "Caregivers",
+const engagement_method: string[] = [
+  "Round table discussion",
+  "Survey",
+  "Advisory group",
+  "Interview",
+  "Workshops",
+  "Focus group discussions",
 ];
 
-const kp_purpose: string[] = [
-  "Capacity building",
-  "Information dissemination",
-  "Public health campaign",
-  "Health promotion",
-];
 
 const initialValues: FormValues = {
   program: "",
-  title: "",
-  date: "",
-  type: "",
-  language: "",
-  audience: "",
-  purpose: "",
-  comments: "",
+  fullname: "",
+  organization: "",
+  primary_perspective: "",
+  engagement_date: "",
+  engagement_method: "",
+  hours_spent: 0,
+  dollar_gifted: 0,
+  comments: ""
 };
 
 const validationSchema = Yup.object({
   program: Yup.string().required("Required"),
-  title: Yup.string()
+  fullname: Yup.string()
     .min(5, "Too short!")
     .max(70, "Too long!")
     .required("Required"),
-  date: Yup.string().required("Required"),
-  type: Yup.string().required("Required"),
-  language: Yup.string().required("Required"),
-  audience: Yup.string().required("Required"),
-  purpose: Yup.string().required("Required"),
+  organization: Yup.string().required("Required"),
+  primary_perspective: Yup.string().required("Required"),
+  engagement_date: Yup.string().required("Required"),
+  engagement_method: Yup.string().required("Required"),
+  hours_spent: Yup.number().required("Required"),
+  dollar_gifted: Yup.string()
+    .required("Required")
+    .test(
+      "two-decimal-places",
+      "Invalid dollar amount format",
+      (value) => /^\d+(\.\d{1,2})?$/.test(value)
+  )
 });
 
 function Relationships() {
@@ -78,13 +79,11 @@ function Relationships() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-
           onSubmit={(values, actions) => {
             // console.log("Submitted values: ", values);
 
             actions.resetForm();
             actions.setSubmitting(false);
-
           }}
         >
           {(formikProps) => {
@@ -100,52 +99,62 @@ function Relationships() {
                   as="select"
                   options={programs}
                 />
+
                 <FormField
-                  label="Title of KP"
-                  id="title"
-                  name="title"
-                  placeholder="Add a title here"
+                  label="Full name of individual"
+                  id="fullname"
+                  name="fullname"
+                  placeholder="First and Last name"
+                />
+
+                <FormField
+                  label="Organization/Affiliation"
+                  id="organization"
+                  name="organization"
+                  placeholder="Name of organization/affiliation"
+                />
+
+                <FormField
+                  label="Primary perspective individual brings"
+                  as="select"
+                  id="primary_perspective"
+                  name="primary_perspective"
+                  options={primary_perspective}
                 />
 
                 <div className="flex flex-row w-full">
                   <FormField
-                    label="Publication date of KP"
+                    label="Date individual was engaged"
                     id="date"
                     name="date"
                     type="date"
                   />
+
                   <FormField
-                    label="Type of KP"
+                    label="Method of engagement"
                     as="select"
-                    id="type"
-                    name="type"
-                    options={kp_types}
+                    id="engagement_method"
+                    name="engagement_method"
+                    options={engagement_method}
                   />
                 </div>
 
-                <FormField
-                  label="Primary purpose of KP"
-                  as="select"
-                  id="purpose"
-                  name="purpose"
-                  options={kp_purpose}
-                />
-
                 <div className="flex felx-row w-full">
                   <FormField
-                    label="Language of KP"
-                    as="select"
-                    id="language"
-                    name="language"
-                    options={languages}
+                    label="Hours spent"
+                    type="number"
+                    id="hours_spent"
+                    name="hours_spent"
+                    
                   />
 
                   <FormField
-                    label="Target Audience"
-                    as="select"
-                    id="audience"
-                    name="audience"
-                    options={kp_audience}
+                    label="Dollar amount gifted ($)"
+                    type="number"
+                    step="0.01"
+                    id="dollar_gifted"
+                    name="dollar_gifted"
+                  
                   />
                 </div>
 
@@ -159,9 +168,7 @@ function Relationships() {
                   placeholder="Add any additional notes here"
                 />
 
-
                 <Button isSubmitting={isSubmitting} />
-
               </Form>
             );
           }}
@@ -170,6 +177,5 @@ function Relationships() {
     </div>
   );
 }
-
 
 export default Relationships;
