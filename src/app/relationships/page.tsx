@@ -13,12 +13,16 @@ interface FormValues {
   fullname: string;
   organization: string;
   primary_perspective: string;
-  engagement_date: number | string;
-  engagement_method: string;
-  hours_spent: string;
-  dollar_gifted: string;
+  engagement_array: {
+    engagement_activities: {
+      engagement_date: string | number;
+      engagement_method: string;
+      hours_spent: string;
+      dollar_gifted: string;
+    };
+  }[];
+
   comments: string;
-  
 }
 
 const primary_perspective: string[] = [
@@ -43,10 +47,17 @@ const initialValues: FormValues = {
   fullname: "",
   organization: "",
   primary_perspective: "",
-  engagement_date: "",
-  engagement_method: "",
-  hours_spent: "",
-  dollar_gifted: "",
+  engagement_array: [
+    {
+      engagement_activities: {
+        engagement_date: "",
+        engagement_method: "",
+        hours_spent: "",
+        dollar_gifted: "",
+      },
+    },
+  ],
+
   comments: "",
 };
 
@@ -120,53 +131,56 @@ function Relationships() {
                   options={primary_perspective}
                 />
 
-                <table className="table-fixed text-lg  mt-8">
-                  
-                  <thead className=" bg-gray-300">
-                  <tr>
-                    <th>Date individual was engaged</th>
-                    <th>Method of engagement</th>
-                    <th>Hours spent</th>
-                    <th>Remuneration ($)</th>
-                      </tr>
-                    </thead>
-                  <tbody>
+                <h3 className="text-2xl font-bold underline underline-offset-8 mt-12">
+                  Engagement Activities :
+                </h3>
 
-                  <tr>
-                    <td>
+                <table className="table-fixed text-lg  mt-12">
+                  <thead>
+                    <tr>
+                      <th>Date individual was engaged</th>
+                      <th>Method of engagement</th>
+                      <th>Hours spent</th>
+                      <th>Remuneration ($)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
                         <FormField
                           id="date"
                           name="engagement_date"
-                          type="date" />
-                    </td>
+                          type="date"
+                        />
+                      </td>
 
-                    <td>
-                      <FormField
-                        as="select"
-                        id="engagement_method"
-                        name="engagement_method"
-                        options={engagement_method}
-                      />
-                    </td>
-                    <td>
-                      <FormField
-                        type="number"
-                        id="hours_spent"
-                        name="hours_spent"
-                      />
-                    </td>
-                    <td>
-                      <FormField
-                        type="number"
-                        step="0.01"
-                        id="dollar_gifted"
-                        name="dollar_gifted"
-                      />
-                    </td>
+                      <td>
+                        <FormField
+                          as="select"
+                          id="engagement_method"
+                          name="engagement_method"
+                          placeholder="method of engagement"
+                          options={engagement_method}
+                        />
+                      </td>
+                      <td>
+                        <FormField
+                          type="number"
+                          id="hours_spent"
+                          name="hours_spent"
+                        />
+                      </td>
+                      <td>
+                        <FormField
+                          type="number"
+                          step="0.01"
+                          id="dollar_gifted"
+                          name="dollar_gifted"
+                        />
+                      </td>
                     </tr>
                   </tbody>
                 </table>
-
 
                 <Button isSubmitting={isSubmitting} />
               </Form>
