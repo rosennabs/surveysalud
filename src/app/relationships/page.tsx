@@ -51,7 +51,7 @@ const initialValues: FormValues = {
       engagement_method: "",
       hours_spent: "",
       dollar_gifted: "",
-    }
+    },
   ],
 
   comments: "",
@@ -72,14 +72,11 @@ const validationSchema = Yup.object({
       hours_spent: Yup.number().required("Required"),
       dollar_gifted: Yup.string()
         .required("Required")
-        .test(
-          "two-decimal-places",
-          "Invalid dollar amount format",
-          (value) => /^\d+(\.\d{1,2})?$/.test(value)
+        .test("two-decimal-places", "Invalid dollar amount format", (value) =>
+          /^\d+(\.\d{1,2})?$/.test(value)
         ),
     })
-  )
- 
+  ),
 });
 
 function Relationships() {
@@ -100,28 +97,25 @@ function Relationships() {
         >
           {(formikProps) => {
             //console.log(formikProps);
-            const { isSubmitting } = formikProps;
+            const { isSubmitting, values } = formikProps;
 
             return (
               <Form className="flex flex-wrap text-2xl">
                 <FormField
                   label="Program"
                   name="program"
-                  id="program"
                   as="select"
                   options={programs}
                 />
 
                 <FormField
                   label="Full name of individual"
-                  id="fullname"
                   name="fullname"
                   placeholder="First and Last name"
                 />
 
                 <FormField
                   label="Organization/Affiliation"
-                  id="organization"
                   name="organization"
                   placeholder="Name of organization/affiliation"
                 />
@@ -129,7 +123,6 @@ function Relationships() {
                 <FormField
                   label="Primary perspective individual brings"
                   as="select"
-                  id="primary_perspective"
                   name="primary_perspective"
                   options={primary_perspective}
                 />
@@ -138,52 +131,56 @@ function Relationships() {
                   Engagement Activities :
                 </h3>
 
-                <table className="table-fixed text-lg  mt-12">
-                  <thead>
-                    <tr>
-                      <th>Date individual was engaged</th>
-                      <th>Method of engagement</th>
-                      <th>Hours spent</th>
-                      <th>Remuneration ($)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <FormField
-                          id="date"
-                          name="engagement_activities[0].engagement_date"
-                          type="date"
-                        />
-                      </td>
+                <FieldArray name="engagement_activities">
+                  {({ push, remove }) => {
+                    return (
+                      <div>
+                        {values.engagement_activities.map(
+                          (engagement, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center w-full"
+                            >
+                              <div>
+                                <FormField
+                                  label="Date individual was engaged"
+                                  name={`engagement_activities[${index}].engagement_date`}
+                                  type="date"
+                                />
+                              </div>
 
-                      <td>
-                        <FormField
-                          as="select"
-                          id="engagement_method"
-                          name="engagement_activities[0].engagement_method"
-                         
-                          options={engagement_method}
-                        />
-                      </td>
-                      <td>
-                        <FormField
-                          type="number"
-                          id="hours_spent"
-                          name="engagement_activities[0].hours_spent"
-                        />
-                      </td>
-                      <td>
-                        <FormField
-                          type="number"
-                          step="0.01"
-                          id="dollar_gifted"
-                          name="engagement_activities[0].dollar_gifted"
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                              <div>
+                                <FormField
+                                  label="Method of engagement"
+                                  as="select"
+                                  name={`engagement_activities[${index}].engagement_method`}
+                                  options={engagement_method}
+                                />
+                              </div>
+
+                              <div>
+                                <FormField
+                                  label="Hours spent"
+                                  type="number"
+                                  name={`engagement_activities[${index}].hours_spent`}
+                                />
+                              </div>
+
+                              <div>
+                                <FormField
+                                  label="Remuneration ($)"
+                                  type="number"
+                                  step="0.01"
+                                  name={`engagement_activities[${index}].dollar_gifted`}
+                                />
+                              </div>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    );
+                  }}
+                </FieldArray>
 
                 <Button isSubmitting={isSubmitting} />
               </Form>
