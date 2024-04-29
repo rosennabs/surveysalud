@@ -127,85 +127,105 @@ function Relationships() {
                   options={primary_perspective}
                 />
 
-                <h3 className="text-2xl font-bold underline underline-offset-8 mt-12">
-                  Engagement Activities :
-                </h3>
+                <div>
+                  <h3 className="text-2xl font-bold underline underline-offset-8 my-12">
+                    Engagement Activities :
+                  </h3>
 
-                <FieldArray name="engagement_activities">
-                  {({ push, remove, form }) => {
-                    const { values } = form;
-                    
-                    return (
-                      <div>
-                        {values.engagement_activities.map(
-                          (engagement, index) => (
-                            <div
-                              key={index}
-                              className="flex items-center w-full"
-                            >
-                              <div>
-                                <FormField
-                                  label="Date individual was engaged"
-                                  name={`engagement_activities[${index}].engagement_date`}
-                                  type="date"
-                                />
-                              </div>
+                  <table className="table-fixed text-lg  mt-12">
+                    <thead>
+                      <tr>
+                        <th>Date individual was engaged</th>
+                        <th>Method of engagement</th>
+                        <th>Hours spent</th>
+                        <th>Remuneration ($)</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
 
-                              <div>
-                                <FormField
-                                  label="Method of engagement"
-                                  as="select"
-                                  name={`engagement_activities[${index}].engagement_method`}
-                                  options={engagement_method}
-                                />
-                              </div>
+                    <tbody>
+                      <FieldArray name="engagement_activities">
+                        {({ push, remove, form }) => {
+                          const { values } = form;
 
-                              <div>
-                                <FormField
-                                  label="Hours spent"
-                                  type="number"
-                                  name={`engagement_activities[${index}].hours_spent`}
-                                />
-                              </div>
+                          return (
+                            <>
+                              {values.engagement_activities.map(
+                                (engagement, index) => (
+                                  <tr
+                                    key={index}
+                                    
+                                  >
+                                    <td>
+                                      <FormField
+                                        name={`engagement_activities[${index}].engagement_date`}
+                                        type="date"
+                                      />
+                                    </td>
 
-                              <div>
-                                <FormField
-                                  label="Remuneration ($)"
-                                  type="number"
-                                  step="0.01"
-                                  name={`engagement_activities[${index}].dollar_gifted`}
-                                />
-                              </div>
+                                    <td>
+                                      <FormField
+                                        as="select"
+                                        name={`engagement_activities[${index}].engagement_method`}
+                                        options={engagement_method}
+                                      />
+                                    </td>
 
-                              <div>
-                                <button
-                                  type="button"
-                                  onClick={() => remove(index)}
-                                >
-                                  
-                                  Delete
-                                </button>
-                              </div>
-                            </div>
-                          )
-                        )}
-                        <button
-                          type="button"
-                          onClick={() =>
-                            push({
-                              engagement_date: "",
-                              engagement_method: "",
-                              hours_spent: "",
-                              dollar_gifted: "",
-                            })
-                          }
-                        >
-                          Add Engagement Activity
-                        </button>
-                      </div>
-                    );
-                  }}
-                </FieldArray>
+                                    <td>
+                                      <FormField
+                                        type="number"
+                                        name={`engagement_activities[${index}].hours_spent`}
+                                      />
+                                    </td>
+
+                                    <td>
+                                      <FormField
+                                        type="number"
+                                        step="0.01"
+                                        name={`engagement_activities[${index}].dollar_gifted`}
+                                      />
+                                    </td>
+
+                                    <td>
+                                      <button
+                                        className="py-2 px-6 bg-gray-300 rounded-xl shadow-xl"
+                                        type="button"
+                                        onClick={() => {
+                                          remove(index);
+                                        }}
+                                      >
+                                        Delete
+                                      </button>
+                                    </td>
+                                  </tr>
+                                )
+                              )}
+                              <tr>
+                                <td colSpan="5">
+                                  <button
+                                    className="mt-4 py-2 px-6 bg-gray-300 rounded-xl shadow-xl"
+                                    type="button"
+                                    onClick={() =>
+                                      push({
+                                        engagement_date: "",
+                                        engagement_method: "",
+                                        hours_spent: "",
+                                        dollar_gifted: "",
+                                      })
+                                    }
+                                  >
+                                    Add Engagement Activity
+                                  </button>
+                                </td>
+                              </tr>
+                              
+                            </>
+                          );
+                        }}
+                      </FieldArray>
+                    </tbody>
+                  </table>
+                </div>
 
                 <Button isSubmitting={isSubmitting} />
               </Form>
