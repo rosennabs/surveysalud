@@ -132,7 +132,9 @@ function Relationships() {
                 </h3>
 
                 <FieldArray name="engagement_activities">
-                  {({ push, remove }) => {
+                  {({ push, remove, form }) => {
+                    const { values } = form;
+                    
                     return (
                       <div>
                         {values.engagement_activities.map(
@@ -174,9 +176,32 @@ function Relationships() {
                                   name={`engagement_activities[${index}].dollar_gifted`}
                                 />
                               </div>
+
+                              <div>
+                                <button
+                                  type="button"
+                                  onClick={() => remove(index)}
+                                >
+                                  
+                                  Delete
+                                </button>
+                              </div>
                             </div>
                           )
                         )}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            push({
+                              engagement_date: "",
+                              engagement_method: "",
+                              hours_spent: "",
+                              dollar_gifted: "",
+                            })
+                          }
+                        >
+                          Add Engagement Activity
+                        </button>
                       </div>
                     );
                   }}
