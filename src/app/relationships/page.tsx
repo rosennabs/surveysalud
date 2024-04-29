@@ -13,13 +13,11 @@ interface FormValues {
   fullname: string;
   organization: string;
   primary_perspective: string;
-  engagement_array: {
-    engagement_activities: {
-      engagement_date: string | number;
-      engagement_method: string;
-      hours_spent: string;
-      dollar_gifted: string;
-    };
+  engagement_activities: {
+    engagement_date: string | number;
+    engagement_method: string;
+    hours_spent: string;
+    dollar_gifted: string;
   }[];
 
   comments: string;
@@ -47,15 +45,13 @@ const initialValues: FormValues = {
   fullname: "",
   organization: "",
   primary_perspective: "",
-  engagement_array: [
+  engagement_activities: [
     {
-      engagement_activities: {
-        engagement_date: "",
-        engagement_method: "",
-        hours_spent: "",
-        dollar_gifted: "",
-      },
-    },
+      engagement_date: "",
+      engagement_method: "",
+      hours_spent: "",
+      dollar_gifted: "",
+    }
   ],
 
   comments: "",
@@ -69,14 +65,21 @@ const validationSchema = Yup.object({
     .required("Required"),
   organization: Yup.string().required("Required"),
   primary_perspective: Yup.string().required("Required"),
-  engagement_date: Yup.string().required("Required"),
-  engagement_method: Yup.string().required("Required"),
-  hours_spent: Yup.number().required("Required"),
-  dollar_gifted: Yup.string()
-    .required("Required")
-    .test("two-decimal-places", "Invalid dollar amount format", (value) =>
-      /^\d+(\.\d{1,2})?$/.test(value)
-    ),
+  engagement_activities: Yup.array().of(
+    Yup.object().shape({
+      engagement_date: Yup.string().required("Required"),
+      engagement_method: Yup.string().required("Required"),
+      hours_spent: Yup.number().required("Required"),
+      dollar_gifted: Yup.string()
+        .required("Required")
+        .test(
+          "two-decimal-places",
+          "Invalid dollar amount format",
+          (value) => /^\d+(\.\d{1,2})?$/.test(value)
+        ),
+    })
+  )
+ 
 });
 
 function Relationships() {
@@ -89,7 +92,7 @@ function Relationships() {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={(values, actions) => {
-            // console.log("Submitted values: ", values);
+            console.log("Submitted values: ", values);
 
             actions.resetForm();
             actions.setSubmitting(false);
@@ -149,7 +152,7 @@ function Relationships() {
                       <td>
                         <FormField
                           id="date"
-                          name="engagement_date"
+                          name="engagement_activities[0].engagement_date"
                           type="date"
                         />
                       </td>
@@ -158,8 +161,8 @@ function Relationships() {
                         <FormField
                           as="select"
                           id="engagement_method"
-                          name="engagement_method"
-                          placeholder="method of engagement"
+                          name="engagement_activities[0].engagement_method"
+                         
                           options={engagement_method}
                         />
                       </td>
@@ -167,7 +170,7 @@ function Relationships() {
                         <FormField
                           type="number"
                           id="hours_spent"
-                          name="hours_spent"
+                          name="engagement_activities[0].hours_spent"
                         />
                       </td>
                       <td>
@@ -175,7 +178,7 @@ function Relationships() {
                           type="number"
                           step="0.01"
                           id="dollar_gifted"
-                          name="dollar_gifted"
+                          name="engagement_activities[0].dollar_gifted"
                         />
                       </td>
                     </tr>
