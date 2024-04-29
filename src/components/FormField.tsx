@@ -1,9 +1,14 @@
 import { useField } from "formik";
 import React from "react";
 
-function FormField({ label, as, options, ...props } : {
-    label: string;
-    as: string;
+function FormField({
+  label,
+  as,
+  options,
+  ...props
+}: {
+  label: string;
+  as: string;
   options: string[];
   [key: string]: any; //for additional attributes passed through props
 }) {
@@ -19,7 +24,7 @@ function FormField({ label, as, options, ...props } : {
         <select
           {...field}
           {...props}
-          className={`border-solid border-2 w-full rounded-lg p-2 ${
+          className={`border-solid border-2 w-full rounded-lg p-2 h-12 ${
             meta.touched && meta.error ? "border-red-600" : "border-green-600 "
           }`}
         >
@@ -46,15 +51,19 @@ function FormField({ label, as, options, ...props } : {
             {...field}
             {...props}
             className={`border-solid border-2 w-full rounded-lg p-4 ${
-              meta.touched && meta.error ? "border-red-600" : "border-green-600 "
+              meta.touched && meta.error
+                ? "border-red-600"
+                : "border-green-600 "
             }`}
           />
         ) : (
           <input
             {...field}
             {...props}
-            className={`border-solid border-2 w-full rounded-lg p-2 ${
-              meta.touched && meta.error ? "border-red-600" : "border-green-600 "
+            className={`border-solid border-2 w-full rounded-lg p-2 h-12 ${
+              meta.touched && meta.error
+                ? "border-red-600"
+                : "border-green-600 "
             }`}
           />
         )}
@@ -65,7 +74,6 @@ function FormField({ label, as, options, ...props } : {
       </div>
     );
   }
-
 }
 
 export default FormField;

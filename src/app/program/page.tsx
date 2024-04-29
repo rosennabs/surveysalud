@@ -107,9 +107,6 @@ function Program() {
                   options={quarter}
                 />
 
-                
-                
-
                 <Button isSubmitting={isSubmitting} />
               </Form>
             );
