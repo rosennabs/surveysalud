@@ -14,6 +14,7 @@ interface FormValues {
   date: number | string;
   type: string;
   language: string;
+  other_languages: string;
   audience: string;
   purpose: string;
   comments: string;
@@ -43,6 +44,7 @@ const initialValues: FormValues = {
   date: "",
   type: "",
   language: "",
+  other_languages: "",
   audience: "",
   purpose: "",
   comments: "",
@@ -57,6 +59,10 @@ const validationSchema = Yup.object({
   date: Yup.string().required("Required"),
   type: Yup.string().required("Required"),
   language: Yup.string().required("Required"),
+  other_languages: Yup.string().when('language', {
+    is: (value: string) => value === 'Others',
+    then:  () => Yup.string().required('Required')
+  }),
   audience: Yup.string().required("Required"),
   purpose: Yup.string().required("Required"),
 });
