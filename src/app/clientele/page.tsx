@@ -12,6 +12,7 @@ interface FormValues {
   program: string;
   fullname: string;
   gender: string;
+  gender_diverse: string;
   organization: string;
   occupation: string;
   province: string;
@@ -48,6 +49,7 @@ const initialValues: FormValues = {
   program: "",
   fullname: "",
   gender: "",
+  gender_diverse: "",
   organization: "",
   occupation: "",
   province: "",
@@ -60,8 +62,13 @@ const validationSchema = Yup.object({
     .max(70, "Too long!")
     .required("Required"),
   gender: Yup.string().required("Required"),
+  gender_diverse: Yup.string().when('gender', {
+    is: (value: string) => value === 'Others',
+    then: () => Yup.string().required('Required')
+  }),
   organization: Yup.string().required("Required"),
   province: Yup.string().required("Required"),
+  occupation: Yup.string().required("Required"),
 });
 
 function Clientele() {
