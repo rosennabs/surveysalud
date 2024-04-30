@@ -28,7 +28,7 @@ function Login() {
     last_name: Yup.string().required("Required"),
     email: Yup.string().email("Invalid email format").required("Required"),
     password: Yup.string().required("Required"),
-    confirm_password: Yup.string().required("Required"),
+    confirm_password: Yup.string().oneOf([Yup.ref('password'), ''], 'Passwords must match').required("Required"),
   });
 
   return (
