@@ -89,7 +89,7 @@ function Relationships() {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={(values, actions) => {
-            console.log("Submitted values: ", values);
+            //console.log("Submitted values: ", values);
 
             actions.resetForm();
             actions.setSubmitting(false);
@@ -97,7 +97,7 @@ function Relationships() {
         >
           {(formikProps) => {
             //console.log(formikProps);
-            const { isSubmitting, values } = formikProps;
+            const { isSubmitting } = formikProps;
 
             return (
               <Form className="flex flex-wrap text-2xl">
@@ -186,9 +186,9 @@ function Relationships() {
                                       />
                                     </td>
 
-                                    <td>
+                                    <td >
                                       <button
-                                        className="py-2 px-6 bg-gray-300 rounded-xl shadow-xl"
+                                        className="py-2 px-6 h-12 bg-gray-300 rounded-xl shadow-xl"
                                         type="button"
                                         onClick={() => {
                                           remove(index);
@@ -201,7 +201,7 @@ function Relationships() {
                                 )
                               )}
                               <tr>
-                                <td colSpan="5">
+                                <td colSpan="5" >
                                   <button
                                     className="mt-4 py-2 px-6 bg-gray-300 rounded-xl shadow-xl"
                                     type="button"
