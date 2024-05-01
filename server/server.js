@@ -6,7 +6,7 @@ const PORT = 8080;
 
 app.use(cors());
 
-app.get("/", (req, res) => {
+app.get("/api/home", (req, res) => {
   
   res.json({ message: "Welcome to PMBASE!" });
 });
