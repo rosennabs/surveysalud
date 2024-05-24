@@ -10,19 +10,23 @@ const db = new Pool({
   database: process.env.DB_NAME,
 });
 
-
-
-db.query("SELECT * FROM programs", (err, res) => {
-  console.log(err ? err.message : res.rows);
-});
-
-db.query("SELECT current_database()", (err, res) => {
-  if (err) {
-    console.error("Error executing query:", err.message);
-  } else {
-    console.log("Connected to database:", res.rows[0].current_database);
+// Function to save users to the database
+const saveUser = async (user) => {
+  const { first_name, last_name, email, password } = user;
+  try {
+    const result = await db.query(
+      'INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING *',
+      [first_name, last_name, email, password]
+    );
+    return result.rows[0];
   }
-});
+  catch (err) {
+    throw err;
+  }
+}
+
+
 module.exports = {
-  db
+  db,
+  saveUser,
 };
