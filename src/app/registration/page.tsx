@@ -5,6 +5,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
 import Button from "../../components/Button";
+import axios from 'axios';
 
 interface FormValues {
   first_name: string;
@@ -31,6 +32,21 @@ function Register() {
     confirm_password: Yup.string().oneOf([Yup.ref('password'), ''], 'Passwords must match').required("Required"),
   });
 
+  const handleSubmit = async (values, actions) => {
+    console.log("User info: ", values);
+    
+    try {
+      const response = await axios.post('http://localhost:8080/api/register', values);
+      console.log('User saved to db:', response.data);
+      actions.resetForm();
+      actions.setSubmitting(false);
+    }
+    catch (error) {
+      console.error('Error saving user:', error);
+      actions.setSubmitting(false);
+    }
+  }
+
   return (
     <div className="pt-40 w-full flex flex-col items-center">
       <h1 className="text-5xl pb-16">Register</h1>
@@ -42,11 +58,7 @@ function Register() {
 
           validationSchema={validationSchema}
 
-          onSubmit={(values, action) => {
-            console.log("Form values: ", values);
-            action.resetForm();
-            action.setSubmitting(false);
-          }}
+          onSubmit={handleSubmit}
 
         >
           {

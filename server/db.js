@@ -27,6 +27,5 @@ const saveUser = async (user) => {
 
 
 module.exports = {
-  db,
   saveUser,
 };
