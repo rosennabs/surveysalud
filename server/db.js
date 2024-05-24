@@ -10,6 +10,8 @@ const db = new Pool({
   database: process.env.DB_NAME,
 });
 
+
+
 db.query("SELECT * FROM programs", (err, res) => {
   console.log(err ? err.message : res.rows);
 });
@@ -21,4 +23,6 @@ db.query("SELECT current_database()", (err, res) => {
     console.log("Connected to database:", res.rows[0].current_database);
   }
 });
-module.exports = db;
+module.exports = {
+  db
+};
