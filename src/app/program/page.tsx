@@ -5,11 +5,12 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
 import Button from "../../components/Button";
-import { programs } from "@/helpers/globalOptions";
+import { programs } from "../../helpers/globalOptions";
+import axios from 'axios';
 
 //Define types for form values
 interface FormValues {
-  program: string;
+  program_name: string;
   current_phase: string;
   fiscal_year: string;
   quarter: string;
@@ -28,7 +29,7 @@ const fiscal_year: string[] = ["2022 - 2023", "2023 - 2024"];
 const quarter: string[] = ["Q1", "Q2", "Q3", "Q4"];
 
 const initialValues: FormValues = {
-  program: "",
+  program_name: "",
   current_phase: "",
   fiscal_year: "",
   quarter: "",
@@ -37,12 +38,27 @@ const initialValues: FormValues = {
 };
 
 const validationSchema = Yup.object({
-  program: Yup.string().required("Required"),
+  program_name: Yup.string().required("Required"),
   current_phase: Yup.string().required("Required"),
   fiscal_year: Yup.string().required("Required"),
   quarter: Yup.string().required("Required"),
   end_date: Yup.string().required("Required"),
 });
+
+const handleSubmit = async (values, actions) => {
+  console.log("Program info: ", values);
+
+  try {
+    const response = await axios.post('http://localhost:8080/api/program', values);
+    console.log('Program saved to db:', response.data);
+    actions.resetForm();
+    actions.setSubmitting(false);
+  }
+  catch (error) {
+    console.error('Error saving program:', error);
+    actions.setSubmitting(false);
+  }
+}
 
 function Program() {
   return (
@@ -53,20 +69,16 @@ function Program() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values, actions) => {
-            // console.log("Submitted values: ", values);
-
-            actions.resetForm();
-            actions.setSubmitting(false);
-          }}
+          onSubmit={handleSubmit}
         >
           {({ isSubmitting, values }) => {
+    
             return (
               <Form className="flex flex-wrap text-2xl">
                 <FormField
                   label="Program Name"
-                  name="program"
-                  id="program"
+                  name="program_name"
+                  id="program_name"
                   as="select"
                   options={programs}
                 />
@@ -107,7 +119,7 @@ function Program() {
                   options={quarter}
                 />
 
-                <Button isSubmitting={isSubmitting} />
+                <Button isSubmitting={isSubmitting}/>
               </Form>
             );
           }}

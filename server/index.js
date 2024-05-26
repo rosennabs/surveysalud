@@ -25,6 +25,7 @@ app
     });
 
     server.use('/api/register', require('./routes/userRoutes'))
+    server.use('/api/program', require('./routes/programRoutes'))
 
     // Custom Next.js request handler
     server.get("*", (req, res) => {

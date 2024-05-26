@@ -15,7 +15,7 @@ interface FormValues {
   confirm_password: string | number;
 }
 
-function Register() {
+
   const initialValues: FormValues = {
     first_name: "",
     last_name: "",
@@ -46,7 +46,8 @@ function Register() {
       actions.setSubmitting(false);
     }
   }
-
+  
+function Register() {
   return (
     <div className="pt-40 w-full flex flex-col items-center">
       <h1 className="text-5xl pb-16">Register</h1>
