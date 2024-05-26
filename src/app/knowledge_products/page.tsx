@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import FormField from "../../components/FormField";
 import Button from "../../components/Button";
 import { programs } from "../../helpers/globalOptions";
+import axios from 'axios';
 
 //Define types for form values
 interface FormValues {
@@ -59,13 +60,30 @@ const validationSchema = Yup.object({
   date: Yup.string().required("Required"),
   type: Yup.string().required("Required"),
   language: Yup.string().required("Required"),
-  other_languages: Yup.string().when('language', {
-    is: (value: string) => value === 'Others',
-    then:  () => Yup.string().required('Required')
+  other_languages: Yup.string().when("language", {
+    is: (value: string) => value === "Others",
+    then: () => Yup.string().required("Required"),
   }),
   audience: Yup.string().required("Required"),
   purpose: Yup.string().required("Required"),
 });
+
+
+const handleSubmit = async (values, actions) => {
+  console.log("KP info: ", values);
+  
+  try {
+    const response = await axios.post('http://localhost:8080/api/knowledge_product', values);
+    console.log('KP saved to db:', response.data);
+    actions.resetForm();
+    actions.setSubmitting(false);
+  }
+  catch (error) {
+    console.error('Error saving KP:', error);
+    actions.setSubmitting(false);
+  }
+
+}
 
 function Knowledge_Products() {
   return (
@@ -76,15 +94,9 @@ function Knowledge_Products() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values, actions) => {
-            // console.log("Submitted values: ", values);
-
-            actions.resetForm();
-            actions.setSubmitting(false);
-          }}
+          onSubmit={handleSubmit}
         >
           {({ isSubmitting, values }) => {
-
             return (
               <Form className="flex flex-wrap text-2xl">
                 <FormField
