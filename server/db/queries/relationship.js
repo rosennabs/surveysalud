@@ -8,12 +8,11 @@ const saveRelationship = async (relationship) => {
       const { engagement_date, engagement_method, hours_spent, dollar_gifted } =
         engagement;
 
-      const query = `
-        INSERT INTO relationships (program, fullname, organization, primary_perspective, engagement_date, engagement_method, hours_spent, dollar_gifted, comments)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-        RETURNING *;
-        `;
-
+      // Check if the record already exists
+      const checkQuery = `
+        SELECT * FROM relationships
+        WHERE program = $1 AND fullname = $2 AND organization = $3 AND primary_perspective = $4 AND engagement_date = $5 AND engagement_method = $6 AND hours_spent = $7 AND dollar_gifted = $8 AND comments = $9
+      `;
       const values = [
         program,
         fullname,
@@ -23,11 +22,27 @@ const saveRelationship = async (relationship) => {
         engagement_method,
         hours_spent,
         dollar_gifted,
-        comments,
+        comments
       ];
 
-      const result = await db.query(query, values);
-      return result.rows[0];
+      const checkResult = await db.query(checkQuery, values);
+
+      if (checkResult.rows.length === 0) {
+        // If no existence, insert the new record
+
+        const insertQuery = `
+        INSERT INTO relationships (program, fullname, organization, primary_perspective, engagement_date, engagement_method, hours_spent, dollar_gifted, comments)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        RETURNING *;
+        `;
+
+
+        const result = await db.query(insertQuery, values);
+        return result.rows[0];
+      } else {
+        // If exists, return the existing record
+        return checkResult.rows[0];
+      }
     });
 
     // Await all promises and get the results
