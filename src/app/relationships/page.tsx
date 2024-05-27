@@ -77,22 +77,31 @@ const validationSchema = Yup.object({
           /^\d+(\.\d{1,2})?$/.test(value)
         ),
     })
-  ),
+  ).required('Must have engagement activities').min(1, 'Minimum of 1 engagement activity'),
 });
 
 const handleSubmit = async (values, actions) => {
+  // Disable the submit button
+  actions.setSubmitting(true);
+
   try {
+    // Send the form data to the server
     const response = await axios.post('http://localhost:8080/api/relationship', values);
-    console.log('relationship saved to db:', response.data);
+    
+    // Reset the form fields
     actions.resetForm();
-    actions.setSubmitting(false);
-  }
-  catch (error) {
+  } catch (error) {
+    // Log the error to the console
     console.error('Error saving relationship:', error);
+
+    // Display an error message to the user
+    actions.setStatus({ error: 'An error occurred while saving data.' });
+  } finally {
+    // Re-enable the submit button
     actions.setSubmitting(false);
   }
-  
 };
+
 
 function Relationships() {
   return (
@@ -107,7 +116,7 @@ function Relationships() {
         >
           {(formikProps) => {
             //console.log(formikProps);
-            const { isSubmitting } = formikProps;
+            const { isSubmitting, status } = formikProps;
 
             return (
               <Form className="flex flex-wrap text-2xl">
@@ -236,8 +245,12 @@ function Relationships() {
                     </tbody>
                   </table>
                 </div>
-
+          
                 <Button isSubmitting={isSubmitting} />
+
+                {status && status.error && (
+                  <div className="text-red-500 mb-4">{status.error}</div>
+                )}
               </Form>
             );
           }}
