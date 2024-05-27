@@ -5,7 +5,8 @@ import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
 import Button from "../../components/Button";
-import { programs } from "@/helpers/globalOptions";
+import { programs } from "../../helpers/globalOptions";
+import axios from 'axios';
 
 //Define types for form values
 interface FormValues {
@@ -79,6 +80,20 @@ const validationSchema = Yup.object({
   ),
 });
 
+const handleSubmit = async (values, actions) => {
+  try {
+    const response = await axios.post('http://localhost:8080/api/relationship', values);
+    console.log('relationship saved to db:', response.data);
+    actions.resetForm();
+    actions.setSubmitting(false);
+  }
+  catch (error) {
+    console.error('Error saving relationship:', error);
+    actions.setSubmitting(false);
+  }
+  
+};
+
 function Relationships() {
   return (
     <div className=" w-full pt-40 flex flex-col items-center">
@@ -88,12 +103,7 @@ function Relationships() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values, actions) => {
-            //console.log("Submitted values: ", values);
-
-            actions.resetForm();
-            actions.setSubmitting(false);
-          }}
+          onSubmit={handleSubmit}
         >
           {(formikProps) => {
             //console.log(formikProps);
