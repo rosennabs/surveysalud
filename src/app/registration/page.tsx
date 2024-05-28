@@ -33,11 +33,10 @@ interface FormValues {
   });
 
   const handleSubmit = async (values, actions) => {
-    console.log("User info: ", values);
     
     try {
       const response = await axios.post('http://localhost:8080/api/register', values);
-      console.log('User saved to db:', response.data);
+      
       actions.resetForm();
       actions.setSubmitting(false);
     }
@@ -46,7 +45,7 @@ interface FormValues {
       actions.setSubmitting(false);
     }
   }
-  
+
 function Register() {
   return (
     <div className="pt-40 w-full flex flex-col items-center">
