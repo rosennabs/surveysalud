@@ -95,7 +95,7 @@ const handleSubmit = async (values, actions) => {
     console.error('Error saving relationship:', error);
 
     // Display an error message to the user
-    actions.setStatus({ error: 'An error occurred while saving data.' });
+    actions.setStatus({ error: 'An error occurred while saving data!' });
   } finally {
     // Re-enable the submit button
     actions.setSubmitting(false);
@@ -246,11 +246,9 @@ function Relationships() {
                   </table>
                 </div>
           
-                <Button isSubmitting={isSubmitting} />
+                <Button isSubmitting={isSubmitting} status={status} />
 
-                {status && status.error && (
-                  <div className="text-red-500 mb-4">{status.error}</div>
-                )}
+               
               </Form>
             );
           }}

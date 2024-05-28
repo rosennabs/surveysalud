@@ -39,10 +39,6 @@ export default function RootLayout({
           <Link href='/relationships'> <div className={navClassName}>
           Relationship building
         </div> </Link>
-
-          <Link href='/clientele'> <div className={navClassName}>
-          Clientele
-        </div> </Link>
         
         </header>
         
