@@ -70,16 +70,18 @@ const validationSchema = Yup.object({
 
 
 const handleSubmit = async (values, actions) => {
-  console.log("KP info: ", values);
   
   try {
     const response = await axios.post('http://localhost:8080/api/knowledge_product', values);
-    console.log('KP saved to db:', response.data);
+    // console.log('KP saved to db:', response.data);
     actions.resetForm();
     actions.setSubmitting(false);
   }
   catch (error) {
     console.error('Error saving KP:', error);
+
+    // Display an error message to the user
+    actions.setStatus({ error: 'An error occurred while saving data!' });
     actions.setSubmitting(false);
   }
 
@@ -96,7 +98,7 @@ function Knowledge_Products() {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting, values }) => {
+          {({ isSubmitting, values, status }) => {
             return (
               <Form className="flex flex-wrap text-2xl">
                 <FormField
@@ -174,7 +176,7 @@ function Knowledge_Products() {
                   placeholder="Add any additional notes here"
                 />
 
-                <Button isSubmitting={isSubmitting} />
+                <Button isSubmitting={isSubmitting} status={status}/>
               </Form>
             );
           }}

@@ -56,6 +56,8 @@ const handleSubmit = async (values, actions) => {
   }
   catch (error) {
     console.error('Error saving program:', error);
+    // Display an error message to the user
+    actions.setStatus({ error: 'An error occurred while saving data!' });
     actions.setSubmitting(false);
   }
 }
@@ -71,7 +73,7 @@ function Program() {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting, values }) => {
+          {({ isSubmitting, status }) => {
     
             return (
               <Form className="flex flex-wrap text-2xl">
@@ -119,7 +121,7 @@ function Program() {
                   options={quarter}
                 />
 
-                <Button isSubmitting={isSubmitting}/>
+                <Button isSubmitting={isSubmitting} status={status}/>
               </Form>
             );
           }}
