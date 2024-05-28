@@ -3,29 +3,32 @@ const db = require('../dbConnection');
 const saveRelationship = async (relationship) => {
   const { program, fullname, organization, primary_perspective, engagement_activities, comments } = relationship;
 
+
   try {
     const promises = engagement_activities.map(async (engagement) => {
       const { engagement_date, engagement_method, hours_spent, dollar_gifted } =
         engagement;
+      
+    
 
       // Check if the record already exists
       const checkQuery = `
         SELECT * FROM relationships
-        WHERE program = $1 AND fullname = $2 AND organization = $3 AND primary_perspective = $4 AND engagement_date = $5 AND engagement_method = $6 AND hours_spent = $7 AND dollar_gifted = $8 AND comments = $9
+        WHERE program = $1 AND LOWER(fullname) = LOWER($2) AND primary_perspective = $3 AND engagement_date = $4 AND engagement_method = $5 AND hours_spent = $6 AND dollar_gifted = $7;
       `;
-      const values = [
+      const checkValues = [
         program,
         fullname,
-        organization,
         primary_perspective,
         engagement_date,
         engagement_method,
         hours_spent,
         dollar_gifted,
-        comments
       ];
 
-      const checkResult = await db.query(checkQuery, values);
+      
+      const checkResult = await db.query(checkQuery, checkValues);
+
 
       if (checkResult.rows.length === 0) {
         // If no existence, insert the new record
@@ -36,8 +39,20 @@ const saveRelationship = async (relationship) => {
         RETURNING *;
         `;
 
+        const insertValues = [
+          program,
+          fullname,
+          organization,
+          primary_perspective,
+          engagement_date,
+          engagement_method,
+          hours_spent,
+          dollar_gifted,
+          comments,
+        ];
 
-        const result = await db.query(insertQuery, values);
+
+        const result = await db.query(insertQuery, insertValues);
         return result.rows[0];
       } else {
         // If exists, return the existing record

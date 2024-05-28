@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
   //Start a transaction upon receiving a post request
   try {
     const relationship = await saveRelationship(req.body);
-    console.log("Relationship response: ", req.body);
+    //console.log("Relationship response: ", req.body);
     res.status(201).json(relationship);
   }
   catch (error) {

@@ -8,9 +8,11 @@ router.post('/', async(req, res) => {
     const program = await saveProgram(req.body);
     res.status(201).json(program);
   } catch (error) {
-    console.error("Error saving program to database:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
+   
+      console.error("Error saving program to database:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }   
+  
 });
 
 module.exports = router;

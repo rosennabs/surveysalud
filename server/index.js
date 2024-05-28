@@ -16,7 +16,7 @@ app
   .then(() => {
     const server = express();
 
-    //Middleware
+    //Middleware 
     server.use(cors());
     server.use(bodyParser.json());
 

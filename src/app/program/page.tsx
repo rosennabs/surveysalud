@@ -46,16 +46,17 @@ const validationSchema = Yup.object({
 });
 
 const handleSubmit = async (values, actions) => {
-  console.log("Program info: ", values);
 
   try {
     const response = await axios.post('http://localhost:8080/api/program', values);
-    console.log('Program saved to db:', response.data);
+ 
     actions.resetForm();
     actions.setSubmitting(false);
   }
   catch (error) {
     console.error('Error saving program:', error);
+
+    
     // Display an error message to the user
     actions.setStatus({ error: 'An error occurred while saving data!' });
     actions.setSubmitting(false);
