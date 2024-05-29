@@ -46,7 +46,9 @@ const handleSubmit = async (values, actions) => {
     if (error.response && error.response.data && error.response.data.error === "User already exists!") {
       // Display an error message to the user
       actions.setStatus({ error: 'User already exists! Please login.' });
-
+    }
+    else {
+      actions.setStatus({ error: 'An error occurred while registering user. Please try again later.' });
     }
     actions.setSubmitting(false);
   }

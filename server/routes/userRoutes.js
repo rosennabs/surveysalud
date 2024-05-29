@@ -29,4 +29,33 @@ router.post("/register", async (req, res) => {
   }
 });
 
+//Login a user
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    //Find user by email
+    const user = await findUserbyEmail(email);
+
+    if (!user) {
+      console.log("User not found: ", user);
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    //Compare user password with hashed password
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    //Return success response
+    res.status(200).json({ message: 'Login successful!' });
+
+  } catch (error) {
+    console.error("Error logging in user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+})
+
 module.exports = router;
