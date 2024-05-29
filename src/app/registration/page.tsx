@@ -16,35 +16,41 @@ interface FormValues {
 }
 
 
-  const initialValues: FormValues = {
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    confirm_password: ""
-  };
+const initialValues: FormValues = {
+  first_name: "",
+  last_name: "",
+  email: "",
+  password: "",
+  confirm_password: ""
+};
 
-  const validationSchema = Yup.object({
-    first_name: Yup.string().required("Required"),
-    last_name: Yup.string().required("Required"),
-    email: Yup.string().email("Invalid email format").required("Required"),
-    password: Yup.string().required("Required"),
-    confirm_password: Yup.string().oneOf([Yup.ref('password'), ''], 'Passwords must match').required("Required"),
-  });
+const validationSchema = Yup.object({
+  first_name: Yup.string().required("Required"),
+  last_name: Yup.string().required("Required"),
+  email: Yup.string().email("Invalid email format").required("Required"),
+  password: Yup.string().required("Required"),
+  confirm_password: Yup.string().oneOf([Yup.ref('password'), ''], 'Passwords must match').required("Required"),
+});
 
-  const handleSubmit = async (values, actions) => {
-    
-    try {
-      const response = await axios.post('http://localhost:8080/api/register', values);
-      
-      actions.resetForm();
-      actions.setSubmitting(false);
-    }
-    catch (error) {
-      console.error('Error saving user:', error);
-      actions.setSubmitting(false);
-    }
+const handleSubmit = async (values, actions) => {
+
+  try {
+    const response = await axios.post('http://localhost:8080/api/user/register', values);
+
+    actions.resetForm();
+    actions.setSubmitting(false);
   }
+  catch (error) {
+    console.error('Error registering user:', error);
+
+    if (error.response && error.response.data && error.response.data.error === "User already exists!") {
+      // Display an error message to the user
+      actions.setStatus({ error: 'User already exists! Please login.' });
+
+    }
+    actions.setSubmitting(false);
+  }
+};
 
 function Register() {
   return (
@@ -61,45 +67,44 @@ function Register() {
           onSubmit={handleSubmit}
 
         >
-          {
-            formikProps => {
-              return (
-                <Form>
-                  <FormField
-                    label='First Name'
-                    name='first_name'
-                    placeholder='First Name'
-                  />
-                  <FormField
-                    label='Last Name'
-                    name='last_name'
-                    placeholder='Last Name'
-                  />
-                  <FormField
-                    label='Email'
-                    name='email'
-                    type='email'
-                    placeholder='Email'
-                  />
+          {({ status }) => {
+            return (
+              <Form>
+                <FormField
+                  label='First Name'
+                  name='first_name'
+                  placeholder='First Name'
+                />
+                <FormField
+                  label='Last Name'
+                  name='last_name'
+                  placeholder='Last Name'
+                />
+                <FormField
+                  label='Email'
+                  name='email'
+                  type='email'
+                  placeholder='Email'
+                />
 
-                  <FormField
-                    label='Password'
-                    name='password'
-                    type='password'
-                    
-                  />
+                <FormField
+                  label='Password'
+                  name='password'
+                  type='password'
 
-                  <FormField
-                    label='Confirm Password'
-                    name='confirm_password'
-                    type='password'
-                    
-                  />
-                  <Button />
+                />
 
-                </Form>
-              );
-            }
+                <FormField
+                  label='Confirm Password'
+                  name='confirm_password'
+                  type='password'
+
+                />
+                <Button status={status} />
+
+              </Form>
+            );
+          }
           }
 
         </Formik>

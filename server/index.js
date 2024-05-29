@@ -24,7 +24,7 @@ app
       res.json({ message: "Welcome to PMBASE!" });
     });
 
-    server.use('/api/register', require('./routes/userRoutes'))
+    server.use('/api/user', require('./routes/userRoutes'))
     server.use('/api/program', require('./routes/programRoutes'))
     server.use('/api/knowledge_product', require('./routes/kpRoutes'))
     server.use('/api/relationship', require('./routes/relationshipRoutes'))

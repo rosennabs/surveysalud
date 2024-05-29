@@ -1,15 +1,30 @@
 const express = require("express");
 const router = express.Router();
-const { saveUser } = require("../db/queries/user");
-
+const bcrypt = require('bcryptjs');
+const { saveUser, findUserbyEmail } = require("../db/queries/user");
+const SALT_ROUNDS = 12; 
 
 //Register a user
-router.post("/", async (req, res) => {
+router.post("/register", async (req, res) => {
   try {
-    const user = await saveUser(req.body);
-    res.status(201).json(user);
+
+    const { first_name, last_name, email, password } = req.body;
+
+    //Check if the user already exists
+    const existingUser = await findUserbyEmail(email);
+
+    if (existingUser) {
+      return res.status(409).json({ error: 'User already exists!' });
+    }
+
+    //Hash user password
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+
+    const newUser = await saveUser({first_name, last_name, email, password: hashedPassword});
+    res.status(201).json(newUser);
+
   } catch (error) {
-    console.error("Error saving user to database:", error);
+    console.error("Error registering user:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

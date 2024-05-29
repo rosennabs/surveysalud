@@ -5,31 +5,38 @@ const saveUser = async (user) => {
   const { first_name, last_name, email, password } = user;
 
   try {
-    const checkQuery = `
-    SELECT * FROM users
-    WHERE LOWER(first_name) = LOWER ($1) AND LOWER(last_name) = LOWER($2) AND email = $3 AND password = $4;
-    `;
-
+    const query =
+      `INSERT INTO users (first_name, last_name, email, password) 
+      VALUES ($1, $2, $3, $4)
+      RETURNING *;
+      `;
     const values = [first_name, last_name, email, password];
 
-    const checkResult = await db.query(checkQuery, values);
+    const result = await db.query(query, values);
+    return result.rows[0];
 
-    if (checkResult.rows.length === 0) {
-      const insertQuery =
-        "INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4)";
-      
-      const result = await db.query(insertQuery, values);
-      return result.rows[0];
-    } else {
-      return checkResult.rows[0];
-    }
- 
-    
   } catch (err) {
     throw err;
   }
 };
 
+//Function to find user in the database
+const findUserbyEmail = async (email) => {
+  try {
+    const query = `
+    SELECT * FROM users
+    WHERE LOWER(email) = LOWER($1);
+    `;
+    const result = await db.query(query, [email]);
+    return result.rows[0];
+
+  } catch (error) {
+    console.error('Error finding user by email: ', error);
+    throw error;
+  }
+};
+
 module.exports = {
-  saveUser
-}
+  saveUser,
+  findUserbyEmail
+};
