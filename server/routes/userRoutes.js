@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+//const authMiddleware = require ('')
 const { saveUser, findUserbyEmail } = require("../db/queries/user");
-const SALT_ROUNDS = 12; 
+const SALT_ROUNDS = 12;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 //Register a user
 router.post("/register", async (req, res) => {
@@ -49,8 +52,10 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    //Return success response
-    res.status(200).json({ message: 'Login successful!' });
+    //Generate a JWT token after successful authentication
+    const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+    //Return the token
+    res.status(200).json({ token });
 
   } catch (error) {
     console.error("Error logging in user:", error);
