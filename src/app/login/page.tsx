@@ -1,11 +1,13 @@
 "use client";
 
 import React from "react";
+import { useRouter } from 'next/navigation';
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
 import Button from "../../components/Button";
 import axios from 'axios';
+
 
 interface FormValues {
   email: string;
@@ -13,6 +15,8 @@ interface FormValues {
 }
 
 function Login() {
+  const router = useRouter(); // Use useRouter from next/router
+
   const initialValues: FormValues = {
     email: "",
     password: "",
@@ -23,13 +27,22 @@ function Login() {
     password: Yup.string().required("Required"),
   });
 
+  
 
   const handleSubmit = async (values, actions) => {
+
     try {
       const response = await axios.post('http://localhost:8080/api/user/login', values);
       
+      // Fetch the user's token
+      const { token, user } = response.data;
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('user', JSON.stringify(user));
+
+      
       actions.resetForm();
       actions.setSubmitting(false);
+      router.push('/'); //Navigate to the homepage
     }
     catch (error) {
       console.error('Error logging in user:', error);

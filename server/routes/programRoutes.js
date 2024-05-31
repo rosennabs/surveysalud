@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const authorization = require("../middleware/authMiddleware");
 const { saveProgram } = require("../db/queries/program");
 
 //Enter a program
-router.post('/', async(req, res) => {
+router.post('/', authorization, async(req, res) => {
   try {
     const program = await saveProgram(req.body);
     res.status(201).json(program);
@@ -14,5 +15,7 @@ router.post('/', async(req, res) => {
     }   
   
 });
+
+
 
 module.exports = router;

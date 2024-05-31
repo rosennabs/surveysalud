@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
 
-const authMiddleware = (req, res, next) => {
-  console.log("authorization: ", req);
+// Create middleware to protect routes and validate the JWT token
+
+const authorization = (req, res, next) => {
+  //console.log("authorization: ", req);
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -18,7 +20,7 @@ const authMiddleware = (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, JWT_SECRET);
-    console.log("Is user authorized? ", payload);
+    //console.log("Is user authorized? ", payload);
     req.user = payload; // Attach the verified token to the request object
     next();
   }
@@ -31,8 +33,6 @@ const authMiddleware = (req, res, next) => {
   };
 }
 
-//   router.get('/profile', authMiddleware, (req, res) => {
-//   res.json({ message: `Welcome, ${req.user.email}!`, user: req.user });
-// });
 
-module.exports = authMiddleware;
+
+module.exports = authorization;

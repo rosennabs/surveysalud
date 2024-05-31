@@ -4,6 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const PORT = 8080;
 const path = require("path");
+const authorization = require('./middleware/authMiddleware');
 
 
 
@@ -20,9 +21,9 @@ app
     server.use(cors());
     server.use(bodyParser.json());
 
-    server.get("/api/home", (req, res) => {
-      res.json({ message: "Welcome to PMBASE!" });
-    });
+    // server.get("/api/", authorization, (req, res) => {
+    //   res.json({ message: `Welcome to PMBASE, ${req.user.email}` });
+    // });
 
     server.use('/api/user', require('./routes/userRoutes'))
     server.use('/api/program', require('./routes/programRoutes'))
