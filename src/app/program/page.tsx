@@ -1,11 +1,13 @@
 "use client";
 
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
 import Button from "../../components/Button";
 import { programs } from "../../helpers/globalOptions";
+import axiosInstance from '../../helpers/axiosInstance';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 //Define types for form values
@@ -48,7 +50,7 @@ const validationSchema = Yup.object({
 const handleSubmit = async (values, actions) => {
 
   try {
-    const response = await axios.post('http://localhost:8080/api/program', values);
+    const response = await axiosInstance.post('http://localhost:8080/api/program', values);
  
     actions.resetForm();
     actions.setSubmitting(false);
@@ -64,6 +66,24 @@ const handleSubmit = async (values, actions) => {
 }
 
 function Program() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if (user && user.token) {
+      setIsAuthenticated(true);
+    } else {
+      router.push('/login');
+    }
+
+  }, []);
+
+  if (!isAuthenticated) {
+    return null; // Render nothing if not authenticated
+  }
+
+
   return (
     <div className=" w-full pt-40 flex flex-col items-center">
       <h1 className="text-5xl pb-16">Program Portfolio</h1>
