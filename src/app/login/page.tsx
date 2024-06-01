@@ -14,39 +14,40 @@ interface FormValues {
   password: string | number;
 }
 
+const initialValues: FormValues = {
+  email: "",
+  password: "",
+};
+
+const validationSchema = Yup.object({
+  email: Yup.string().email("Invalid email format").required("Required"),
+  password: Yup.string().required("Required"),
+});
+
+
+
+
 function Login() {
   const router = useRouter(); // Use useRouter from next/router
-
-  const initialValues: FormValues = {
-    email: "",
-    password: "",
-  };
-
-  const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email format").required("Required"),
-    password: Yup.string().required("Required"),
-  });
-
-  
 
   const handleSubmit = async (values, actions) => {
 
     try {
       const response = await axios.post('http://localhost:8080/api/user/login', values);
-      
+
       // Fetch the user's token
       const { token, user } = response.data;
       sessionStorage.setItem('token', token);
       sessionStorage.setItem('user', JSON.stringify(user));
 
-      
+
       actions.resetForm();
       actions.setSubmitting(false);
       router.push('/'); //Navigate to the homepage
     }
     catch (error) {
       console.error('Error logging in user:', error);
-      
+
       if (error.response && error.response.data && error.response.data.error === "Invalid email or password") {
         // Display an error message to the user
         actions.setStatus({ error: 'Invalid email or password' });
@@ -56,8 +57,7 @@ function Login() {
       }
       actions.setSubmitting(false);
     }
-}
-  
+  }
 
   return (
     <div className="pt-40 w-full flex flex-col items-center">

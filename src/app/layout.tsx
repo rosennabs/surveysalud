@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from 'next/link';
+import { AuthProvider } from '../contexts/AuthContext';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -41,8 +42,11 @@ export default function RootLayout({
         </div> </Link>
         
         </header>
-        
-        {children}
+
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+     
 
         <footer>
           <p className="text-sm my-10">© 2024 PMBASE. All rights reserved.</p>

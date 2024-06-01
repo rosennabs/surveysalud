@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 import { programs } from "../../helpers/globalOptions";
 import axiosInstance from '../../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import { useAuth } from '../../contexts/AuthContext';
 
 //Define types for form values
 interface FormValues {
@@ -66,20 +66,13 @@ const handleSubmit = async (values, actions) => {
 }
 
 function Program() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    if (user && user.token) {
-      setIsAuthenticated(true);
-    } else {
-      router.push('/login');
-    }
+  const { isAuthenticated } = useAuth();
 
-  }, []);
 
   if (!isAuthenticated) {
+    router.push("/login");
     return null; // Render nothing if not authenticated
   }
 

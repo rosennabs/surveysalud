@@ -16,27 +16,27 @@ interface FormValues {
   confirm_password: string | number;
 }
 
+const initialValues: FormValues = {
+  first_name: "",
+  last_name: "",
+  email: "",
+  password: "",
+  confirm_password: ""
+};
+
+const validationSchema = Yup.object({
+  first_name: Yup.string().required("Required"),
+  last_name: Yup.string().required("Required"),
+  email: Yup.string().email("Invalid email format").required("Required"),
+  password: Yup.string().required("Required"),
+  confirm_password: Yup.string().oneOf([Yup.ref('password'), ''], 'Passwords must match').required("Required"),
+});
 
 
 function Register() {
 
   const router = useRouter(); // Use useRouter from next/router
 
-  const initialValues: FormValues = {
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    confirm_password: ""
-  };
-
-  const validationSchema = Yup.object({
-    first_name: Yup.string().required("Required"),
-    last_name: Yup.string().required("Required"),
-    email: Yup.string().email("Invalid email format").required("Required"),
-    password: Yup.string().required("Required"),
-    confirm_password: Yup.string().oneOf([Yup.ref('password'), ''], 'Passwords must match').required("Required"),
-  });
 
   const handleSubmit = async (values, actions) => {
 
