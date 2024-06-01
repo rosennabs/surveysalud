@@ -7,6 +7,8 @@ import FormField from "../../components/FormField";
 import Button from "../../components/Button";
 import { programs } from "../../helpers/globalOptions";
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '../../contexts/AuthContext';
 
 //Define types for form values
 interface FormValues {
@@ -104,6 +106,17 @@ const handleSubmit = async (values, actions) => {
 
 
 function Relationships() {
+
+  const router = useRouter();
+
+  const { isAuthenticated } = useAuth();
+
+
+  if (!isAuthenticated) {
+    router.push("/login");
+    return null; // Render nothing if not authenticated
+  }
+  
   return (
     <div className=" w-full pt-40 flex flex-col items-center">
       <h1 className="text-5xl pb-16">Relationship building</h1>
