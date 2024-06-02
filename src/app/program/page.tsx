@@ -70,9 +70,14 @@ function Program() {
 
   const { isAuthenticated } = useAuth();
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login");
+    }
+  }, [isAuthenticated, router]);
 
   if (!isAuthenticated) {
-    router.push("/login");
+    
     return null; // Render nothing if not authenticated
   }
 

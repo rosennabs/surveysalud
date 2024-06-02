@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, {useEffect } from "react";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
@@ -112,11 +112,17 @@ function Relationships() {
   const { isAuthenticated } = useAuth();
 
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login");
+    }
+  }, [isAuthenticated, router]);
+
   if (!isAuthenticated) {
-    router.push("/login");
+
     return null; // Render nothing if not authenticated
   }
-  
+
   return (
     <div className=" w-full pt-40 flex flex-col items-center">
       <h1 className="text-5xl pb-16">Relationship building</h1>

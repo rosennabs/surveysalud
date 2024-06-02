@@ -1,12 +1,13 @@
 "use client";
 
-import React from "react";
+import React, {useEffect} from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
 import Button from "../../components/Button";
 import { programs } from "../../helpers/globalOptions";
 import axios from 'axios';
+import axiosInstance from '../../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -74,8 +75,8 @@ const validationSchema = Yup.object({
 const handleSubmit = async (values, actions) => {
   
   try {
-    const response = await axios.post('http://localhost:8080/api/knowledge_product', values);
-    // console.log('KP saved to db:', response.data);
+    const response = await axiosInstance.post('http://localhost:8080/api/knowledge_product', values);
+
     actions.resetForm();
     actions.setSubmitting(false);
   }
@@ -95,11 +96,16 @@ function Knowledge_Products() {
 
   const { isAuthenticated } = useAuth();
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login");    
+    }
+  }, [isAuthenticated, router]);
 
   if (!isAuthenticated) {
-    router.push("/login");
     return null; // Render nothing if not authenticated
   }
+
 
   return (
     <div className=" w-full pt-40 flex flex-col items-center">

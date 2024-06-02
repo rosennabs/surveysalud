@@ -12,9 +12,13 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem("user"));
-    if (user && user.token) {
+    const token = sessionStorage.getItem("token");
+    
+    if (user && token) {
       setIsAuthenticated(true);
-    } 
+    } else {
+      setIsAuthenticated(false);
+    }
   }, []);
   
   return (

@@ -18,10 +18,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
        
       <body className="flex h-screen flex-col items-center justify-between">
+        <AuthProvider>
 
         <header className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex pt-24">
           
@@ -43,14 +45,12 @@ export default function RootLayout({
         
         </header>
 
-        <AuthProvider>
-          {children}
-        </AuthProvider>
-     
+            {children}
 
         <footer>
           <p className="text-sm my-10">© 2024 PMBASE. All rights reserved.</p>
-        </footer>
+          </footer>
+        </AuthProvider>
       </body>
     </html>
   );

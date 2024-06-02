@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 
 // Add a request interceptor to include the token
 axiosInstance.interceptors.request.use(
-  (config) => {
+  config => {
     const user = JSON.parse(sessionStorage.getItem('user'));
 
     if (user && user.token) {
