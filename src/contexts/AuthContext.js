@@ -20,9 +20,14 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(false);
     }
   }, []);
+
+    const logout = () => {
+      sessionStorage.clear();
+      setIsAuthenticated(false);
+    };
   
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, logout }}>
       {children}
     </AuthContext.Provider>
   );

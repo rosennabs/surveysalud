@@ -3,14 +3,15 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-
+import { useAuth } from '../contexts/AuthContext';
 
 
 export default function Home() {
+ 
+  const router = useRouter();
+  const { logout } = useAuth();
 
   const [user, setUser] = useState(null);
-  const router = useRouter();
-
 
   useEffect(() => {
     const storedUser = JSON.parse(sessionStorage.getItem('user'));
@@ -19,9 +20,8 @@ export default function Home() {
   
 
   const handleLogout = () => {
-    sessionStorage.clear();
-    setUser(null);
-    router.push('/');
+    logout();
+    router.push('/login');
 
   }
 
