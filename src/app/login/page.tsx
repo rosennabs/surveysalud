@@ -6,6 +6,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
 import Button from "../../components/Button";
+import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
 
 
@@ -29,6 +30,7 @@ const validationSchema = Yup.object({
 
 function Login() {
   const router = useRouter(); // Use useRouter from next/router
+  const { login } = useAuth();
 
   const handleSubmit = async (values, actions) => {
 
@@ -37,9 +39,7 @@ function Login() {
 
       // Fetch the user's token
       const { token, user } = response.data;
-      sessionStorage.setItem('token', token);
-      sessionStorage.setItem('user', JSON.stringify(user));
-
+      login (user, token);
 
       actions.resetForm();
       actions.setSubmitting(false);

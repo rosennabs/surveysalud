@@ -1,7 +1,9 @@
 'use client';
  
 import Link from 'next/link';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '../contexts/AuthContext';
 
 const baseButtonClassName = "bg-gray-300 rounded-xl shadow-xl w-[100px] h-10 bg-teal-500 hover:text-white";
 const activeButtonClassName = "rounded-xl shadow-xl w-[100px] h-10 border-2 border-teal-500";
@@ -10,6 +12,16 @@ const activeNavClassName = "underline underline-offset-8 text-teal-600 font-bold
 
 
 export default function Header() {
+
+  const router = useRouter();
+  const { isAuthenticated, user, logout } = useAuth();
+
+
+  const handleLogout = (logoutButton: string) => {
+    handleButtonClick(logoutButton);
+    logout();
+    router.push('/login');
+  }
 
   const [activeButton, setActiveButton] = useState<string | null>(baseButtonClassName);
   const [activeNav, setActiveNav] = useState<string | null>(null);
@@ -50,9 +62,23 @@ export default function Header() {
                   Relationship building
                 </div>
               </Link>
-            </div>
+      </div>
+      
+      
 
-            <div className="flex items-center space-x-8">
+      <div className="flex items-center space-x-8">
+        
+        {isAuthenticated ? (
+          <>
+            <p className="text-m text-black">Hello, {user.first_name}</p>
+
+            <button onClick={() => handleLogout('logoutButton')} className={activeButton === 'logoutButton' ? activeButtonClassName : baseButtonClassName}>
+                Logout
+              </button>
+            
+          </>
+        ) : (
+          <>
               <Link href='/login'>
                 <button onClick={() => handleButtonClick('login')} className={activeButton === 'login' ? activeButtonClassName : baseButtonClassName}>
                   Login
@@ -63,7 +89,9 @@ export default function Header() {
               <button onClick={() => handleButtonClick('signup')} className={activeButton === 'signup' ? activeButtonClassName : baseButtonClassName}>
                   Sign up
                 </button>
-              </Link>
+            </Link>
+            </>
+        )}
             </div>
 
 

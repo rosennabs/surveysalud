@@ -8,26 +8,37 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
  
 
   useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    const storedUser = JSON.parse(sessionStorage.getItem("user"));
     const token = sessionStorage.getItem("token");
     
-    if (user && token) {
+    if (storedUser && token) {
+      setUser(storedUser);
       setIsAuthenticated(true);
     } else {
+      setUser(null);
       setIsAuthenticated(false);
     }
   }, []);
 
+  const login = (user, token) => {
+    sessionStorage.setItem("user", JSON.stringify(user));
+    sessionStorage.setItem("token", token);
+    setUser(user);
+    setIsAuthenticated(true);
+  };
+
     const logout = () => {
       sessionStorage.clear();
+      setUser(null);
       setIsAuthenticated(false);
     };
   
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
