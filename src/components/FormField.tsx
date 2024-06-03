@@ -25,7 +25,7 @@ function FormField({
           {...field}
           {...props}
           className={`border-solid border-2 w-full rounded-lg p-2 h-12 ${
-            meta.touched && meta.error ? "border-red-600" : "border-green-600 "
+            meta.touched && meta.error ? "border-red-600" : "border-teal-500"
           }`}
         >
           <option value=""></option>
@@ -53,7 +53,7 @@ function FormField({
             className={`border-solid border-2 w-full rounded-lg p-4 ${
               meta.touched && meta.error
                 ? "border-red-600"
-                : "border-green-600 "
+                : "border-teal-500"
             }`}
           />
         ) : (
@@ -63,7 +63,7 @@ function FormField({
             className={`border-solid border-2 w-full rounded-lg p-2 h-12 ${
               meta.touched && meta.error
                 ? "border-red-600"
-                : "border-green-600 "
+              : "border-teal-500"
             }`}
           />
         )}
