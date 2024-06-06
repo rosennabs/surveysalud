@@ -16,22 +16,26 @@ export default function Header() {
   const router = useRouter();
   const { isAuthenticated, user, logout } = useAuth();
 
-
-  const handleLogout = (logoutButton: string) => {
-    handleButtonClick(logoutButton);
-    logout();
-    router.push('/login');
-  }
+  
 
   const [activeButton, setActiveButton] = useState<string | null>(baseButtonClassName);
   const [activeNav, setActiveNav] = useState<string | null>(null);
+
+  
+
+  const handleNavClick = (nav: string) => {
+    setActiveNav(nav);
+  }
 
   const handleButtonClick = (button: string) => {
     setActiveButton(button);
   };
 
-  const handleNavClick = (nav: string) => {
-    setActiveNav(nav);
+  const handleLogout = (button: string) => {
+    setActiveButton(button);
+    logout();
+    router.push('/login');
+    setActiveButton(baseButtonClassName);
   }
 
   return (
@@ -72,7 +76,7 @@ export default function Header() {
           <>
             <p className="text-m text-black">Hello, {user.first_name}</p>
 
-            <button onClick={() => handleLogout('logoutButton')} className={activeButton === 'logoutButton' ? activeButtonClassName : baseButtonClassName}>
+            <button onClick={() => handleLogout('logout')} className={activeButton === 'logout' ? activeButtonClassName : baseButtonClassName}>
                 Logout
               </button>
             

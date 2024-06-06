@@ -4,7 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const PORT = 8080;
 const path = require("path");
-const authorization = require('./middleware/authMiddleware');
+
 
 
 

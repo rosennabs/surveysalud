@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import FormField from "../../components/FormField";
 import Button from "../../components/Button";
 import { programs } from "../../helpers/globalOptions";
-import axios from 'axios';
+import axiosInstance from '../../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -87,8 +87,10 @@ const handleSubmit = async (values, actions) => {
   actions.setSubmitting(true);
 
   try {
+
+
     // Send the form data to the server
-    const response = await axios.post('http://localhost:8080/api/relationship', values);
+    const response = await axiosInstance.post('http://localhost:8080/api/relationship', values);
     
     // Reset the form fields
     actions.resetForm();

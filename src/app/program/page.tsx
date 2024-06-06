@@ -50,7 +50,17 @@ const validationSchema = Yup.object({
 const handleSubmit = async (values, actions) => {
 
   try {
-    const response = await axiosInstance.post('http://localhost:8080/api/program', values);
+
+    // Fetch the user from sessionStorage
+    const user = JSON.parse(sessionStorage.getItem("user"));
+
+    // Include the user's email in the values object
+    const valuesWithUser = {
+      ...values,
+      reported_by: user.email,
+    };
+
+    const response = await axiosInstance.post('http://localhost:8080/api/program', valuesWithUser);
  
     actions.resetForm();
     actions.setSubmitting(false);

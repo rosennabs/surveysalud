@@ -6,7 +6,6 @@ import * as Yup from "yup";
 import FormField from "../../components/FormField";
 import Button from "../../components/Button";
 import { programs } from "../../helpers/globalOptions";
-import axios from 'axios';
 import axiosInstance from '../../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../contexts/AuthContext';
@@ -72,23 +71,7 @@ const validationSchema = Yup.object({
 });
 
 
-const handleSubmit = async (values, actions) => {
-  
-  try {
-    const response = await axiosInstance.post('http://localhost:8080/api/knowledge_product', values);
 
-    actions.resetForm();
-    actions.setSubmitting(false);
-  }
-  catch (error) {
-    console.error('Error saving KP:', error);
-
-    // Display an error message to the user
-    actions.setStatus({ error: 'An error occurred while saving data!' });
-    actions.setSubmitting(false);
-  }
-
-}
 
 function Knowledge_Products() {
 
@@ -106,6 +89,34 @@ function Knowledge_Products() {
     return null; // Render nothing if not authenticated
   }
 
+  const handleSubmit = async (values, actions) => {
+
+    try {
+
+      // Fetch the user from sessionStorage
+      const user = JSON.parse(sessionStorage.getItem("user"));
+
+      // Include the user's email in the values object
+      const valuesWithUser = {
+        ...values,
+        reported_by: user.email,
+      };
+
+
+      const response = await axiosInstance.post('http://localhost:8080/api/knowledge_product', valuesWithUser);
+
+      actions.resetForm();
+      actions.setSubmitting(false);
+    }
+    catch (error) {
+      console.error('Error saving KP:', error);
+
+      // Display an error message to the user
+      actions.setStatus({ error: 'An error occurred while saving data!' });
+      actions.setSubmitting(false);
+    }
+
+  }
 
   return (
     <div className=" w-full pt-40 flex flex-col items-center">
