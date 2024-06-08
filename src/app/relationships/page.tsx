@@ -82,48 +82,65 @@ const validationSchema = Yup.object({
   ).required('Must have engagement activities').min(1, 'Minimum of 1 engagement activity'),
 });
 
-const handleSubmit = async (values, actions) => {
-  // Disable the submit button
-  actions.setSubmitting(true);
-
-  try {
-
-
-    // Send the form data to the server
-    const response = await axiosInstance.post('http://localhost:8080/api/relationship', values);
-    
-    // Reset the form fields
-    actions.resetForm();
-  } catch (error) {
-    // Log the error to the console
-    console.error('Error saving relationship:', error);
-
-    // Display an error message to the user
-    actions.setStatus({ error: 'An error occurred while saving data!' });
-  } finally {
-    // Re-enable the submit button
-    actions.setSubmitting(false);
-  }
-};
 
 
 function Relationships() {
 
   const router = useRouter();
 
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user, loading } = useAuth();
 
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!loading && !isAuthenticated) {
       router.push("/login");
     }
-  }, [isAuthenticated, router]);
+  }, [loading, isAuthenticated, router]);
+
+  if (loading) {
+    return <div className="flex flex-col items-center pt-40">
+      <h1 className="text-5xl">
+        Loading...
+      </h1></div>; // Render loading state
+  }
 
   if (!isAuthenticated) {
 
     return null; // Render nothing if not authenticated
   }
+
+  const handleSubmit = async (values, actions) => {
+    // Disable the submit button
+    actions.setSubmitting(true);
+
+    try {
+
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      // Include the user's email in the values object
+      const valuesWithUser = {
+        ...values,
+        reported_by: user.email,
+      };
+
+      // Send the form data to the server
+      const response = await axiosInstance.post('http://localhost:8080/api/relationship', valuesWithUser);
+
+     
+      actions.resetForm();
+      actions.setSubmitting(false);
+    }
+    catch (error) {
+      console.error('Error saving relationship:', error);
+
+
+      // Display an error message to the user
+      actions.setStatus({ error: 'An error occurred while saving data!' });
+      actions.setSubmitting(false);
+    }
+  };
 
   return (
     <div className=" w-full pt-40 flex flex-col items-center">

@@ -77,14 +77,22 @@ function Knowledge_Products() {
 
   const router = useRouter();
 
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user, loading } = useAuth();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!loading && !isAuthenticated) { // Check loading state before redirecting
       router.push("/login");    
     }
-  }, [isAuthenticated, router]);
+  }, [loading, isAuthenticated, router]);
 
+  
+if (loading) {
+  return <div className="flex flex-col items-center pt-40">
+    <h1 className="text-5xl">
+      Loading...
+    </h1></div>; // Render loading state
+}
+  
   if (!isAuthenticated) {
     return null; // Render nothing if not authenticated
   }
@@ -93,8 +101,9 @@ function Knowledge_Products() {
 
     try {
 
-      // Fetch the user from sessionStorage
-      const user = JSON.parse(sessionStorage.getItem("user"));
+      if (!user) {
+        throw new Error('User not found');
+      }
 
       // Include the user's email in the values object
       const valuesWithUser = {

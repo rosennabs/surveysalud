@@ -1,7 +1,15 @@
 const db = require('../dbConnection');
 
 const saveRelationship = async (relationship) => {
-  const { program, fullname, organization, primary_perspective, engagement_activities, comments } = relationship;
+  const {
+    program,
+    fullname,
+    organization,
+    primary_perspective,
+    engagement_activities,
+    comments,
+    reported_by,
+  } = relationship;
 
 
   try {
@@ -14,7 +22,7 @@ const saveRelationship = async (relationship) => {
       // Check if the record already exists
       const checkQuery = `
         SELECT * FROM relationships
-        WHERE program = $1 AND LOWER(fullname) = LOWER($2) AND primary_perspective = $3 AND engagement_date = $4 AND engagement_method = $5 AND hours_spent = $6 AND dollar_gifted = $7;
+        WHERE program = $1 AND LOWER(fullname) = LOWER($2) AND primary_perspective = $3 AND engagement_date = $4 AND engagement_method = $5 AND hours_spent = $6 AND dollar_gifted = $7 AND reported_by = $8;
       `;
       const checkValues = [
         program,
@@ -24,6 +32,7 @@ const saveRelationship = async (relationship) => {
         engagement_method,
         hours_spent,
         dollar_gifted,
+        reported_by,
       ];
 
       
@@ -34,8 +43,8 @@ const saveRelationship = async (relationship) => {
         // If no existence, insert the new record
 
         const insertQuery = `
-        INSERT INTO relationships (program, fullname, organization, primary_perspective, engagement_date, engagement_method, hours_spent, dollar_gifted, comments)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        INSERT INTO relationships (program, fullname, organization, primary_perspective, engagement_date, engagement_method, hours_spent, dollar_gifted, comments, reported_by)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
         RETURNING *;
         `;
 
@@ -49,6 +58,7 @@ const saveRelationship = async (relationship) => {
           hours_spent,
           dollar_gifted,
           comments,
+          reported_by,
         ];
 
 
@@ -81,6 +91,7 @@ const saveRelationship = async (relationship) => {
       primary_perspective,
       engagement_activities: engagementActivities,
       comments,
+      reported_by,
     };
 
     return response;

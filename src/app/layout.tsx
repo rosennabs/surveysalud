@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from '../components/Header';
 import { AuthProvider } from '../contexts/AuthContext';
+import { FormProvider } from '../contexts/FormContext';
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body className="flex flex-col h-screen justify-between font-serif m-16">
        
         <AuthProvider>
+          <FormProvider>
 
           <Header />
 
@@ -37,7 +39,9 @@ export default function RootLayout({
 
           <footer className="w-full py-4 text-center">
             <p className="text-sm my-10">© 2024 PMBASE. All rights reserved.</p>
-          </footer>
+            </footer>
+            
+          </FormProvider>
 
         </AuthProvider>
       </body>

@@ -5,7 +5,6 @@ const { saveKnowledgeProduct } = require('../db/queries/kp');
 router.post('/', async (req, res) => {
   try {
     const knowledge_product = await saveKnowledgeProduct(req.body);
-    //console.log(knowledge_product);
     
     res.status(201).json(knowledge_product);
   }

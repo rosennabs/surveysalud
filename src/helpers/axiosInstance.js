@@ -1,11 +1,11 @@
 //Globally protect routes by automatically adding the authentication token to all requests
 
 import axios from "axios";
-import { useRouter } from "next/navigation";
+
 
 // Create an axios instance
 const axiosInstance = axios.create({
-  baseUrl: 'http://localhost:8080/api',
+  baseURL: 'http://localhost:8080/api',
 });
 
 // Add a request interceptor to include the token
@@ -16,7 +16,7 @@ axiosInstance.interceptors.request.use(
     if (user && user.token) {
       config.headers.Authorization = `Bearer ${user.token}`;
     }
-    console.log("config", config);
+    
     return config;
 
   },
@@ -33,7 +33,10 @@ axiosInstance.interceptors.response.use(
   error => {
     if (error.response && error.response.status === 401) {
       sessionStorage.clear();
-      useRouter().push('/login');
+      if (typeof window !== "undefined") {
+        window.location.href = '/login';
+      }
+     
     }
     return Promise.reject(error);
   }

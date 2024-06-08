@@ -47,50 +47,59 @@ const validationSchema = Yup.object({
   end_date: Yup.string().required("Required"),
 });
 
-const handleSubmit = async (values, actions) => {
 
-  try {
-
-    // Fetch the user from sessionStorage
-    const user = JSON.parse(sessionStorage.getItem("user"));
-
-    // Include the user's email in the values object
-    const valuesWithUser = {
-      ...values,
-      reported_by: user.email,
-    };
-
-    const response = await axiosInstance.post('http://localhost:8080/api/program', valuesWithUser);
- 
-    actions.resetForm();
-    actions.setSubmitting(false);
-  }
-  catch (error) {
-    console.error('Error saving program:', error);
-
-    
-    // Display an error message to the user
-    actions.setStatus({ error: 'An error occurred while saving data!' });
-    actions.setSubmitting(false);
-  }
-}
 
 function Program() {
   const router = useRouter();
 
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user, loading } = useAuth();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!loading && !isAuthenticated) {
       router.push("/login");
     }
-  }, [isAuthenticated, router]);
+  }, [loading, isAuthenticated, router]);
 
+  if (loading) {
+    return <div className="flex flex-col items-center pt-40">
+      <h1 className="text-5xl">
+        Loading...
+      </h1></div>; // Render loading state
+  }
+  
   if (!isAuthenticated) {
     
     return null; // Render nothing if not authenticated
   }
 
+  const handleSubmit = async (values, actions) => {
+
+    try {
+
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      // Include the user's email in the values object
+      const valuesWithUser = {
+        ...values,
+        reported_by: user.email,
+      };
+
+      const response = await axiosInstance.post('http://localhost:8080/api/program', valuesWithUser);
+
+      actions.resetForm();
+      actions.setSubmitting(false);
+    }
+    catch (error) {
+      console.error('Error saving program:', error);
+
+
+      // Display an error message to the user
+      actions.setStatus({ error: 'An error occurred while saving data!' });
+      actions.setSubmitting(false);
+    }
+  }
 
   return (
     <div className=" w-full pt-40 flex flex-col items-center">

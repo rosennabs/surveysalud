@@ -9,12 +9,12 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
- 
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const storedUser = JSON.parse(sessionStorage.getItem("user"));
     const token = sessionStorage.getItem("token");
-    
+
     if (storedUser && token) {
       setUser(storedUser);
       setIsAuthenticated(true);
@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       setIsAuthenticated(false);
     }
+    setLoading(false); // Set loading to false after initialization
   }, []);
 
   const login = (user, token) => {
@@ -31,14 +32,14 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(true);
   };
 
-    const logout = () => {
-      sessionStorage.clear();
-      setUser(null);
-      setIsAuthenticated(false);
-    };
-  
+  const logout = () => {
+    sessionStorage.clear();
+    setUser(null);
+    setIsAuthenticated(false);
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
