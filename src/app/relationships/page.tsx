@@ -9,6 +9,7 @@ import { programs } from "../../helpers/globalOptions";
 import axiosInstance from '../../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../contexts/AuthContext';
+import { useFormContext } from '../../contexts/FormContext';
 
 //Define types for form values
 interface FormValues {
@@ -43,22 +44,7 @@ const engagement_method: string[] = [
   "Focus group discussions",
 ];
 
-const initialValues: FormValues = {
-  program: "",
-  fullname: "",
-  organization: "",
-  primary_perspective: "",
-  engagement_activities: [
-    {
-      engagement_date: "",
-      engagement_method: "",
-      hours_spent: "",
-      dollar_gifted: "",
-    },
-  ],
 
-  comments: "",
-};
 
 const validationSchema = Yup.object({
   program: Yup.string().required("Required"),
@@ -89,7 +75,25 @@ function Relationships() {
   const router = useRouter();
 
   const { isAuthenticated, user, loading } = useAuth();
+  const { selectedProgram, setSelectedProgram } = useFormContext();
 
+
+  const initialValues: FormValues = {
+    program: selectedProgram || "",
+    fullname: "",
+    organization: "",
+    primary_perspective: "",
+    engagement_activities: [
+      {
+        engagement_date: "",
+        engagement_method: "",
+        hours_spent: "",
+        dollar_gifted: "",
+      },
+    ],
+
+    comments: "",
+  };
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
@@ -130,6 +134,7 @@ function Relationships() {
 
      
       actions.resetForm();
+      setSelectedProgram("")
       actions.setSubmitting(false);
     }
     catch (error) {
@@ -152,10 +157,8 @@ function Relationships() {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {(formikProps) => {
-            //console.log(formikProps);
-            const { isSubmitting, status } = formikProps;
-
+          {({ isSubmitting, status, setFieldValue}) => {
+            
             return (
               <Form className="flex flex-wrap text-2xl">
                 <FormField
@@ -163,6 +166,11 @@ function Relationships() {
                   name="program"
                   as="select"
                   options={programs}
+                  onChange={(e) => {
+                    const selectedValue = e.target.value;
+                    setSelectedProgram(selectedValue);
+                    setFieldValue('program', selectedValue);
+                  }}
                 />
 
                 <FormField

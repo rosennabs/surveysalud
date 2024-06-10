@@ -9,6 +9,7 @@ import { programs } from "../../helpers/globalOptions";
 import axiosInstance from '../../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../contexts/AuthContext';
+import { useFormContext } from '../../contexts/FormContext';
 
 //Define types for form values
 interface FormValues {
@@ -41,17 +42,7 @@ const kp_purpose: string[] = [
   "Health promotion",
 ];
 
-const initialValues: FormValues = {
-  program: "",
-  title: "",
-  date: "",
-  type: "",
-  language: "",
-  other_languages: "",
-  audience: "",
-  purpose: "",
-  comments: "",
-};
+
 
 const validationSchema = Yup.object({
   program: Yup.string().required("Required"),
@@ -75,9 +66,24 @@ const validationSchema = Yup.object({
 
 function Knowledge_Products() {
 
+
   const router = useRouter();
 
   const { isAuthenticated, user, loading } = useAuth();
+  const { selectedProgram, setSelectedProgram } = useFormContext();
+
+
+  const initialValues: FormValues = {
+    program: selectedProgram || "",
+    title: "",
+    date: "",
+    type: "",
+    language: "",
+    other_languages: "",
+    audience: "",
+    purpose: "",
+    comments: "",
+  };
 
   useEffect(() => {
     if (!loading && !isAuthenticated) { // Check loading state before redirecting
@@ -137,7 +143,7 @@ if (loading) {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting, values, status }) => {
+          {({ isSubmitting, setFieldValue, values, status }) => {
             return (
               <Form className="flex flex-wrap text-2xl">
                 <FormField
@@ -146,6 +152,12 @@ if (loading) {
                   id="program"
                   as="select"
                   options={programs}
+
+                  onChange={(e) => {
+                    const selectedValue = e.target.value;
+                    setSelectedProgram(selectedValue);
+                    setFieldValue('program', selectedValue);
+                  }}
                 />
                 <FormField
                   label="Title of KP"

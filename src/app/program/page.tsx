@@ -9,6 +9,7 @@ import { programs } from "../../helpers/globalOptions";
 import axiosInstance from '../../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../contexts/AuthContext';
+import { useFormContext } from '../../contexts/FormContext';
 
 //Define types for form values
 interface FormValues {
@@ -30,14 +31,7 @@ const current_phase: string[] = [
 const fiscal_year: string[] = ["2022 - 2023", "2023 - 2024"];
 const quarter: string[] = ["Q1", "Q2", "Q3", "Q4"];
 
-const initialValues: FormValues = {
-  program_name: "",
-  current_phase: "",
-  fiscal_year: "",
-  quarter: "",
-  end_date: "",
- 
-};
+
 
 const validationSchema = Yup.object({
   program_name: Yup.string().required("Required"),
@@ -53,6 +47,16 @@ function Program() {
   const router = useRouter();
 
   const { isAuthenticated, user, loading } = useAuth();
+  const { selectedProgram, setSelectedProgram } = useFormContext();
+
+  const initialValues: FormValues = {
+    program_name: selectedProgram || "",
+    current_phase: "",
+    fiscal_year: "",
+    quarter: "",
+    end_date: "",
+
+  };
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
@@ -111,7 +115,8 @@ function Program() {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting, status }) => {
+          {({ isSubmitting, status, setFieldValue}) => {
+
     
             return (
               <Form className="flex flex-wrap text-2xl">
@@ -120,7 +125,12 @@ function Program() {
                   name="program_name"
                   id="program_name"
                   as="select"
-                  options={programs}
+                  options={programs}                
+                  onChange={(e) => {
+                    const selectedValue = e.target.value;
+                    setSelectedProgram(selectedValue);
+                    setFieldValue('program_name', selectedValue);
+                  }}
                 />
                 
 
