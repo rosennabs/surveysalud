@@ -134,7 +134,6 @@ function Relationships() {
 
      
       actions.resetForm();
-      setSelectedProgram("")
       actions.setSubmitting(false);
     }
     catch (error) {

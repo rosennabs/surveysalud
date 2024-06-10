@@ -28,8 +28,8 @@ export default function RootLayout({
 
       <body className="flex flex-col h-screen justify-between font-serif m-16">
        
+        <FormProvider>
         <AuthProvider>
-          <FormProvider>
 
           <Header />
 
@@ -40,10 +40,9 @@ export default function RootLayout({
           <footer className="w-full py-4 text-center">
             <p className="text-sm my-10">© 2024 PMBASE. All rights reserved.</p>
             </footer>
-            
-          </FormProvider>
 
-        </AuthProvider>
+          </AuthProvider>
+          </FormProvider>
       </body>
     </html>
   );
