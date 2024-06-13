@@ -4,22 +4,22 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../contexts/AuthContext';
+import { useFormContext } from '../contexts/FormContext';
 
-const baseButtonClassName = "bg-gradient-to-b from-primary-start to-primary-end rounded-lg shadow-xl min-w-[100px] h-10 text-white hover:text-gray-600 px-8";
-const activeButtonClassName = "rounded-lg shadow-xl min-w-[100px] h-10 border-2 border-teal-500 px-8";
-
-const activeNavClassName = "underline underline-offset-8 text-teal-600 font-bold mr-8";
 
 
 export default function Header() {
 
   const router = useRouter();
   const { isAuthenticated, user, logout } = useAuth();
-
-  
-
-  const [activeButton, setActiveButton] = useState<string | null>(baseButtonClassName);
-  const [activeNav, setActiveNav] = useState<string | null>(null);
+  const {
+    baseButtonClassName,
+    activeButtonClassName,
+    activeNavClassName,
+    activeNav,
+    setActiveNav,
+    activeButton,
+    setActiveButton } = useFormContext();
 
   
 

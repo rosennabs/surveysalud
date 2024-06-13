@@ -1,10 +1,10 @@
 "use client";
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
-import Button from "../../components/Button";
+import Button from "../../components/submitButton";
 import { programs } from "../../helpers/globalOptions";
 import axiosInstance from '../../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
@@ -70,9 +70,9 @@ function Program() {
         Loading...
       </h1></div>; // Render loading state
   }
-  
+
   if (!isAuthenticated) {
-    
+
     return null; // Render nothing if not authenticated
   }
 
@@ -103,7 +103,7 @@ function Program() {
       actions.setStatus({ error: 'An error occurred while saving data!' });
       actions.setSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className=" w-full pt-40 flex flex-col items-center">
@@ -115,9 +115,9 @@ function Program() {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting, status, setFieldValue}) => {
+          {({ isSubmitting, status, setFieldValue }) => {
 
-    
+
             return (
               <Form className="flex flex-wrap text-2xl">
                 <FormField
@@ -125,14 +125,14 @@ function Program() {
                   name="program_name"
                   id="program_name"
                   as="select"
-                  options={programs}                
+                  options={programs}
                   onChange={(e) => {
                     const selectedValue = e.target.value;
                     setSelectedProgram(selectedValue);
                     setFieldValue('program_name', selectedValue);
                   }}
                 />
-                
+
 
                 <div className="flex flex-row w-full">
                   <FormField
@@ -150,7 +150,7 @@ function Program() {
                     type="date"
                   />
 
-                  
+
                 </div>
 
                 <FormField
@@ -169,7 +169,7 @@ function Program() {
                   options={quarter}
                 />
 
-                <Button isSubmitting={isSubmitting} status={status}/>
+                <Button isSubmitting={isSubmitting} status={status} />
               </Form>
             );
           }}

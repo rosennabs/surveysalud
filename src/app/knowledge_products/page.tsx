@@ -1,10 +1,10 @@
 "use client";
 
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
-import Button from "../../components/Button";
+import Button from "../../components/submitButton";
 import { programs } from "../../helpers/globalOptions";
 import axiosInstance from '../../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
@@ -87,18 +87,18 @@ function Knowledge_Products() {
 
   useEffect(() => {
     if (!loading && !isAuthenticated) { // Check loading state before redirecting
-      router.push("/login");    
+      router.push("/login");
     }
   }, [loading, isAuthenticated, router]);
 
-  
-if (loading) {
-  return <div className="flex flex-col items-center pt-40">
-    <h1 className="text-5xl">
-      Loading...
-    </h1></div>; // Render loading state
-}
-  
+
+  if (loading) {
+    return <div className="flex flex-col items-center pt-40">
+      <h1 className="text-5xl">
+        Loading...
+      </h1></div>; // Render loading state
+  }
+
   if (!isAuthenticated) {
     return null; // Render nothing if not authenticated
   }
@@ -131,7 +131,7 @@ if (loading) {
       actions.setSubmitting(false);
     }
 
-  }
+  };
 
   return (
     <div className=" w-full pt-40 flex flex-col items-center">
@@ -227,7 +227,7 @@ if (loading) {
                   placeholder="Add any additional notes here"
                 />
 
-                <Button isSubmitting={isSubmitting} status={status}/>
+                <Button isSubmitting={isSubmitting} status={status} />
               </Form>
             );
           }}

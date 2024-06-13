@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
-import Button from "../../components/Button";
+import Button from "../../components/submitButton";
 import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
 
@@ -39,7 +39,7 @@ function Login() {
 
       // Fetch the user's token
       const { token, user } = response.data;
-      login (user, token);
+      login(user, token);
 
       actions.resetForm();
       actions.setSubmitting(false);
@@ -57,7 +57,7 @@ function Login() {
       }
       actions.setSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className="pt-40 w-full flex flex-col items-center">
@@ -65,14 +65,14 @@ function Login() {
 
       <div className="bg-white w-1/3 text-xl p-4">
 
-      <Formik
-        initialValues={initialValues}
+        <Formik
+          initialValues={initialValues}
 
-        validationSchema={validationSchema}
+          validationSchema={validationSchema}
 
-        onSubmit={handleSubmit}
-        
-      >
+          onSubmit={handleSubmit}
+
+        >
           {({ status }) => {
             return (
               <Form>
@@ -88,13 +88,13 @@ function Login() {
                   type='password'
                 />
 
-                <Button status={status}/>
+                <Button status={status} />
 
               </Form>
-            )
+            );
           }
-        }
-        
+          }
+
         </Formik>
       </div>
     </div>

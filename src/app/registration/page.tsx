@@ -5,7 +5,7 @@ import { Formik, Form } from "formik";
 import { useRouter } from 'next/navigation';
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
-import Button from "../../components/Button";
+import Button from "../../components/submitButton";
 import axios from 'axios';
 
 interface FormValues {
@@ -45,7 +45,7 @@ function Register() {
 
       actions.resetForm();
       actions.setSubmitting(false);
-      router.push("/login")
+      router.push("/login");
     }
     catch (error) {
       console.error('Error registering user:', error);

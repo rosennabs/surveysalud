@@ -1,10 +1,10 @@
 "use client";
 
-import React, {useEffect } from "react";
+import React, { useEffect } from "react";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
-import Button from "../../components/Button";
+import Button from "../../components/submitButton";
 import { programs } from "../../helpers/globalOptions";
 import axiosInstance from '../../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
@@ -132,7 +132,7 @@ function Relationships() {
       // Send the form data to the server
       const response = await axiosInstance.post('http://localhost:8080/api/relationship', valuesWithUser);
 
-     
+
       actions.resetForm();
       actions.setSubmitting(false);
     }
@@ -156,8 +156,8 @@ function Relationships() {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting, status, setFieldValue}) => {
-            
+          {({ isSubmitting, status, setFieldValue }) => {
+
             return (
               <Form className="flex flex-wrap text-2xl">
                 <FormField
@@ -218,7 +218,7 @@ function Relationships() {
                                 (engagement, index) => (
                                   <tr
                                     key={index}
-                                    
+
                                   >
                                     <td>
                                       <FormField
@@ -282,7 +282,7 @@ function Relationships() {
                                   </button>
                                 </td>
                               </tr>
-                              
+
                             </>
                           );
                         }}
@@ -290,10 +290,10 @@ function Relationships() {
                     </tbody>
                   </table>
                 </div>
-          
+
                 <Button isSubmitting={isSubmitting} status={status} />
 
-               
+
               </Form>
             );
           }}
