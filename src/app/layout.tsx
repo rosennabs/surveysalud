@@ -26,19 +26,20 @@ export default function RootLayout({
   return (
     <html lang="en">
 
-      <body className="flex flex-col h-screen justify-between font-serif m-16">
+      <body className="flex flex-col h-screen justify-between montserrat-light my-8">
        
         <FormProvider>
         <AuthProvider>
 
-          <Header />
+            <Header />
+            <div className="border-b-2 border-teal-600"></div>
 
-          <main className="flex-grow">
+          <main className="flex-grow mx-32">
             {children}
           </main>
 
           <footer className="w-full py-4 text-center">
-            <p className="text-sm my-10">© 2024 PMBASE. All rights reserved.</p>
+            <p className="text-sm my-10">© 2024 HECBASE. All rights reserved.</p>
             </footer>
 
           </AuthProvider>

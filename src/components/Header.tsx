@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../contexts/AuthContext';
 
-const baseButtonClassName = "bg-gray-300 rounded-xl shadow-xl w-[100px] h-10 bg-teal-500 hover:text-white";
-const activeButtonClassName = "rounded-xl shadow-xl w-[100px] h-10 border-2 border-teal-500";
+const baseButtonClassName = "bg-gradient-to-b from-primary-start to-primary-end rounded-lg shadow-xl min-w-[100px] h-10 text-white hover:text-gray-600 px-8";
+const activeButtonClassName = "rounded-lg shadow-xl min-w-[100px] h-10 border-2 border-teal-500 px-8";
 
 const activeNavClassName = "underline underline-offset-8 text-teal-600 font-bold mr-8";
 
@@ -40,37 +40,70 @@ export default function Header() {
 
   return (
    
-          <header className="z-10 w-full flex items-center justify-between text-m lg:flex">
+    <header className="z-10 flex items-center justify-between text-m lg:flex pb-4 mx-32">
 
-            <div className="flex items-center w-90">
+      
               <Link href='/'>
-                <div onClick={()=> setActiveNav(null)} className="text-3xl mr-16">
-                  PMbase
+          <div onClick={() => setActiveNav(null)} className="text-3xl mr-16 bg-gradient-to-r from-primary-start to-primary-end bg-clip-text text-transparent montserrat-semibold">
+                  HECbase
                 </div>
-              </Link>
+      </Link>
+      
+      <div className="flex items-center w-90">
+        <Link href='/about'>
+          <div onClick={() => handleNavClick('about')} className={activeNav === 'about' ? activeNavClassName : 'mr-8'}>
+            About
+          </div>
+        </Link>
 
-              <Link href='/program'>
+        <Link href='/dashboard'>
+          <div onClick={() => handleNavClick('dashboard')} className={activeNav === 'dashboard' ? activeNavClassName : 'mr-8'}>
+            Dashboard
+          </div>
+        </Link>
+        
+        <Link href='/reporting'>
+          <div onClick={() => handleNavClick('reporting')} className={activeNav === 'reporting' ? activeNavClassName : 'mr-8'}>
+            Reporting
+          </div>
+        </Link>
+
+        <Link href='/resources'>
+          <div onClick={() => handleNavClick('resources')} className={activeNav === 'resources' ? activeNavClassName : 'mr-8'}>
+            Resources
+          </div>
+        </Link>
+        
+
+              {/* <Link href='/program'>
           <div onClick={() => handleNavClick('program')} className={activeNav === 'program' ? activeNavClassName : 'mr-8'}>
                   Program
                 </div>
-              </Link>
+              </Link> */}
 
-              <Link href='/knowledge_products'>
+              {/* <Link href='/knowledge_products'>
           <div onClick={() => handleNavClick('kp')} className={activeNav === 'kp' ? activeNavClassName : 'mr-8'}>
                   Knowledge Products
                 </div>
-              </Link>
+              </Link> */}
 
-              <Link href='/relationships'>
+              {/* <Link href='/relationships'>
           <div onClick={() => handleNavClick('relationship')} className={activeNav === 'relationship' ? activeNavClassName : 'mr-8'}>
                   Relationship building
                 </div>
-              </Link>
+              </Link> */}
       </div>
       
+      <div className=''>
+        <Link href='/feedback'>
+          <button onClick={() => handleButtonClick('feedback')} className={activeButton === 'feedback' ? activeButtonClassName : baseButtonClassName}>
+            Leave Feedback
+          </button>
+        </Link>
+      </div>
       
 
-      <div className="flex items-center space-x-8">
+      {/* <div className="flex items-center space-x-8">
         
         {isAuthenticated ? (
           <>
@@ -96,7 +129,7 @@ export default function Header() {
             </Link>
             </>
         )}
-            </div>
+            </div> */}
 
 
           </header>
