@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useFormContext } from '../contexts/FormContext';
 
+const resourceCard = "bg-white border rounded-3xl border-light-grey"
 
 
 export default function Home() {
@@ -17,6 +18,8 @@ export default function Home() {
   
  
   return (  
+    <div className='flex flex-col items-center'>
+
     <div className='relative flex'>
       <div className="relative flex flex-col my-24 w-2/3 z-10">
 
@@ -34,6 +37,36 @@ export default function Home() {
       <div className='absolute top-0 right-0 w-2/3 z-0'>
         <img className="opacity-45 ml-32" src='/background.png' alt="Graphical background image" />
         
+      </div>
+
+    </div>
+
+      <h1 className="text-5xl text-black mt-48 pb-8 z-10">RESOURCE HUB</h1>
+      
+      <div className="flex flex-row justify-between w-full z-10 mt-16">
+        <div className={resourceCard}>
+          <h1 className="text-2xl text-black p-16 montserrat-semibold">Annual Report</h1>
+        </div>
+        <div className={resourceCard}>
+          <h1 className="text-2xl text-black p-16 montserrat-semibold">Annual Report</h1>
+        </div>
+        <div className={resourceCard}>
+          <h1 className="text-2xl text-black p-16 montserrat-semibold">Annual Report</h1>
+        </div>
+        
+      </div>
+      
+      <div className="flex flex-row justify-between w-full z-10 mt-16">
+        <div className={resourceCard}>
+          <h1 className="text-2xl text-black p-16 montserrat-semibold">Annual Report</h1>
+        </div>
+        <div className={resourceCard}>
+          <h1 className="text-2xl text-black p-16 montserrat-semibold">Annual Report</h1>
+        </div>
+        <div className={resourceCard}>
+          <h1 className="text-2xl text-black p-16 montserrat-semibold">Annual Report</h1>
+        </div>
+
       </div>
 
     </div>
