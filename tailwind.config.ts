@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/contexts/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
@@ -21,10 +21,10 @@ const config: Config = {
         'off-white': '#F5F5F5',
         'light-grey': '#D5D5D5'
       },
-      gradientColorStops: theme => ({
+      gradientColorStops: {
         'primary-start': '#14b8a6',
         'primary-end': '#134e4a',
-      }),
+      },
       fontFamily: {
         'montserrat': ['Montserrat', 'sans-serif'],
       }

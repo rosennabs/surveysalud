@@ -19,7 +19,8 @@ export default function Header() {
     activeNav,
     setActiveNav,
     activeButton,
-    setActiveButton } = useFormContext();
+    setActiveButton,
+    handleButtonClick } = useFormContext();
 
   
 
@@ -27,9 +28,6 @@ export default function Header() {
     setActiveNav(nav);
   }
 
-  const handleButtonClick = (button: string) => {
-    setActiveButton(button);
-  };
 
   const handleLogout = (button: string) => {
     setActiveButton(button);
@@ -94,13 +92,13 @@ export default function Header() {
               </Link> */}
       </div>
       
-      <div className=''>
+     
         <Link href='/feedback'>
           <button onClick={() => handleButtonClick('feedback')} className={activeButton === 'feedback' ? activeButtonClassName : baseButtonClassName}>
             Leave Feedback
           </button>
         </Link>
-      </div>
+     
       
 
       {/* <div className="flex items-center space-x-8">

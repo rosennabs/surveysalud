@@ -34,7 +34,8 @@ export default function RootLayout({
             <Header />
             <div className="border-b-2 border-teal-600"></div>
 
-          <main className="flex-grow mx-32">
+            <main className="flex-grow mx-32">
+              
             {children}
           </main>
 

@@ -14,11 +14,17 @@ const activeButtonClassName =
 const activeNavClassName =
   "underline underline-offset-8 text-teal-600 font-bold mr-8";
 
+  
+
 
 export const FormProvider = ({ children }) => {
   const [selectedProgram, setSelectedProgram] = useState('');
   const [activeButton, setActiveButton] = useState (baseButtonClassName);
-  const [activeNav, setActiveNav] = useState (null);
+  const [activeNav, setActiveNav] = useState(null);
+  
+  const handleButtonClick = (button) => {
+    setActiveButton(button);
+  };
 
   return (
     <FormContext.Provider value={{
@@ -30,7 +36,8 @@ export const FormProvider = ({ children }) => {
       setActiveNav,
       baseButtonClassName,
       activeButtonClassName,
-      activeNavClassName
+      activeNavClassName,
+      handleButtonClick
     }}>
       {children}
     </FormContext.Provider>
