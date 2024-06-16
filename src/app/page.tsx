@@ -4,7 +4,11 @@ import React from 'react';
 import Link from 'next/link';
 import { useFormContext } from '../contexts/FormContext';
 
-const resourceCard = "bg-white border rounded-3xl border-light-grey"
+const resourceCard = "flex flex-grow flex-col bg-white border rounded-2xl border-neutral-200 w-full m-8 p-4";
+const h5 = "text-2xl text-black montserrat-semibold";
+const text = 'ml-16 -mt-2 mb-2 text-xs';
+const titleContainer = 'flex flex-row space-x-2 m-4';
+const image = "bg-teal-100 p-2 w-[35px]";
 
 
 export default function Home() {
@@ -35,7 +39,7 @@ export default function Home() {
       </div>
 
       <div className='absolute top-0 right-0 w-2/3 z-0'>
-        <img className="opacity-45 ml-32" src='/background.png' alt="Graphical background image" />
+        <img className="ml-10" src='/Image.png' alt="Graphical background image" />
         
       </div>
 
@@ -45,26 +49,60 @@ export default function Home() {
       
       <div className="flex flex-row justify-between w-full z-10 mt-16">
         <div className={resourceCard}>
-          <h1 className="text-2xl text-black p-16 montserrat-semibold">Annual Report</h1>
+          <div className={titleContainer}>
+            <img className={image} src="/bar chart.svg" alt="a bar chart"/>
+            <h1 className={h5}>Annual Report</h1>
+          </div>
+          
+          <p className={text}>2023-24 Annual Report. Take a deep dive into our annual progress.</p>
         </div>
+
+
         <div className={resourceCard}>
-          <h1 className="text-2xl text-black p-16 montserrat-semibold">Annual Report</h1>
+          <div className={titleContainer}>
+            <img className={image} src="/book.svg" alt="a book" />
+            <h1 className={h5}>Directory</h1>
+          </div>
+          <p className={text}>Search for the meaning of our indicators in the PMF directory.</p>
         </div>
+
+
         <div className={resourceCard}>
-          <h1 className="text-2xl text-black p-16 montserrat-semibold">Annual Report</h1>
+          <div className={titleContainer}>
+            <img className={image} src="/puzzle.svg" alt="a puzzle" />
+            <h1 className={h5}>Logic Model</h1>
+          </div>
+          <p className={text}>This is where we connect the dots to achieve our ultimate goal.</p>
         </div>
         
       </div>
       
+
       <div className="flex flex-row justify-between w-full z-10 mt-16">
         <div className={resourceCard}>
-          <h1 className="text-2xl text-black p-16 montserrat-semibold">Annual Report</h1>
+          <div className={titleContainer}>
+            <img className={image} src="/loop.svg" alt="a loop" />
+            <h1 className={h5}>Change Theory</h1>
+          </div>
+          <p className={text}>Understand our theory of change and how we intend to make a difference.</p>
         </div>
+
+
         <div className={resourceCard}>
-          <h1 className="text-2xl text-black p-16 montserrat-semibold">Annual Report</h1>
+          <div className={titleContainer}>
+            <img className={image} src="/target.svg" alt="round target" />
+          <h1 className={h5}>Annual Targets</h1>
         </div>
+          <p className={text}>See what we have set out to achieve this year.</p>
+        </div>
+
+
         <div className={resourceCard}>
-          <h1 className="text-2xl text-black p-16 montserrat-semibold">Annual Report</h1>
+          <div className={titleContainer}>
+            <img className={image} src="/graph.svg" alt="a line graph" />
+            <h1 className={h5}>PMF</h1>
+          </div>
+          <p className={text}>The Performance Measurement Framework outlines our indicators.</p>
         </div>
 
       </div>
