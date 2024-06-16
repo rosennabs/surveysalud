@@ -1,15 +1,12 @@
-'use client';
- 
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '../contexts/AuthContext';
-import { useFormContext } from '../contexts/FormContext';
+"use client";
 
-
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../contexts/AuthContext";
+import { useFormContext } from "../contexts/FormContext";
 
 export default function Header() {
-
   const router = useRouter();
   const { isAuthenticated, user, logout } = useAuth();
   const {
@@ -20,86 +17,96 @@ export default function Header() {
     setActiveNav,
     activeButton,
     setActiveButton,
-    handleButtonClick } = useFormContext();
-
-  
+    handleButtonClick,
+  } = useFormContext();
 
   const handleNavClick = (nav: string) => {
     setActiveNav(nav);
-  }
-
+  };
 
   const handleLogout = (button: string) => {
     setActiveButton(button);
     logout();
-    router.push('/login');
+    router.push("/login");
     setActiveButton(baseButtonClassName);
-  }
+  };
 
   return (
-   
     <header className="z-10 flex items-center justify-between text-m lg:flex pb-4 mx-32">
-
-      
-              <Link href='/'>
-          <div onClick={() => setActiveNav(null)} className="text-3xl mr-16 bg-gradient-to-r from-primary-start to-primary-end bg-clip-text text-transparent montserrat-semibold">
-                  HECbase
-                </div>
+      <Link href="/">
+        <div onClick={() => setActiveNav(null)}>
+          <img src="/logo.png" alt="logo" className="w-[120px]"/>
+        </div>
       </Link>
-      
+
       <div className="flex items-center w-90">
-        <Link href='/about'>
-          <div onClick={() => handleNavClick('about')} className={activeNav === 'about' ? activeNavClassName : 'mr-8'}>
+        <Link href="/about">
+          <div
+            onClick={() => handleNavClick("about")}
+            className={activeNav === "about" ? activeNavClassName : "mr-8"}
+          >
             About
           </div>
         </Link>
 
-        <Link href='/dashboard'>
-          <div onClick={() => handleNavClick('dashboard')} className={activeNav === 'dashboard' ? activeNavClassName : 'mr-8'}>
+        <Link href="/dashboard">
+          <div
+            onClick={() => handleNavClick("dashboard")}
+            className={activeNav === "dashboard" ? activeNavClassName : "mr-8"}
+          >
             Dashboard
           </div>
         </Link>
-        
-        <Link href='/reporting'>
-          <div onClick={() => handleNavClick('reporting')} className={activeNav === 'reporting' ? activeNavClassName : 'mr-8'}>
+
+        <Link href="/reporting">
+          <div
+            onClick={() => handleNavClick("reporting")}
+            className={activeNav === "reporting" ? activeNavClassName : "mr-8"}
+          >
             Reporting
           </div>
         </Link>
 
-        <Link href='/resources'>
-          <div onClick={() => handleNavClick('resources')} className={activeNav === 'resources' ? activeNavClassName : 'mr-8'}>
+        <Link href="/resources">
+          <div
+            onClick={() => handleNavClick("resources")}
+            className={activeNav === "resources" ? activeNavClassName : "mr-8"}
+          >
             Resources
           </div>
         </Link>
-        
 
-              {/* <Link href='/program'>
+        {/* <Link href='/program'>
           <div onClick={() => handleNavClick('program')} className={activeNav === 'program' ? activeNavClassName : 'mr-8'}>
                   Program
                 </div>
               </Link> */}
 
-              {/* <Link href='/knowledge_products'>
+        {/* <Link href='/knowledge_products'>
           <div onClick={() => handleNavClick('kp')} className={activeNav === 'kp' ? activeNavClassName : 'mr-8'}>
                   Knowledge Products
                 </div>
               </Link> */}
 
-              {/* <Link href='/relationships'>
+        {/* <Link href='/relationships'>
           <div onClick={() => handleNavClick('relationship')} className={activeNav === 'relationship' ? activeNavClassName : 'mr-8'}>
                   Relationship building
                 </div>
               </Link> */}
       </div>
-      
-     
-        <Link href='/feedback'>
-          <button onClick={() => handleButtonClick('feedback')} className={activeButton === 'feedback' ? activeButtonClassName : baseButtonClassName}>
-            Leave Feedback
-          </button>
-        </Link>
-     
-      
+
+      <Link href="/feedback">
+        <button
+          onClick={() => handleButtonClick("feedback")}
+          className={
+            activeButton === "feedback"
+              ? activeButtonClassName
+              : baseButtonClassName
+          }
+        >
+          Leave Feedback
+        </button>
+      </Link>
 
       {/* <div className="flex items-center space-x-8">
         
@@ -128,9 +135,6 @@ export default function Header() {
             </>
         )}
             </div> */}
-
-
-          </header>
-
+    </header>
   );
 }
