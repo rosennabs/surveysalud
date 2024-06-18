@@ -1,11 +1,12 @@
 'use client'
 
-import React from 'react';
+import React, {useState} from 'react';
 import Link from 'next/link';
 import { useFormContext } from '../contexts/FormContext';
 
-const resourceCard = "flex flex-grow flex-col bg-white border rounded-2xl border-neutral-200 w-full m-8 p-4";
-const h5 = "text-2xl text-black montserrat-semibold";
+const resourceCard = "flex flex-grow flex-col bg-white cursor-pointer border rounded-2xl border-neutral-200 w-full m-8 p-4";
+const activeResourceCard = "flex flex-grow flex-col bg-gradient-to-b from-primary-start to-primary-end text-white shadow-2xl border border-neutral-300 rounded-2xl w-full m-8 p-4";
+const h5 = "text-2xl montserrat-semibold";
 const text = 'ml-16 -mt-2 mb-2 text-xs';
 const titleContainer = 'flex flex-row space-x-2 m-4';
 const image = "bg-teal-100 p-2 w-[35px]";
@@ -19,7 +20,12 @@ export default function Home() {
     activeButton,
     handleButtonClick } = useFormContext();
  
-  
+  const [resourceClicked, setResourceClicked] = useState(null);
+
+  const handleResourceClick = (title : string) => {  
+    setResourceClicked(title);
+  }
+
  
   return (  
     <div className='flex flex-col items-center'>
@@ -47,8 +53,8 @@ export default function Home() {
 
       <h1 className="text-5xl text-black mt-48 pb-8 z-10">RESOURCE HUB</h1>
       
-      <div className="flex flex-row justify-between w-full z-10 mt-16">
-        <div className={resourceCard}>
+      <div className="flex flex-row justify-between text-black w-full z-10 mt-16">
+        <div onClick={() => handleResourceClick("Annual Report")} className={resourceClicked === "Annual Report" ? activeResourceCard : resourceCard}>
           <div className={titleContainer}>
             <img className={image} src="/bar chart.svg" alt="a bar chart"/>
             <h1 className={h5}>Annual Report</h1>
@@ -58,7 +64,7 @@ export default function Home() {
         </div>
 
 
-        <div className={resourceCard}>
+        <div onClick={() => handleResourceClick("Directory")} className={resourceClicked === "Directory" ? activeResourceCard : resourceCard}>
           <div className={titleContainer}>
             <img className={image} src="/book.svg" alt="a book" />
             <h1 className={h5}>Directory</h1>
@@ -67,7 +73,7 @@ export default function Home() {
         </div>
 
 
-        <div className={resourceCard}>
+        <div onClick={() => handleResourceClick("Logic Model")} className={resourceClicked === "Logic Model" ? activeResourceCard : resourceCard}>
           <div className={titleContainer}>
             <img className={image} src="/puzzle.svg" alt="a puzzle" />
             <h1 className={h5}>Logic Model</h1>
@@ -79,7 +85,7 @@ export default function Home() {
       
 
       <div className="flex flex-row justify-between w-full z-10 mt-16">
-        <div className={resourceCard}>
+        <div onClick={() => handleResourceClick("Change Theory")} className={resourceClicked === "Change Theory" ? activeResourceCard : resourceCard}>
           <div className={titleContainer}>
             <img className={image} src="/loop.svg" alt="a loop" />
             <h1 className={h5}>Change Theory</h1>
@@ -88,7 +94,7 @@ export default function Home() {
         </div>
 
 
-        <div className={resourceCard}>
+        <div onClick={() => handleResourceClick("Annual Targets")} className={resourceClicked === "Annual Targets" ? activeResourceCard : resourceCard}>
           <div className={titleContainer}>
             <img className={image} src="/target.svg" alt="round target" />
           <h1 className={h5}>Annual Targets</h1>
@@ -97,7 +103,7 @@ export default function Home() {
         </div>
 
 
-        <div className={resourceCard}>
+        <div onClick={() => handleResourceClick("PMF")} className={resourceClicked === "PMF" ? activeResourceCard : resourceCard}>
           <div className={titleContainer}>
             <img className={image} src="/graph.svg" alt="a line graph" />
             <h1 className={h5}>PMF</h1>
