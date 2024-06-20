@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useFormContext } from "../contexts/FormContext";
+import ContactForm from '../components/ContactForm'
 
 const resourceCard =
   "flex flex-col bg-white cursor-pointer border rounded-2xl border-neutral-200 w-[350px] p-4";
@@ -185,8 +186,12 @@ export default function Home() {
           <img className="w-full" src="/contact.svg" alt="a trapezium"/>      
         </div>
 
-        <div className="absolute inset-0 flex items-center ml-16 text-4xl text-white montserrat-semibold z-10">
-          <p>Contact us</p>
+        <div className="absolute inset-0 flex items-center text-4xl text-white montserrat-semibold z-10">
+          <p className="ml-16">Contact us</p>
+          <div className="text-base text-black montserrat-regular w-1/2 ml-64">
+            <ContactForm />
+          </div>
+          
         </div>
       </section>
 
