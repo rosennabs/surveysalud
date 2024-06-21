@@ -2,8 +2,11 @@ import React from "react";
 import { useRouter } from 'next/navigation';
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import axios from 'axios';
 import FormField from "../components/FormField";
+
+
+
+const button = "bg-teal-100 px-4 py-1 rounded-lg"
 
 interface FormValues {
   subject: string | number;
@@ -42,6 +45,12 @@ function Contact() {
                 rows="5"
                 placeholder="Type your message here"
               />
+              <div className="flex flex-row justify-between">
+                <button className={`${button}`} type="submit">Cancel</button>
+                <button className={button} type="reset">Send</button>
+              </div>
+             
+              
             </Form>
           );
           
