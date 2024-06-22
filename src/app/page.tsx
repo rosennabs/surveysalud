@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useFormContext } from "../contexts/FormContext";
-import ContactForm from '../components/ContactForm'
+import ContactForm from '../components/ContactForm';
+import { FaSearch } from "react-icons/fa";
 
 const resourceCard =
   "flex flex-col bg-white cursor-pointer border rounded-2xl border-neutral-200 w-[350px] p-4";
@@ -33,7 +34,7 @@ export default function Home() {
 
       {/* Section: PMF */}
 
-      <section className="relative flex">
+      <section className="relative flex mx-32">
         <div className="relative flex flex-col my-24 w-2/3 z-10">
           <h1 className="text-5xl text-black pb-8">
             PERFORMANCE MEASUREMENT & EVALUATION{" "}
@@ -71,10 +72,10 @@ export default function Home() {
         </div>
       </section>
 
-      
+
       {/* Section: Resource Hub */}
-      
-      <section className="flex flex-col items-center">
+
+      <section className="flex flex-col items-center mx-32">
 
         <h1 className="text-5xl text-black mt-48 pb-8 z-10">RESOURCE HUB</h1>
 
@@ -181,21 +182,62 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mt-48 relative">
+      <section className="my-48 relative">
         <div className="relative">
-          <img className="w-full" src="/contact.svg" alt="a trapezium"/>      
+          <img className="w-full" src="/contact.svg" alt="a trapezium" />
         </div>
 
-        <div className="absolute inset-0 flex items-center text-4xl text-white montserrat-semibold z-10">
-          <p className="ml-16">Contact us</p>
+        <div className="absolute inset-0 items-center flex text-4xl text-white montserrat-semibold z-10">
+          <p className="ml-32">Contact us</p>
           <div className="text-base text-black montserrat-regular w-1/2 ml-64">
             <ContactForm />
           </div>
-          
+
         </div>
       </section>
 
-    
+      <section className="flex mx-32">
+        <div className="w-2/5 mr-8">
+          <form action="/search" method="GET" className="relative">
+            <input className="border-solid border border-teal-500 w-full p-2 h-12 mb-4" type="text" name="search" placeholder="Search">    
+            </input>
+            <FaSearch className="absolute top-4 right-4"/>
+          </form>
+
+          <p className="mb-2">Privacy</p>
+          <p className="mb-2">Terms of Use</p>
+          
+        </div>
+
+        <div className="flex justify-between w-3/5">
+          <div className="flex flex-col" >
+            <h5 className="text-lg pb-4 montserrat-semibold">Quick links</h5>
+            <p className="mb-2">About</p>
+            <p className="mb-2">Our Team</p>
+            <p className="mb-2">Directory</p>
+            <p className="mb-2">Leave Feedback</p>
+          </div>
+          
+          <div className="flex flex-col" >
+            <h5 className="text-lg pb-4 montserrat-semibold">Resources</h5>
+            <p className="mb-2">Annual Reports</p>
+            <p className="mb-2">Annual Targets</p>
+            <p className="mb-2">Change Theory</p>
+            <p className="mb-2">Logic Model</p>
+          </div>
+
+          <div className="flex flex-col" >
+            <h5 className="text-lg pb-4 montserrat-semibold">Our Progress</h5>
+            <p className="mb-2">PMF</p>
+            <p className="mb-2">Dashboard</p>
+            <p className="mb-2">Logic Model</p>
+            <p className="mb-2">Quarterly Reports</p>
+          </div>
+
+        </div>
+      </section>
+
+
     </div>
   );
 }

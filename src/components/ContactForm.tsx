@@ -25,16 +25,15 @@ const validationSchema = Yup.object({
 
 function Contact() {
   return (
-    <div>
+    <div className="ml-32">
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        // validationSchema={validationSchema}
       >
-        {({ values }) => {
+        {({ }) => {
           return (
             <Form>
               <FormField
-                label='Subject'
                 name='subject'
                 placeholder="Subject"
               />
@@ -42,11 +41,11 @@ function Contact() {
                 name='message'
                 as="textarea"
                 wrap="soft"
-                rows="5"
+                rows="3"
                 placeholder="Type your message here"
               />
               <div className="flex flex-row justify-between">
-                <button className={`${button}`} type="submit">Cancel</button>
+                <button className={button} type="submit">Cancel</button>
                 <button className={button} type="reset">Send</button>
               </div>
              

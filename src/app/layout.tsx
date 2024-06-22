@@ -34,10 +34,12 @@ export default function RootLayout({
             <Header />
             <div className="border-b-2 border-teal-600"></div>
 
-            <main className="flex-grow mx-32">
+            <main className="flex-grow">
               
             {children}
           </main>
+
+            <div className="border-b-2 border-teal-600 mt-32"></div>
 
           <footer className="w-full py-4 text-center">
             <p className="text-sm my-10">© 2024 HECBASE. All rights reserved.</p>
