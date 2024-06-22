@@ -7,7 +7,7 @@ function Footer() {
     <section className="flex mx-32">
       <div className="w-2/5 mr-8">
         <form action="/search" method="GET" className="relative">
-          <input className="border-solid border border-teal-500 w-full p-2 h-12 mb-4" type="text" name="search" placeholder="Search">
+          <input className="border-solid border border-light-grey w-full p-2 h-12 mb-16" type="text" name="search" placeholder="Search">
           </input>
           <FaSearch className="absolute top-4 right-4" />
         </form>

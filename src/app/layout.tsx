@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from '../components/Header';
 import { AuthProvider } from '../contexts/AuthContext';
 import { FormProvider } from '../contexts/FormContext';
+import Footer from '../components/Footer';
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -39,10 +40,11 @@ export default function RootLayout({
             {children}
           </main>
 
-            <div className="border-b-2 border-teal-600 mt-32"></div>
+            <div className="border-b-2 border-light-grey"></div>
 
-          <footer className="w-full py-4 text-center">
-            <p className="text-sm my-10">© 2024 HECBASE. All rights reserved.</p>
+            <footer className="w-full py-4 mt-4">
+              <Footer />
+              <p className="text-sm my-10 text-center mt-32">© 2024 HECBASE. All rights reserved.</p>
             </footer>
 
           </AuthProvider>

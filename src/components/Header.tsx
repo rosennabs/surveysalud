@@ -5,6 +5,9 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import { useFormContext } from "../contexts/FormContext";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import DropDown from "./DropDown";
+
 
 export default function Header() {
   const router = useRouter();
@@ -31,6 +34,8 @@ export default function Header() {
     setActiveButton(baseButtonClassName);
   };
 
+ 
+
   return (
     <header className="z-10 flex items-center justify-between text-m lg:flex pb-4 mx-32">
       <Link href="/">
@@ -40,14 +45,19 @@ export default function Header() {
       </Link>
 
       <div className="flex items-center w-90">
-        <Link href="/about">
-          <div
-            onClick={() => handleNavClick("about")}
-            className={activeNav === "about" ? activeNavClassName : "mr-8"}
-          >
-            About
-          </div>
-        </Link>
+        
+        <div className=" flex relative group">
+          <Link href="/about">
+            <div
+              onClick={() => handleNavClick("about")}
+              className={`flex items-center ${activeNav === "about" ? activeNavClassName : "mr-8"}`}
+            >
+              About
+              <MdOutlineKeyboardArrowDown />
+            </div>
+            <DropDown />
+          </Link>
+        </div>
 
         <Link href="/dashboard">
           <div
