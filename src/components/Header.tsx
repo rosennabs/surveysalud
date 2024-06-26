@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import { useFormContext } from "../contexts/FormContext";
@@ -23,8 +23,12 @@ export default function Header() {
     handleButtonClick,
   } = useFormContext();
 
+  const [dropdownMenu, setDropdownMenu] = useState(false);
+  const dropdownRef = useRef(null);
+
   const handleNavClick = (nav: string) => {
     setActiveNav(nav);
+    nav === "about" ? setDropdownMenu(!dropdownMenu) : setDropdownMenu(false);
   };
 
   const handleLogout = (button: string) => {
@@ -34,7 +38,29 @@ export default function Header() {
     setActiveButton(baseButtonClassName);
   };
 
- 
+  const handleClickOutside = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) { //checks if the dropdown element exists and if the clicked element is outside the dropdown.
+      setDropdownMenu(false);
+      setActiveNav(null);
+    }
+  }
+
+  useEffect(() => {
+    if (dropdownMenu) {
+      // Add the event listener when the dropdown menu is visible
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      // Remove the event listener when the dropdown menu is hidden
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    // Cleanup function to remove the event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownMenu]);
+
+  
 
   return (
     <header className="z-10 flex items-center justify-between text-m lg:flex pb-4 mx-32">
@@ -46,18 +72,20 @@ export default function Header() {
 
       <div className="flex items-center w-90">
         
-        <div className=" flex relative group">
-          <Link href="/about">
+        <div className=" flex relative group" ref={dropdownRef}>
+         
             <div
               onClick={() => handleNavClick("about")}
-              className={`flex items-center ${activeNav === "about" ? activeNavClassName : "mr-8"}`}
+              className={`flex items-center cursor-pointer ${activeNav === "about" ? activeNavClassName : "mr-8"}`}
             >
               About
               <MdOutlineKeyboardArrowDown />
             </div>
-            <DropDown />
-          </Link>
+            {dropdownMenu && <DropDown />}
+          
         </div>
+
+       
 
         <Link href="/dashboard">
           <div
