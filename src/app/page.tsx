@@ -76,9 +76,9 @@ export default function Home() {
 
       {/* Section: Resource Hub */}
 
-      <section className="flex flex-col items-center mx-32">
+      <section id="resource-hub" className="flex flex-col items-center mx-32 mt-48">
 
-        <h1 className="text-5xl text-black mt-48 pb-8 z-10">RESOURCE HUB</h1>
+        <h1 className="text-5xl text-black pb-8 mt-8 z-10">RESOURCE HUB</h1>
 
         <div className="flex flex-row justify-between text-black w-full z-10 mt-16">
           <div

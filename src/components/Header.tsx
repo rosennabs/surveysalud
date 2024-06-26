@@ -29,6 +29,11 @@ export default function Header() {
   const handleNavClick = (nav: string) => {
     setActiveNav(nav);
     nav === "about" ? setDropdownMenu(!dropdownMenu) : setDropdownMenu(false);
+
+    if (nav === "resources") {
+      const resourceHubElement = document.getElementById("resource-hub");
+      resourceHubElement && resourceHubElement.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const handleLogout = (button: string) => {
@@ -105,14 +110,13 @@ export default function Header() {
           </div>
         </Link>
 
-        <Link href="/resources">
           <div
             onClick={() => handleNavClick("resources")}
-            className={activeNav === "resources" ? activeNavClassName : "mr-8"}
+          className={activeNav === "resources" ? activeNavClassName : "mr-8 cursor-pointer"}
           >
             Resources
           </div>
-        </Link>
+       
 
         <Link href='/program'>
           <div onClick={() => handleNavClick('program')} className={activeNav === 'program' ? activeNavClassName : 'mr-8'}>

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const DropDownContainer = styled.div`
-  background-color: white;
+  background-color: #f0fdfa;
   width: 180px;
   position: absolute;
   cursor: pointer;
