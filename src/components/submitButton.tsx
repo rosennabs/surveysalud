@@ -1,6 +1,6 @@
 import React from "react";
 
-function Button({ isSubmitting, status }) {
+function Button({ isSubmitting, status, text }) {
  
   return (
     <div className="flex flex-col w-full">
@@ -11,7 +11,7 @@ function Button({ isSubmitting, status }) {
         type="submit"
         disabled={isSubmitting}
         
-      > Sign in</button>
+      > {text}</button>
       
       
       </div>

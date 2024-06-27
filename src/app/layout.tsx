@@ -40,9 +40,10 @@ export default function RootLayout({
             {children}
           </main>
 
-            <div className="border-b-2 border-light-grey"></div>
+            
 
-            <footer className="w-full py-4 mt-4">
+            <footer className="w-full py-4 mt-32">
+              <div className="border-b-2 border-light-grey mb-4"></div>
               <Footer />
               <p className="text-sm my-10 text-center mt-32">© 2024 HECBASE. All rights reserved.</p>
             </footer>

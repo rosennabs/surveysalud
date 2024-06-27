@@ -15,7 +15,7 @@ function FormField({
   const [field, meta] = useField(props);
 
   return (
-    <div className="flex flex-col p-4 w-full">
+    <div className="flex flex-col py-4 px-2 w-full">
       {/*Question field*/}
       <label className="text-xl">{label}</label>
 
@@ -58,7 +58,7 @@ function FormField({
             <input
               {...field}
               {...props}
-              className={`border-solid border w-full rounded-lg p-2 h-12 ${
+              className={`border-solid border w-full rounded-lg p-2 h-12 text-base ${
                 meta.touched && meta.error
                   ? "border-red-600"
                   : "border-teal-500"

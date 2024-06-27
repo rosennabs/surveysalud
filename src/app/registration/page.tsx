@@ -63,10 +63,10 @@ function Register() {
 
 
   return (
-    <div className="pt-40 w-full flex flex-col items-center">
-      <h1 className="text-5xl pb-16">Register</h1>
+    <div className="pt-32 w-full flex flex-col items-center">
+      
 
-      <div className="bg-white w-1/3 text-xl p-4">
+      <div className="bg-off-white border border-black border-opacity-15 w-[500px] text-xl p-8">
 
         <Formik
           initialValues={initialValues}
@@ -79,16 +79,23 @@ function Register() {
           {({ status }) => {
             return (
               <Form>
-                <FormField
-                  label='First Name'
-                  name='first_name'
-                  placeholder='First Name'
-                />
-                <FormField
-                  label='Last Name'
-                  name='last_name'
-                  placeholder='Last Name'
-                />
+                <h2 className="flex justify-center pb-16 mt-8">Create an account</h2>
+                
+
+                <div className="flex">
+                 
+                  <FormField 
+                    label='First name'
+                    name='first_name'
+                    placeholder='First Name'
+                  />
+                  <FormField
+                    label='Last name'
+                    name='last_name'
+                    placeholder='Last Name'
+                  />
+                </div>
+                
                 <FormField
                   label='Email'
                   name='email'
@@ -109,7 +116,7 @@ function Register() {
                   type='password'
 
                 />
-                <Button status={status} />
+                <Button status={status} text={"Sign up"} />
 
               </Form>
             );
