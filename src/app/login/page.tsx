@@ -62,7 +62,7 @@ function Login() {
   return (
     <div className="mt-32 w-full flex flex-col items-center">
       
-      <div className="bg-off-white border border-black border-opacity-15 w-[500px] text-xl p-8">
+      <div className="bg-white border border-black border-opacity-15 w-[500px] text-xl p-8">
 
         <Formik
           initialValues={initialValues}
@@ -94,9 +94,9 @@ function Login() {
                 <Button status={status} text={"Sign in"}/>
 
                 <div className="flex justify-center">
-                  <a className="font-medium underline underline-offset-4" href="">Forgot password?</a>
-                  <span className="px-4">|</span>
                   <a className="font-medium underline underline-offset-4" href="/registration">Create an account</a>
+                  <span className="px-4">|</span>
+                  <a className="font-medium underline underline-offset-4" href="">Forgot password?</a>
                 </div>
                 
 

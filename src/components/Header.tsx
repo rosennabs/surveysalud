@@ -31,8 +31,7 @@ export default function Header() {
     nav === "about" ? setDropdownMenu(!dropdownMenu) : setDropdownMenu(false);
 
     if (nav === "resources") {
-      const resourceHubElement = document.getElementById("resource-hub");
-      resourceHubElement && resourceHubElement.scrollIntoView({ behavior: "smooth" });
+      router.push('/?scrollTo=resource-hub'); //Navigate to homepage with the provided query parameter
     }
   };
 
@@ -110,13 +109,15 @@ export default function Header() {
           </div>
         </Link>
 
+       
           <div
             onClick={() => handleNavClick("resources")}
-          className={activeNav === "resources" ? activeNavClassName : "mr-8 cursor-pointer"}
+            className={activeNav === "resources" ? activeNavClassName : "mr-8 cursor-pointer"}
           >
             Resources
           </div>
-       
+        
+
 
         <Link href='/program'>
           <div onClick={() => handleNavClick('program')} className={activeNav === 'program' ? activeNavClassName : 'mr-8'}>

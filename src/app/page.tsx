@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useSearchParams } from 'next/navigation';
 import Link from "next/link";
 import { useFormContext } from "../contexts/FormContext";
 import ContactForm from '../components/ContactForm';
@@ -28,6 +29,17 @@ export default function Home() {
   const handleResourceClick = (title: string) => {
     setResourceClicked(title);
   };
+
+  //Navigate to the resource hub in the homepage by searching for query parameter provided when resources is clicked
+  const searchParams = useSearchParams();
+  const resourceHubRef = useRef(null);
+
+  useEffect(() => {
+    if (searchParams.get('scrollTo') === 'resource-hub' && resourceHubRef.current) {
+      resourceHubRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [searchParams]);
+
 
   return (
     <div className="flex flex-col">
@@ -75,7 +87,7 @@ export default function Home() {
 
       {/* Section: Resource Hub */}
 
-      <section id="resource-hub" className="flex flex-col items-center mx-32 mt-48">
+      <section id="resource-hub" ref={resourceHubRef} className="flex flex-col items-center mx-32 mt-48">
 
         <h1 className="pb-8 mt-8 z-10">RESOURCE HUB</h1>
 
