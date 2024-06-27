@@ -17,7 +17,7 @@ function FormField({
   return (
     <div className="flex flex-col p-4 w-full">
       {/*Question field*/}
-      <label className="text-xl text-white">{label}</label>
+      <label className="text-xl">{label}</label>
 
       {as === "select" ? (
         <>

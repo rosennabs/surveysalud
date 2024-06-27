@@ -18,8 +18,9 @@ const config: Config = {
         'gradient-to-b': 'linear-gradient(to bottom, var(--tw-gradient-stops))',
       },
       colors: {
-        'off-white': '#F5F5F5',
-        'light-grey': '#D5D5D5'
+        'off-white': '#f0fdfa',
+        'light-grey': '#D5D5D5',
+        'custom-teal': '#14B8A6'
       },
       gradientColorStops: {
         'primary-start': '#14b8a6',

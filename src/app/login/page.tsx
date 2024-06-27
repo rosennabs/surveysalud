@@ -60,10 +60,9 @@ function Login() {
   };
 
   return (
-    <div className="pt-40 w-full flex flex-col items-center">
-      <h1 className="text-5xl pb-16">Login</h1>
-
-      <div className="bg-white w-1/3 text-xl p-4">
+    <div className="mt-32 w-full flex flex-col items-center">
+      
+      <div className="bg-off-white border border-black border-opacity-15 w-1/3 text-xl p-8">
 
         <Formik
           initialValues={initialValues}
@@ -76,6 +75,11 @@ function Login() {
           {({ status }) => {
             return (
               <Form>
+                <div>
+                  <h2 className="flex justify-center pb-8 mt-8">Log in</h2>
+                </div>
+                
+
                 <FormField
                   label='Email'
                   name='email'
@@ -89,6 +93,13 @@ function Login() {
                 />
 
                 <Button status={status} />
+
+                <div className="flex justify-center">
+                  <a className="font-medium underline underline-offset-4" href="">Forgot password?</a>
+                  <span className="px-4">|</span>
+                  <a className="font-medium underline underline-offset-4" href="/registration">Create an account</a>
+                </div>
+                
 
               </Form>
             );

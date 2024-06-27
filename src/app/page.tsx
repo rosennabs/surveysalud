@@ -11,7 +11,6 @@ const resourceCard =
   "flex flex-col bg-white cursor-pointer border rounded-2xl border-neutral-200 w-[350px] p-4";
 const activeResourceCard =
   "flex flex-col bg-gradient-to-b from-primary-start to-primary-end text-white shadow-2xl border border-neutral-300 rounded-2xl w-[350px] p-4";
-const h5 = "text-2xl montserrat-semibold";
 const text = "ml-16 -mt-2 mb-2 text-xs";
 const titleContainer = "flex flex-row space-x-2 m-4";
 const image = "bg-teal-100 p-2 w-[35px]";
@@ -37,7 +36,7 @@ export default function Home() {
 
       <section className="relative flex mx-32">
         <div className="relative flex flex-col my-24 w-2/3 z-10">
-          <h1 className="text-5xl text-black pb-8">
+          <h1 className="pb-8">
             PERFORMANCE MEASUREMENT & EVALUATION{" "}
           </h1>
           <p className="pb-8">
@@ -78,7 +77,7 @@ export default function Home() {
 
       <section id="resource-hub" className="flex flex-col items-center mx-32 mt-48">
 
-        <h1 className="text-5xl text-black pb-8 mt-8 z-10">RESOURCE HUB</h1>
+        <h1 className="pb-8 mt-8 z-10">RESOURCE HUB</h1>
 
         <div className="flex flex-row justify-between text-black w-full z-10 mt-16">
           <div
@@ -91,7 +90,7 @@ export default function Home() {
           >
             <div className={titleContainer}>
               <img className={image} src="/bar chart.svg" alt="a bar chart" />
-              <h1 className={h5}>Annual Report</h1>
+              <h4>Annual Report</h4>
             </div>
 
             <p className={text}>
@@ -107,7 +106,7 @@ export default function Home() {
           >
             <div className={titleContainer}>
               <img className={image} src="/book.svg" alt="a book" />
-              <h1 className={h5}>Directory</h1>
+              <h4>Directory</h4>
             </div>
             <p className={text}>
               Search for the meaning of our indicators in the PMF directory.
@@ -124,7 +123,7 @@ export default function Home() {
           >
             <div className={titleContainer}>
               <img className={image} src="/puzzle.svg" alt="a puzzle" />
-              <h1 className={h5}>Logic Model</h1>
+              <h4>Logic Model</h4>
             </div>
             <p className={text}>
               This is where we connect the dots to achieve our ultimate goal.
@@ -143,7 +142,7 @@ export default function Home() {
           >
             <div className={titleContainer}>
               <img className={image} src="/loop.svg" alt="a loop" />
-              <h1 className={h5}>Change Theory</h1>
+              <h4>Change Theory</h4>
             </div>
             <p className={text}>
               Understand our theory of change and how we intend to make a
@@ -161,7 +160,7 @@ export default function Home() {
           >
             <div className={titleContainer}>
               <img className={image} src="/target.svg" alt="round target" />
-              <h1 className={h5}>Annual Targets</h1>
+              <h4>Annual Targets</h4>
             </div>
             <p className={text}>See what we have set out to achieve this year.</p>
           </div>
@@ -174,7 +173,7 @@ export default function Home() {
           >
             <div className={titleContainer}>
               <img className={image} src="/graph.svg" alt="a line graph" />
-              <h1 className={h5}>PMF</h1>
+              <h4>PMF</h4>
             </div>
             <p className={text}>
               The Performance Measurement Framework outlines our indicators.
@@ -188,9 +187,9 @@ export default function Home() {
           <img className="w-full" src="/contact.svg" alt="a trapezium" />
         </div>
 
-        <div className="absolute inset-0 items-center flex text-4xl text-white montserrat-semibold z-10">
-          <p className="ml-32">Contact us</p>
-          <div className="text-base text-black montserrat-regular w-1/2 ml-64">
+        <div className="flex absolute inset-0 items-center text-white z-10">
+          <h2 className="ml-32">Contact us</h2>
+          <div className="text-black montserrat-regular w-1/2 ml-64">
             <ContactForm />
           </div>
 
