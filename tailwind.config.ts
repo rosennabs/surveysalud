@@ -20,7 +20,7 @@ const config: Config = {
       colors: {
         'off-white': '#f0fdfa',
         'light-grey': '#D5D5D5',
-        'custom-teal': '#14B8A6'
+        'light-teal': '#E1FEFB'
       },
       gradientColorStops: {
         'primary-start': '#14b8a6',

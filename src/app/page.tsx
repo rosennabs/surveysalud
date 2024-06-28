@@ -91,7 +91,7 @@ export default function Home() {
 
         <h1 className="pb-8 mt-8 z-10">RESOURCE HUB</h1>
 
-        <div className="flex flex-row justify-between text-black w-full z-10 mt-16">
+        <div className="grid grid-cols-3 gap-14 place-content-center text-black w-full z-10 mt-16">
           <div
             onClick={() => handleResourceClick("Annual Report")}
             className={
@@ -143,7 +143,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex flex-row justify-between w-full z-10 mt-16">
+        <div className="grid grid-cols-3 gap-14 place-content-center w-full z-10 mt-16">
           <div
             onClick={() => handleResourceClick("Change Theory")}
             className={

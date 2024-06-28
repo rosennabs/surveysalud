@@ -38,7 +38,8 @@ export default function Header() {
   const handleLogout = (button: string) => {
     setActiveButton(button);
     logout();
-    router.push("/login");
+    router.push("/");
+    setActiveNav(null);
     setActiveButton(baseButtonClassName);
   };
 
@@ -119,11 +120,11 @@ export default function Header() {
         
 
 
-        <Link href='/program'>
+        {/* <Link href='/program'>
           <div onClick={() => handleNavClick('program')} className={activeNav === 'program' ? activeNavClassName : 'mr-8'}>
                   Program
                 </div>
-              </Link>
+              </Link> */}
 
         {/* <Link href='/knowledge_products'>
           <div onClick={() => handleNavClick('kp')} className={activeNav === 'kp' ? activeNavClassName : 'mr-8'}>
@@ -138,7 +139,7 @@ export default function Header() {
               </Link> */}
       </div>
 
-      <Link href="/feedback">
+      {/* <Link href="/feedback">
         <button
           onClick={() => handleButtonClick("feedback")}
           className={
@@ -149,20 +150,24 @@ export default function Header() {
         >
           Leave Feedback
         </button>
-      </Link>
+      </Link> */}
 
-      {/* <div className="flex items-center space-x-8">
+     <div className="flex items-center space-x-8">
         
-        {isAuthenticated ? (
+        {isAuthenticated && (
           <>
             <p className="text-m text-black">Hello, {user.first_name}</p>
 
             <button onClick={() => handleLogout('logout')} className={activeButton === 'logout' ? activeButtonClassName : baseButtonClassName}>
-                Logout
-              </button>
+              Logout
+            </button>
             
           </>
-        ) : (
+          
+        )}
+      </div>
+        
+        {/* : (
           <>
               <Link href='/login'>
                 <button onClick={() => handleButtonClick('login')} className={activeButton === 'login' ? activeButtonClassName : baseButtonClassName}>
@@ -177,7 +182,7 @@ export default function Header() {
             </Link>
             </>
         )}
-            </div> */}
+             */}
     </header>
   );
 }

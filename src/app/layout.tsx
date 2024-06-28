@@ -41,10 +41,9 @@ export default function RootLayout({
           </main>
 
             
-
-            <footer className="w-full py-4 mt-32">
-              <div className="border-b-2 border-light-grey mb-4"></div>
-              <Footer />
+            
+            <footer className="w-full py-4 mt-32 bg-light-teal">
+        <Footer />
               <p className="text-sm my-10 text-center mt-32">© 2024 HECBASE. All rights reserved.</p>
             </footer>
 
