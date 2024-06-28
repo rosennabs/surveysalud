@@ -8,6 +8,7 @@ import FormField from "../../components/FormField";
 import Button from "../../components/submitButton";
 import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
+import { useFormContext } from "../../contexts/FormContext";
 
 
 interface FormValues {
@@ -32,6 +33,10 @@ function Login() {
   const router = useRouter(); // Use useRouter from next/router
   const { login } = useAuth();
 
+  const {
+    activeNav,
+  } = useFormContext();
+
   const handleSubmit = async (values, actions) => {
 
     try {
@@ -43,8 +48,17 @@ function Login() {
 
       actions.resetForm();
       actions.setSubmitting(false);
-      router.push('/'); //Navigate to the homepage
+
+
+      if (activeNav === "reporting") {
+        router.push('/reporting');
+      } else {
+        router.push('/'); //Navigate to the homepage
+      }  
+      
     }
+
+
     catch (error) {
       console.error('Error logging in user:', error);
 
@@ -57,6 +71,8 @@ function Login() {
       }
       actions.setSubmitting(false);
     }
+
+    
   };
 
   return (
