@@ -6,24 +6,28 @@ import KnowledgeProducts from '../../components/KnowledgeProducts';
 import Program from '../../components/Program';
 import Relationships from '../../components/Relationships';
 
-const menuItem = 'flex items-center justify-center bg-teal-500 rounded-md mt-2 first:mt-0 cursor-pointer';
+const menuItem = 'flex items-center justify-center rounded-lg mt-2 first:mt-0 cursor-pointer';
+const activeMenuItemClass = 'bg-light-teal shadow-xl border border-light-grey text-black';
 
 
 
 function Reporting() {
+ 
   // Initialize state with the value from local storage or default to 'Program'
-  const [activeMenuItem, setActiveMenuItem] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('activeMenuItem') || 'Program';
-    }
-    return 'Program';
-  });
+  const [activeMenuItem, setActiveMenuItem] = useState('Program');
+    
+  useEffect(() => {
+    const storedActiveMenuItem = localStorage.getItem('activeMenuItem');
+
+    storedActiveMenuItem ? setActiveMenuItem(storedActiveMenuItem) : setActiveMenuItem('Program');
+    
+  }, []);
 
   // Save the active menu item to local storage whenever it changes
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('activeMenuItem', activeMenuItem);
-    }
+   
+    localStorage.setItem('activeMenuItem', activeMenuItem);
+    
   }, [activeMenuItem]);
 
 
@@ -35,13 +39,14 @@ function Reporting() {
     <div className='flex justify-between m-32'>
      
       <div className='grid grid-cols-1 gap-4 w-1/6 h-[650px] text-white font-semibold'>
-        <p onClick={() => handleMenuClick("Program")} className={menuItem}>Program</p>
-        <p onClick={() => handleMenuClick("Knowledge Products")} className={menuItem}>Knowledge Products</p>
-        <p onClick={() => handleMenuClick("Relationships")} className={menuItem}>Relationships</p>
-        <p className={menuItem}>Improvement Projects</p>
-        <p className={menuItem}>Healthcare Leaders</p>
-        <p className={menuItem}>Patient Reach</p>
-        <p className={menuItem}>Sustainability</p>
+        <p onClick={() => handleMenuClick("Program")} className={`${menuItem} ${activeMenuItem === "Program" ? activeMenuItemClass : 'bg-teal-500'}`}>Program</p>
+        <p onClick={() => handleMenuClick("Knowledge Products")} className={`${menuItem} ${activeMenuItem === "Knowledge Products" ? activeMenuItemClass : 'bg-teal-500'}`}>Knowledge Products</p>
+        <p onClick={() => handleMenuClick("Relationships")} className={`${menuItem} ${activeMenuItem === "Relationships" ? activeMenuItemClass : 'bg-teal-500'}`}>Relationships</p>
+        <p onClick={() => handleMenuClick("Improvement Projects")} className={`${menuItem} ${activeMenuItem === "Improvement Projects" ? activeMenuItemClass : 'bg-teal-500'}`}>Improvement Projects</p>
+        <p onClick={() => handleMenuClick("Healthcare Leaders")} className={`${menuItem} ${activeMenuItem === "Healthcare Leaders" ? activeMenuItemClass : 'bg-teal-500'}`}>Healthcare Leaders</p>
+        <p onClick={() => handleMenuClick("Patient Reach")} className={`${menuItem} ${activeMenuItem === "Patient Reach" ? activeMenuItemClass : 'bg-teal-500'}`}>Patient Reach</p>
+        <p onClick={() => handleMenuClick("Sustainability")} className={`${menuItem} ${activeMenuItem === "Sustainability" ? activeMenuItemClass : 'bg-teal-500'}`}>Sustainability</p>
+        
       </div>
 
       <div className='flex flex-col justify-center w-4/5'>
