@@ -1,62 +1,123 @@
-'use client'
+"use client";
 
+import React, { useState} from "react";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import FormField from "../../components/FormField";
+import Button from "../../components/submitButton";
+import DataForms from "../../components/DataForms";
+import { programs } from "../../helpers/globalOptions";
+import axios from 'axios';
+import { useFormContext } from '../../contexts/FormContext';
 
-import React, {useState, useEffect} from 'react';
-import KnowledgeProducts from '../../components/KnowledgeProducts';
-import Program from '../../components/Program';
-import Relationships from '../../components/Relationships';
-
-const menuItem = 'flex items-center justify-center rounded-lg mt-2 first:mt-0 cursor-pointer';
-const activeMenuItemClass = 'bg-light-teal shadow-xl border border-light-grey text-black';
-
-
-
-function Reporting() {
- 
-  // Initialize state with the value from local storage or default to 'Program'
-  const [activeMenuItem, setActiveMenuItem] = useState('Program');
-    
-  useEffect(() => {
-    const storedActiveMenuItem = localStorage.getItem('activeMenuItem');
-
-    storedActiveMenuItem ? setActiveMenuItem(storedActiveMenuItem) : setActiveMenuItem('Program');
-    
-  }, []);
-
-  // Save the active menu item to local storage whenever it changes
-  useEffect(() => {
-   
-    localStorage.setItem('activeMenuItem', activeMenuItem);
-    
-  }, [activeMenuItem]);
-
-
-  const handleMenuClick = (item: string) => {
-    setActiveMenuItem(item);
-  }
-
-  return (
-    <div className='flex justify-between m-32'>
-     
-      <div className='grid grid-cols-1 gap-4 w-1/6 h-[650px] text-white font-semibold'>
-        <p onClick={() => handleMenuClick("Program")} className={`${menuItem} ${activeMenuItem === "Program" ? activeMenuItemClass : 'bg-teal-500'}`}>Program</p>
-        <p onClick={() => handleMenuClick("Knowledge Products")} className={`${menuItem} ${activeMenuItem === "Knowledge Products" ? activeMenuItemClass : 'bg-teal-500'}`}>Knowledge Products</p>
-        <p onClick={() => handleMenuClick("Relationships")} className={`${menuItem} ${activeMenuItem === "Relationships" ? activeMenuItemClass : 'bg-teal-500'}`}>Relationships</p>
-        <p onClick={() => handleMenuClick("Improvement Projects")} className={`${menuItem} ${activeMenuItem === "Improvement Projects" ? activeMenuItemClass : 'bg-teal-500'}`}>Improvement Projects</p>
-        <p onClick={() => handleMenuClick("Healthcare Leaders")} className={`${menuItem} ${activeMenuItem === "Healthcare Leaders" ? activeMenuItemClass : 'bg-teal-500'}`}>Healthcare Leaders</p>
-        <p onClick={() => handleMenuClick("Patient Reach")} className={`${menuItem} ${activeMenuItem === "Patient Reach" ? activeMenuItemClass : 'bg-teal-500'}`}>Patient Reach</p>
-        <p onClick={() => handleMenuClick("Sustainability")} className={`${menuItem} ${activeMenuItem === "Sustainability" ? activeMenuItemClass : 'bg-teal-500'}`}>Sustainability</p>
-        
-      </div>
-
-      <div className='flex flex-col justify-center w-4/5'>
-        {activeMenuItem === "Knowledge Products" && <KnowledgeProducts />}
-        {activeMenuItem === "Program" && <Program />}
-        {activeMenuItem === "Relationships" && <Relationships />}
-
-      </div>
-    </div>
-  );
+//Define types for form values
+interface FormValues {
+  program_name: string;
+  data_forms: string;
 }
 
-export default Reporting;
+const data_forms: string[] = [
+  "Program",
+  "Knowledge Products",
+  "Relationships",
+  "Improvement Projects",
+  "Healthcare Leaders",
+  "Patient Reach",
+  "Sustainability",
+];
+
+
+
+const validationSchema = Yup.object({
+  program_name: Yup.string().required("Required"),
+  data_forms: Yup.string().required("Required"),
+});
+
+
+
+function ReportingSurvey() {
+
+  const { selectedProgram, setSelectedProgram } = useFormContext();
+  const [formValues, setFormValues] = useState<FormValues | null>(null);
+  const [renderSurvey, setRenderSurvey] = useState(true);
+
+  const initialValues: FormValues = {
+    program_name: selectedProgram || "",
+    data_forms: "",
+  };
+
+
+  const handleSubmit = async (values) => {
+
+    try {
+
+      const response = await axios.post('http://localhost:8080/api/reporting', values);
+      setFormValues(values);
+      
+      setRenderSurvey(false);
+    }
+    catch (error) {
+      console.error('Error saving selections:', error);
+
+    }
+  };
+
+  return (
+    <>
+      {renderSurvey ?
+        (
+          <div className="flex flex-col items-center justify-center m-32">
+
+
+            <div className="bg-white border border-black border-opacity-15 p-16 shadow-xl w-[700px]">
+
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+              >
+                {({ isSubmitting, status, setFieldValue}) => {
+
+
+                  return (
+                    <Form className="flex flex-wrap text-2xl">
+                      <FormField
+                        label="Select program:"
+                        name="program_name"
+                        id="program_name"
+                        as="select"
+                        options={programs}
+                        onChange={(e) => {
+                          const selectedValue = e.target.value;
+                          setSelectedProgram(selectedValue);
+                          setFieldValue('program_name', selectedValue);
+                        }}
+                      />
+
+                      <FormField
+                        label="Select applicable reporting form(s):"
+                        as="select"
+                        id="data_forms"
+                        name="data_forms"
+                        options={data_forms}
+                      />
+
+
+                      <Button isSubmitting={isSubmitting} status={status} text={"Start"} />
+                    </Form>
+                  );
+                }}
+              </Formik>
+            </div>
+          </div>
+        ) : (
+          formValues && <DataForms data_forms={formValues.data_forms}/>
+        )
+      }
+    </>
+  )
+
+
+}
+
+export default ReportingSurvey;

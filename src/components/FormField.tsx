@@ -15,9 +15,9 @@ function FormField({
   const [field, meta] = useField(props);
 
   return (
-    <div className="flex flex-col py-4 px-2 w-full">
+    <div className="flex flex-col py-4 px-2 w-full text-xl">
       {/*Question field*/}
-      <label className="text-xl">{label}</label>
+      <label>{label}</label>
 
       {as === "select" ? (
         <>
