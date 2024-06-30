@@ -13,7 +13,7 @@ import { useFormContext } from '../../contexts/FormContext';
 //Define types for form values
 interface FormValues {
   program_name: string;
-  data_forms: string;
+  data_forms: string[];
 }
 
 const data_forms: string[] = [
@@ -30,7 +30,7 @@ const data_forms: string[] = [
 
 const validationSchema = Yup.object({
   program_name: Yup.string().required("Required"),
-  data_forms: Yup.string().required("Required"),
+  data_forms: Yup.array().min(1, "At least one form is required").required("Required"),
 });
 
 
@@ -43,17 +43,14 @@ function ReportingSurvey() {
 
   const initialValues: FormValues = {
     program_name: selectedProgram || "",
-    data_forms: "",
+    data_forms: [],
   };
 
 
   const handleSubmit = async (values) => {
 
     try {
-
-      const response = await axios.post('http://localhost:8080/api/reporting', values);
-      setFormValues(values);
-      
+      setFormValues(values);   
       setRenderSurvey(false);
     }
     catch (error) {
@@ -96,10 +93,11 @@ function ReportingSurvey() {
 
                       <FormField
                         label="Select applicable reporting form(s):"
-                        as="select"
+                        as="checkbox"
                         id="data_forms"
                         name="data_forms"
                         options={data_forms}
+                        setFieldValue={setFieldValue}
                       />
 
 

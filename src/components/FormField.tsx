@@ -14,20 +14,15 @@ function FormField({
 }) {
   const [field, meta] = useField(props);
 
-  return (
-    <div className="flex flex-col py-4 px-2 w-full text-xl">
-      {/*Question field*/}
-      <label>{label}</label>
-
-      {as === "select" ? (
-        <>
-          {/*Dropdown list options*/}
+  const renderField = () => {
+    switch (as) {
+      case "select":
+        return (
           <select
             {...field}
             {...props}
-            className={`border-solid border w-full rounded-lg p-2 h-12 ${
-              meta.touched && meta.error ? "border-red-600" : "border-teal-500"
-            }`}
+            className={`border-solid border w-full rounded-lg p-2 h-12 ${meta.touched && meta.error ? "border-red-600" : "border-teal-500"
+              }`}
           >
             <option value=""></option>
 
@@ -37,41 +32,68 @@ function FormField({
               </option>
             ))}
           </select>
-          {/*Display error message*/}
-          {meta.touched && meta.error && (
-            <div className="text-red-600">{meta.error}</div>
-          )}
-        </>
-      ) : (
-        <>
-          {as === "textarea" ? (
-            <textarea
-              {...field}
-              {...props}
-              className={`border-solid border w-full rounded-lg p-4 ${
-                meta.touched && meta.error
-                  ? "border-red-600"
-                  : "border-teal-500"
+        );
+      
+      case "textarea":
+        return (
+          <textarea
+            {...field}
+            {...props}
+            className={`border-solid border w-full rounded-lg p-4 ${meta.touched && meta.error
+              ? "border-red-600"
+              : "border-teal-500"
               }`}
-            />
-          ) : (
-            <input
-              {...field}
-              {...props}
-              className={`border-solid border w-full rounded-lg p-2 h-12 text-base ${
-                meta.touched && meta.error
-                  ? "border-red-600"
-                  : "border-teal-500"
+          />
+        );
+      
+      case "checkbox":
+        return (
+          <div className="flex flex-col">
+            {options &&
+              options.map((option) => (
+                
+                <label key={option} className="flex items-center w-max">
+                  <input
+                    type="checkbox"
+                    {...field}
+                    value={option}
+                    checked={field.value.includes(option)}
+                    className={`border-solid border rounded-lg p-2 h-6 w-6 ${meta.touched && meta.error ? "border-red-600" : "border-teal-500"
+                      }`}
+                  />
+                  <span className="ml-2">{option}</span>
+                </label>
+              ))}
+            </div>
+        );
+      default:
+        return (
+          <input
+            {...field}
+            {...props}
+            className={`border-solid border w-full rounded-lg p-2 h-12 text-base ${meta.touched && meta.error
+              ? "border-red-600"
+              : "border-teal-500"
               }`}
-            />
-          )}
+          />
+        );
+    }
+  };
 
-          {meta.touched && meta.error && (
-            <div className="text-red-600">{meta.error}</div>
-          )}
-        </>
+
+  return (
+    <div className="flex flex-col py-4 px-2 w-full text-xl">
+     
+      <label className="pb-4">
+        {label}
+      </label>
+      {renderField()}
+      {meta.touched && meta.error && (
+        <div className="text-red-600">{meta.error}</div>
       )}
-    </div>
+      </div>
+
+      
   );
 }
 
