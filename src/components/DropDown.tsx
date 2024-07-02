@@ -19,9 +19,9 @@ export const dropdownMenu = "p-2 hover:bg-teal-500 hover:text-white"
 export function AboutDropDown() {
   return (
     <DropDownContainer>
-      <p className={dropdownMenu}>About Us</p>
-      <p className={dropdownMenu}>Our Team</p>
-      <p className={dropdownMenu}>Services</p>
+      <p className={dropdownMenu}>Our Services</p>
+      <p className={dropdownMenu}>The Team</p>
+      <p className={dropdownMenu}>Contact us</p>
 
     </DropDownContainer>
   );
