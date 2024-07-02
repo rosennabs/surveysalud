@@ -9,7 +9,7 @@ const activeMenuItemClass = 'bg-light-teal shadow-xl border border-light-grey te
 
 
 
-function Reporting({data_forms}) {
+function DataForms({data_forms}) {
 
   // Initialize state with the value from local storage or default to 'Program'
   const [activeMenuItem, setActiveMenuItem] = useState(data_forms[0]);
@@ -53,4 +53,4 @@ function Reporting({data_forms}) {
   );
 }
 
-export default Reporting;
+export default DataForms;

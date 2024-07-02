@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const DropDownContainer = styled.div`
-  background-color: #f0fdfa;
+export const DropDownContainer = styled.div`
+  background-color: white;
   width: 180px;
   position: absolute;
   cursor: pointer;
@@ -12,9 +12,9 @@ const DropDownContainer = styled.div`
   margin-top: 4px;
 `;
 
-const dropdownMenu = "p-2 hover:bg-teal-500 hover:text-white"
+export const dropdownMenu = "p-2 hover:bg-teal-500 hover:text-white"
 
-function DropDown() {
+export function AboutDropDown() {
   return (
     <DropDownContainer>
       <p className={dropdownMenu}>About Us</p>
@@ -25,4 +25,3 @@ function DropDown() {
   );
 }
 
-export default DropDown;
