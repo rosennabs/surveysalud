@@ -47,7 +47,7 @@ export default function Home() {
       {/* Section: PMF */}
 
       <section className="relative flex mx-32">
-        <div className="relative flex flex-col my-24 w-2/3 z-10">
+        <div className="relative flex flex-col my-24 w-2/3">
           <h1 className="pb-8">
             PERFORMANCE MEASUREMENT & EVALUATION{" "}
           </h1>
