@@ -4,7 +4,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useFormContext } from "../contexts/FormContext";
-import About from "../components/About";
+import OurServices from "../components/OurServices";
+import ContactForm from "../components/ContactForm";
+import OurTeam from "../components/OurTeam";
 
 const resourceCard =
   "flex flex-col bg-white cursor-pointer border rounded-2xl border-neutral-200 w-[350px] p-4 hover:bg-teal-600 hover:text-white";
@@ -162,8 +164,35 @@ export default function Home() {
         </div>
       </section>
 
-      <section>
-        <About />
+      
+      {/* Section: Services */}
+      <section className="mx-32 my-48">
+        <OurServices/>
+      </section>
+
+      {/* Section: Our Team */}
+      <section className="mx-32 mb-48">
+        <OurTeam />
+      </section>
+
+      {/* Section: Contact us */}
+      <section className="mx-24">
+        <div className="flex relative">
+          <img
+            className="w-3/5"
+            src="/contactUs.jpg"
+            alt="image of people in the office"
+          />
+          <div className="flex absolute inset-10 z-10 w-full">
+            <div className="flex absolute right-0 top-2 w-1/2 mr-8" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+              <div className="flex flex-col items-center w-full">
+                <h2 className="m-8 text-white">Contact Us</h2>
+                <ContactForm />
+              </div>
+            </div>
+
+          </div>
+        </div>
       </section>
     </div>
   );

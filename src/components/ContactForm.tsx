@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../components/FormField";
 
-const button = "bg-teal-100 px-4 py-1 rounded-lg";
+const button = "bg-teal-500 hover:text-white px-4 py-1 rounded-lg";
 
 interface FormValues {
   subject: string | number;
@@ -22,15 +22,8 @@ const validationSchema = Yup.object({
 
 function Contact() {
   return (
-    <div className="relative">
-      <div className="">
-        <img className="w-full" src="/contact.svg" alt="a trapezium" />
-      </div>
 
-      <div className="flex absolute inset-0 items-center text-white z-10">
-        <h2 className="ml-32">Contact us</h2>
-
-        <div className="text-black montserrat-regular w-1/2 ml-64 p-16">
+        <div className="text-black montserrat-regular w-full p-16 -mt-16">
           <Formik
             initialValues={initialValues}
             // validationSchema={validationSchema}
@@ -59,8 +52,8 @@ function Contact() {
             }}
           </Formik>
         </div>
-      </div>
-    </div>
+  
+    
   );
 }
 

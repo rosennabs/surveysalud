@@ -39,7 +39,7 @@ function FormField({
           <textarea
             {...field}
             {...props}
-            className={`border-solid border w-full rounded-lg p-4 ${meta.touched && meta.error
+            className={`border-solid border w-full rounded-lg p-2 ${meta.touched && meta.error
               ? "border-red-600"
               : "border-teal-500"
               }`}
@@ -82,7 +82,7 @@ function FormField({
 
 
   return (
-    <div className="flex flex-col py-4 px-2 w-full text-xl">
+    <div className="flex flex-col py-4 px-2 w-full text-base">
      
       <label className="pb-4">
         {label}
