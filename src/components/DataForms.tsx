@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import KnowledgeProducts from './KnowledgeProducts';
 import Program from './Program';
 import Relationships from './Relationships';
+import { IoMdAddCircle } from "react-icons/io";
 
 const menuItem = 'flex items-center justify-center rounded-lg my-4 first:mt-0 cursor-pointer h-[80px]';
 const activeMenuItemClass = 'bg-light-teal shadow-xl border border-light-grey text-black';
@@ -40,6 +41,11 @@ function DataForms({data_forms}) {
         {data_forms.map((form) => (
           <p key={form} onClick={() => handleMenuClick(form)} className={`${menuItem} ${activeMenuItem === form ? activeMenuItemClass : 'bg-teal-500'}`}>{form}</p>
         ))}
+
+        <div className='flex items-center justify-center space-x-4 mt-8 text-black w-full'>
+          <IoMdAddCircle className='text-3xl text-green-600 hover:text-gray-400 cursor-pointer' />
+          <span>Add form</span>
+        </div>
 
       </div>
 

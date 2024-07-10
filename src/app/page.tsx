@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useFormContext } from "../contexts/FormContext";
@@ -9,7 +9,7 @@ import ContactForm from "../components/ContactForm";
 import OurTeam from "../components/OurTeam";
 
 const resourceCard =
-  "flex flex-col bg-white cursor-pointer border rounded-2xl border-neutral-200 w-[350px] p-4 hover:bg-teal-600 hover:text-white";
+  "flex flex-col bg-white cursor-pointer border rounded-2xl border-neutral-200 w-[350px] h-[150px] p-4 hover:bg-teal-600 hover:text-white";
 const text = "ml-16 -mt-2 mb-2 text-xs";
 const titleContainer = "flex flex-row space-x-2 m-4";
 const image = "bg-teal-100 p-2 w-[35px]";
@@ -26,6 +26,7 @@ export default function Home() {
   const searchParams = useSearchParams();
   const resourceHubRef = useRef(null);
 
+  
   useEffect(() => {
     if (
       searchParams.get("scrollTo") === "resource-hub" &&
@@ -34,6 +35,18 @@ export default function Home() {
       resourceHubRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [searchParams]);
+
+
+  // useEffect(() => {
+  //   if (window.location.hash) {
+  //     const element = document.getElementById(window.location.hash.substring(1)); // extract the id name from the url ignoring the hash
+  //     if (element) {
+  //       element.scrollIntoView({ behavior: "smooth" });
+  //     }
+  //   }
+  // }, []);
+
+
 
   return (
     <div className="flex flex-col">
@@ -84,7 +97,7 @@ export default function Home() {
       >
         <h1 className="pb-8 mt-8 z-10">RESOURCE HUB</h1>
 
-        <div className="grid grid-cols-3 gap-14 place-content-center text-black w-full z-10 mt-16">
+        <div className="flex flex-wrap justify-center text-black w-full z-10 mt-16 space-x-12">
           <Link href="/annual_report">
             <div className={resourceCard}>
               <div className={titleContainer}>
@@ -124,7 +137,7 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-3 gap-14 place-content-center w-full z-10 mt-16">
+        <div className="flex flex-wrap justify-center text-black w-full z-10 mt-16 space-x-12">
           <Link href="/annual_report">
           <div className={resourceCard}>
             <div className={titleContainer}>
@@ -145,7 +158,7 @@ export default function Home() {
               <h4>Annual Targets</h4>
             </div>
             <p className={text}>
-              See what we have set out to achieve this year.
+              We are set to meet the following targets for the year.
             </p>
             </div>
           </Link>
@@ -166,17 +179,23 @@ export default function Home() {
 
       
       {/* Section: Services */}
-      <section className="mx-32 my-48">
+      <section
+        id="our-services"
+        className="mx-32 my-64">
         <OurServices/>
       </section>
 
       {/* Section: Our Team */}
-      <section className="mx-32 mb-48">
+      <section
+        id="the-team"
+        className="mx-32 mb-64">
         <OurTeam />
       </section>
 
       {/* Section: Contact us */}
-      <section className="mx-24">
+      <section
+        id="contact-us"
+        className="mx-24">
         <div className="flex relative">
           <img
             className="w-3/5"

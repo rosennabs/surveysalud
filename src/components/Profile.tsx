@@ -14,10 +14,11 @@ function ProfileDropDown() {
     router.push("/");
   };
 
+
   return (
     <DropDownContainer>
       <p className={dropdownMenu}>My Profile</p>
-      <p className={dropdownMenu}>Contact Admin</p>
+      <p className={dropdownMenu} >Contact Admin</p>
       <p className={dropdownMenu} onClick={() => handleLogout()}>Sign out</p>
 
     </DropDownContainer>

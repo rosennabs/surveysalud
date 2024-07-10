@@ -6,8 +6,6 @@ const PORT = 8080;
 const path = require("path");
 
 
-
-
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev, dir: path.join(__dirname, "../src") });
 const handle = app.getRequestHandler();

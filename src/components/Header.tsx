@@ -53,10 +53,11 @@ export default function Header() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+    
   }, [dropdownMenu]);
 
   return (
-    <header className="z-10 flex items-center justify-between text-m lg:flex pb-4 mx-24">
+    <header className="flex items-center justify-between text-m lg:flex pb-4 mx-24">
       <Link href="/">
         <div onClick={() => setActiveNav(null)}>
           <img src="/logo.png" alt="logo" className="w-[120px]" />
