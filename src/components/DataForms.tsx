@@ -10,29 +10,30 @@ const activeMenuItemClass = 'bg-light-teal shadow-xl border border-light-grey te
 
 
 
-function DataForms({data_forms}) {
+function DataForms({ data_forms, handleAddForm }) {
 
   // Initialize state with the value from local storage or default to 'Program'
   const [activeMenuItem, setActiveMenuItem] = useState(data_forms[0]);
 
+  // Retrieve stored values from local storage on component mount
   useEffect(() => {
     const storedActiveMenuItem = localStorage.getItem('activeMenuItem');
-
-    storedActiveMenuItem ? setActiveMenuItem(storedActiveMenuItem) : setActiveMenuItem(data_forms[0]);
+  
+    storedActiveMenuItem && setActiveMenuItem(storedActiveMenuItem);
 
   }, []);
 
   // Save the active menu item to local storage whenever it changes
   useEffect(() => {
-
     localStorage.setItem('activeMenuItem', activeMenuItem);
-
   }, [activeMenuItem]);
 
 
   const handleMenuClick = (item: string) => {
     setActiveMenuItem(item);
   };
+
+
 
   return (
     <div className='flex justify-between m-32'>
@@ -43,7 +44,7 @@ function DataForms({data_forms}) {
         ))}
 
         <div className='flex items-center justify-center space-x-4 mt-8 text-black w-full'>
-          <IoMdAddCircle className='text-3xl text-green-600 hover:text-gray-400 cursor-pointer' />
+          <IoMdAddCircle onClick={() => handleAddForm()}  className='text-3xl text-green-600 hover:text-gray-400 cursor-pointer' />
           <span>Add form</span>
         </div>
 

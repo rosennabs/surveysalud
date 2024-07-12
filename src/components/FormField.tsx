@@ -48,7 +48,7 @@ function FormField({
       
       case "checkbox":
         return (
-          <div className="flex flex-col">
+          <div className="flex flex-col space-y-2">
             {options &&
               options.map((option) => (
                 

@@ -41,21 +41,27 @@ function ReportingSurvey() {
   const [renderSurvey, setRenderSurvey] = useState(true);
 
   const initialValues: FormValues = {
-    program_name: selectedProgram || "",
-    data_forms: [],
+    program_name: selectedProgram || localStorage.getItem('programSelection'),
+    data_forms: JSON.parse(localStorage.getItem('formSelections')) || [],
   };
 
 
   const handleSubmit = async (values) => {
 
     try {
-      setFormValues(values);   
+      setFormValues(values.data_forms);
+      localStorage.setItem('formSelections', JSON.stringify(values.data_forms)); //save user's selections to local storage
+      localStorage.setItem('programSelection', values.program_name); 
       setRenderSurvey(false);
     }
     catch (error) {
       console.error('Error saving selections:', error);
 
     }
+  };
+
+  const handleAddForm = () => {
+    setRenderSurvey(true);
   };
 
   return (
@@ -108,7 +114,7 @@ function ReportingSurvey() {
             </div>
           </div>
         ) : (
-          formValues && <DataForms data_forms={formValues.data_forms}/>
+          formValues && <DataForms data_forms={formValues} handleAddForm={handleAddForm}/>
         )
       }
     </>
