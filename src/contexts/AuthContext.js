@@ -35,7 +35,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    console.log("logging out");
     sessionStorage.clear();
+    localStorage.clear();
     setUser(null);
     setIsAuthenticated(false);
     setSelectedProgram(""); // Clear the selected program
