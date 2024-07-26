@@ -1,6 +1,7 @@
 const db = require("../dbConnection");
 
 
+
 //Function to save KP data to db
 const saveKnowledgeProduct = async (KP) => {
   const {

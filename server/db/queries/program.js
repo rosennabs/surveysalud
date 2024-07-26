@@ -16,30 +16,38 @@ const saveProgram = async (program) => {
     // Check if the record already exists
     const checkQuery = `
     SELECT * FROM programs
-    WHERE program_name = $1 AND current_phase = $2 AND fiscal_year = $3 AND quarter = $4 AND end_date = $5 AND reported_by = $6;    
+    WHERE program_name = $1 AND current_phase = $2 AND fiscal_year = $3 AND quarter = $4 AND end_date = $5;    
     `;
 
-    const values = [
+    const checkValues = [
       program_name,
       current_phase,
       fiscal_year,
       quarter,
       end_date,
-      reported_by,
     ];
 
-    const checkResult = await db.query(checkQuery, values);
+    const checkResult = await db.query(checkQuery, checkValues);
     
 
     if (checkResult.rows.length === 0) {
       const insertQuery = `
       INSERT INTO programs (program_name, current_phase, fiscal_year, quarter, end_date, reported_by)
-      VALUES ($1, $2, $3, $4, $5, $6);
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *;
       `;
 
-      const result = await db.query(insertQuery, values);
-      //console.log(result.rows[0]);
-      return result.rows[0];
+       const insertValues = [
+         program_name,
+         current_phase,
+         fiscal_year,
+         quarter,
+         end_date,
+         reported_by,
+       ];
+      const insertResult = await db.query(insertQuery, insertValues);
+      // console.log(result.rows[0]);
+      return insertResult.rows[0];
     }
     else {
       // If exists, return the existing record

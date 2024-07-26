@@ -48,7 +48,8 @@ export default function RootLayout({
             </footer>
 
           </AuthProvider>
-          </FormProvider>
+        </FormProvider>
+
       </body>
     </html>
   );

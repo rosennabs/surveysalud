@@ -113,7 +113,7 @@ function Knowledge_Products() {
       // Include the user's email in the values object
       const valuesWithUser = {
         ...values,
-        reported_by: user.email,
+        reported_by: `${user.first_name} ${user.last_name}`,
       };
 
 

@@ -87,10 +87,12 @@ function Program() {
       // Include the user's email in the values object
       const valuesWithUser = {
         ...values,
-        reported_by: user.email,
+        reported_by: `${user.first_name} ${user.last_name}`,
       };
 
       const response = await axiosInstance.post('http://localhost:8080/api/program', valuesWithUser);
+      // console.log(response.data);
+      
 
       actions.resetForm();
       actions.setSubmitting(false);
