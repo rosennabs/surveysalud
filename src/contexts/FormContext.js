@@ -1,6 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useState} from "react";
+import React, { createContext, useContext, useState } from "react";
+//import { usePathname } from "next/navigation";
 
 // Create FormContext
 const FormContext = createContext();
@@ -26,19 +27,25 @@ export const FormProvider = ({ children }) => {
     setActiveButton(button);
   };
 
+   //const pathname = usePathname();
+   //const isDashboard = pathname === "/dashboard";
+
   return (
-    <FormContext.Provider value={{
-      selectedProgram,
-      setSelectedProgram,
-      activeButton,
-      setActiveButton,
-      activeNav,
-      setActiveNav,
-      baseButtonClassName,
-      activeButtonClassName,
-      activeNavClassName,
-      handleButtonClick
-    }}>
+    <FormContext.Provider
+      value={{
+        selectedProgram,
+        setSelectedProgram,
+        activeButton,
+        setActiveButton,
+        activeNav,
+        setActiveNav,
+        baseButtonClassName,
+        activeButtonClassName,
+        activeNavClassName,
+        handleButtonClick,
+  
+      }}
+    >
       {children}
     </FormContext.Provider>
   );

@@ -91,6 +91,7 @@ body {
   border-left: 10px solid teal;
   transition: 0.5s;
   overflow: hidden;
+  z-index: 10;
 }
 
 .navigation ul {
