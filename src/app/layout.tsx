@@ -47,9 +47,11 @@ export default function RootLayout({
               <p className="text-sm my-10 text-center mt-32">© 2024 HECBASE. All rights reserved.</p>
             </footer>
             )}
+
           </AuthProvider>
         </FormProvider>
 
+       
       </body>
     </html>
   );

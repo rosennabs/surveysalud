@@ -8,7 +8,8 @@ import { useFormContext } from "../contexts/FormContext";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { AboutDropDown } from "./DropDown";
 import ProfileDropDown from "./Profile";
-import { CgProfile } from "react-icons/cg";
+import { FaRegUserCircle } from "react-icons/fa";
+
 
 export default function Header() {
   const router = useRouter();
@@ -130,7 +131,7 @@ export default function Header() {
                   : "hover:underline hover:underline-offset-8 hover:text-teal-600 mr-8"
                 }`} >
               
-              <CgProfile className="text-2xl mr-2" />
+                <FaRegUserCircle className="text-2xl mr-2" />
               <MdOutlineKeyboardArrowDown />
             </div>
               {activeNav === "profile" && dropdownMenu && <ProfileDropDown />}
