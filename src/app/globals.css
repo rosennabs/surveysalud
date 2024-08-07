@@ -79,8 +79,6 @@ body {
 .container {
   position: relative;
   width: 100%;
-  
-
 
 }
 
@@ -96,6 +94,10 @@ body {
   
 }
 
+.navigation.active {
+  width: 80px;
+}
+
 .navigation ul {
   position: absolute;
   top: 0;
@@ -106,7 +108,7 @@ body {
 
 .navigation ul li {
   position: relative;
-  width: 200%;
+  width: 100%;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
   padding-left: 15px;
@@ -114,10 +116,10 @@ body {
 
 }
 
-.navigation ul li:hover ,
-.navigation ul li.hovered {
+.navigation ul li:hover {
   background: white;
 }
+
 
 .navigation ul li a {
   position: relative;
@@ -129,8 +131,7 @@ body {
   text-decoration: none; /* Remove underline from links */
 }
 
-.navigation ul li:hover a,
-.navigation ul li.hovered a {
+.navigation ul li:hover a{
   color: teal;
 }
 
@@ -150,16 +151,51 @@ body {
   white-space: nowrap;
 }
 
-/* top menu */
-.main{
+
+
+/* curve outside */
+.navigation ul li:hover a::before {
+  content: '';
   position: absolute;
-  width: calc(100% - 150px);
+  right: 0;
+  top: -50px;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px white;
+  pointer-events: none;
+
+}
+.navigation ul li:hover a::after{
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -50px;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px white;
+  pointer-events: none;
+
+}
+
+
+/* top menu */
+.dashboard{
+  position: absolute;
+  width: calc(100% - 300px);
   left: 300px;
   min-height: 100vh;
   background: white;
   transition: 0.5s;
-  padding-right: 10px;
 
+}
+
+.dashboard.active {
+  width: calc(100% - 80px);
+  left: 80px;
 }
 
 .topbar {

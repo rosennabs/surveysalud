@@ -25,8 +25,12 @@ function Dashboard() {
     //Menu toggle
     const toggle = document.querySelector('.toggle');
     const navigation = document.querySelector('.navigation');
-    const main = document.querySelector('.main');
+    const dashboard = document.querySelector('.dashboard');
 
+    toggle.onclick = function () {
+      navigation.classList.toggle('active');
+      dashboard.classList.toggle('active');
+    }
 
   }, [])
   
@@ -90,7 +94,7 @@ function Dashboard() {
 
 
       {/* top menu */}
-      <div className="main">
+      <div className="dashboard">
         <div className="topbar">
           <div className="toggle">
             <MdMenu />
