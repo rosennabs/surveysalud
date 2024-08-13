@@ -3,7 +3,8 @@
 import React, {useEffect} from "react";
 import "../globals.css";
 import { FaHome, FaUser, FaSignOutAlt, FaLock, FaSearch, FaRegUserCircle } from "react-icons/fa";
-import { MdMessage, MdOutlineLiveHelp, MdOutlineSettings, MdMenu  } from "react-icons/md";
+import { MdMessage, MdOutlineLiveHelp, MdOutlineSettings, MdMenu } from "react-icons/md";
+import DashboardStatsGrid from "../../components/DashboardStatsGrid";
 
 
 function Dashboard() {
@@ -117,6 +118,8 @@ function Dashboard() {
             <FaRegUserCircle className="relative text-3xl cursor-pointer"/>
           </div>
         </div>
+
+        <DashboardStatsGrid />
 
       </div>
     

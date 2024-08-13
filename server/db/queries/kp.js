@@ -68,4 +68,11 @@ const saveKnowledgeProduct = async (KP) => {
   }
 };
 
-module.exports = { saveKnowledgeProduct };
+//Fetch all KP entries
+async function fetchKnowledgeProducts() {
+  const data = await db.query('SELECT * FROM knowledge_products;');
+  return data.rows;
+}
+
+
+module.exports = { saveKnowledgeProduct, fetchKnowledgeProducts };
