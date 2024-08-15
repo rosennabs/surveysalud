@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, LabelList } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, LabelList, Tooltip, CartesianGrid, Rectangle, ResponsiveContainer, PieChart, Pie } from 'recharts';
 import axiosInstance from '../helpers/axiosInstance';
 
 
 
 function DashboardStatsGrid() {
-  const [kpData, setKpData] = useState([]);
+
+  const [kpData, setKpData] = useState({
+    type: [],
+    purpose: [],
+    language: [],
+    targetAudience: []
+  });
 
   useEffect(() => {
     const fetchKpData = async () => {
@@ -13,35 +19,49 @@ function DashboardStatsGrid() {
         const response = await axiosInstance.get('http://localhost:8080/api/knowledge_product/all');
         const data = response.data;
 
-        //Count Kp by type
-        const countKpType = data.reduce((acc, element) => {
-          if (acc[element.type]) { //if the kp type already exists in the accumulator, increment the count
-            acc[element.type]++;
-          } else {
-            acc[element.type] = 1; //else count the kp type
-          }
-          return acc; //returns an object with each kp type and their count
-        }, {});
+        //Function to count Kp by any attribute
+        const countByAttribute = (data, attribute) => {
+          return data.reduce((acc, element) => {
+            const key = element[attribute];
+            if (acc[key]) { //if the key already exists in the accumulator, increment the count value
+              acc[key]++;
+            } else {
+              acc[key] = 1; //else create and count the key
+            }
+            return acc; //returns an object with each kp type and their count
+          }, {});
+        };
 
-        setKpData(countKpType);
+        //Use the function for different attributes
+        const typeCounts = countByAttribute(data, 'type');
+        const purposeCounts = countByAttribute(data, 'purpose');
+        const languageCounts = countByAttribute(data, 'language');
+        const targetAudienceCounts = countByAttribute(data, 'targetAudience');
+
+        // Convert the resulting object to an array of objects with each attribute and their counts.
+        setKpData({
+          type: Object.keys(typeCounts).map(key => ({ key, count: typeCounts[key] })),
+          purpose: Object.keys(purposeCounts).map(key => ({ key, count: purposeCounts[key] })),
+          langauge: Object.keys(languageCounts).map(key => ({ key, count: languageCounts[key] })),
+          targetAudience: Object.keys(targetAudienceCounts).map(key => ({ key, count: targetAudienceCounts[key] })),
+          
+        })
+        
+          
       }
       catch (error) {
-        console.error ('Error fetching KP data:', error);
-      } 
-  
-    }
+        console.error('Error fetching KP data:', error);
+      }
+
+    };
 
 
-    fetchKpData(); 
+    fetchKpData();
 
   }, []);
 
 
-  // Convert the result to an array of objects with each kp type and their count.
-  const kpTypeData = Object.keys(kpData).map((kp_type) => ({
-    kp_type, //shortcut for kpType = kp
-    count: kpData[kp_type]
-  }));
+ 
 
 
   return (
@@ -53,13 +73,30 @@ function DashboardStatsGrid() {
         <BoxWrapper>Users</BoxWrapper>
       </div>
 
-      <div>
-        <BarChart width={400} height={400} data={kpTypeData}>
-          <XAxis dataKey="kp_type" />
-          <Bar dataKey="count" fill="#8884d8">
-            <LabelList dataKey="count" position="top"/> {/* Add count values to the bar */}
-          </Bar>
-        </BarChart>
+      <div className='flex'>
+
+        <div >
+          <BarChart width={400} height={300} data={kpData.type} margin={{ top: 20, right: 0, bottom: 0, left: 20 }}>
+            <YAxis />
+            <XAxis dataKey="key" />
+            <Tooltip />
+            <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
+            <Bar dataKey="count" fill="#82ca9d" activeBar={<Rectangle fill="teal" />}>
+              <LabelList dataKey="count" position="top" /> {/* Add count values to the bar */}
+            </Bar>
+          </BarChart>
+        </div>
+
+        <div>
+          <PieChart width={400} height={300}>
+            <Pie >
+
+            </Pie>
+
+          </PieChart>
+
+        </div>
+
       </div>
     </div>
 
