@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, LabelList, Tooltip, CartesianGrid, Rectangle, ResponsiveContainer, PieChart, Pie } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, LabelList, Tooltip, CartesianGrid, Rectangle, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import axiosInstance from '../helpers/axiosInstance';
 
 
@@ -42,7 +42,7 @@ function DashboardStatsGrid() {
         setKpData({
           type: Object.keys(typeCounts).map(key => ({ key, count: typeCounts[key] })),
           purpose: Object.keys(purposeCounts).map(key => ({ key, count: purposeCounts[key] })),
-          langauge: Object.keys(languageCounts).map(key => ({ key, count: languageCounts[key] })),
+          language: Object.keys(languageCounts).map(key => ({ key, count: languageCounts[key] })),
           targetAudience: Object.keys(targetAudienceCounts).map(key => ({ key, count: targetAudienceCounts[key] })),
           
         })
@@ -60,8 +60,24 @@ function DashboardStatsGrid() {
 
   }, []);
 
+  // Colors for pie slices
+  const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300'];
 
- 
+
+  //Calculate the position where a label should be placed inside each pie slice in a pie chart.
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.35;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+
+  }
 
 
   return (
@@ -80,7 +96,6 @@ function DashboardStatsGrid() {
             <YAxis />
             <XAxis dataKey="key" />
             <Tooltip />
-            <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
             <Bar dataKey="count" fill="#82ca9d" activeBar={<Rectangle fill="teal" />}>
               <LabelList dataKey="count" position="top" /> {/* Add count values to the bar */}
             </Bar>
@@ -89,7 +104,15 @@ function DashboardStatsGrid() {
 
         <div>
           <PieChart width={400} height={300}>
-            <Pie >
+            <Pie data={kpData.language}  fill="#8884d8"
+              dataKey="count" nameKey="key" outerRadius={120} innerRadius={50} labelLine={false}  label={renderCustomizedLabel}>
+              
+              
+              {kpData.language.map((entry, index) => (
+                
+                <Cell key={`cell-${index}`} fill={COLORS[index]}/>
+                
+              ))}
 
             </Pie>
 
