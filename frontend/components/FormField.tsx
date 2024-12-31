@@ -1,19 +1,31 @@
 import { useField } from "formik";
 import React from "react";
 
-function FormField({
-  label,
-  as,
-  options,
-  ...props
-}: {
-  label: string;
-  as: string;
-  options: string[];
-  [key: string]: any; //for additional attributes passed through props
-}) {
-  const [field, meta] = useField(props);
 
+interface FormFieldProps {
+  label: string;
+  id: string;
+  name: string;
+  placeholder: string;
+  options?: string[];
+  type?: string;
+  min?: number;
+  max?: number;
+  as?: string; // Optional prop
+}
+
+const FormField: React.FC<FormFieldProps> = ({
+  label,
+  id,
+  name,
+  placeholder,
+  options,
+  as = "input", // Default to 'input' if 'as' is not provided,
+  ...props 
+}) => {
+  const [field, meta] = useField(name);
+
+  // Function to render the appropriate input type based on 'as' prop
   const renderField = () => {
     switch (as) {
       case "select":
@@ -24,7 +36,7 @@ function FormField({
             className={`border-solid border w-full rounded-lg p-2 h-12 ${meta.touched && meta.error ? "border-red-600" : "border-teal-500"
               }`}
           >
-            <option value=""></option>
+            <option value="" disabled>{placeholder}</option>
 
             {options.map((option) => (
               <option key={option} value={option}>
@@ -39,7 +51,8 @@ function FormField({
           <textarea
             {...field}
             {...props}
-            className={`border-solid border w-full rounded-lg p-2 ${meta.touched && meta.error
+            placeholder={placeholder}
+            className={`border-solid border w-full rounded-lg p-2 h-[140px] ${meta.touched && meta.error
               ? "border-red-600"
               : "border-teal-500"
               }`}
@@ -66,6 +79,24 @@ function FormField({
               ))}
             </div>
         );
+      
+      case "radio":
+        return (
+          <div className="flex flex-col space-y-2">
+            {options.map((option) => (
+              <label key={option} className="flex items-center w-max">
+                <input
+                  type="radio"
+                  {...field}
+                  value={option}
+                  checked={field.value === option}
+                />
+                <span className="ml-2">{option}</span>
+              </label>
+            ))}
+          </div>
+        );
+      
       default:
         return (
           <input
