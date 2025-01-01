@@ -15,7 +15,7 @@ export const antenatalSurvey = [
     name: "gestationalAge",
     placeholder: "Enter number",
     type: "number",
-    min: 0,
+    min: 1,
     max: 45,
   },
   {
@@ -175,6 +175,31 @@ export const antenatalSurvey = [
 ];
 
 
+// Define types for each property in antenatal survey
+
+export interface AntenatalSurveyValues {
+  age: string;
+  gestationalAge: number;
+  numberOfCheckups: number;
+  timingFirstCheckup: string;
+  locationCheckups: string[];
+  other_locationCheckups: string;
+  accessibilityCare: string;
+  travelTime: string;
+  antenatalSupplements: string;
+  nutritionCounseling: string;
+  dietaryIntake: string;
+  vaccinationsReceived: string[];
+  screeningTests: string[];
+  healthEducationReceived: string;
+  topicsCovered: string[];
+  other_topicsCovered: string;
+  satisfactionCare: string;
+  areasImprovement: string;
+  additionalComments: string;
+}
+
+
 // Validation Schema
 
 export const antenatalSurveyValidationSchema = Yup.object({
@@ -193,7 +218,7 @@ export const antenatalSurveyValidationSchema = Yup.object({
 
   // Numbers
   gestationalAge: Yup.number()
-    .min(0, "Cannot be negative")
+    .min(1, "Cannot be negative")
     .max(45, "Exceeds maximum weeks")
     .required("Required"),
   numberOfCheckups: Yup.number()
@@ -207,16 +232,17 @@ export const antenatalSurveyValidationSchema = Yup.object({
   screeningTests: Yup.array().min(1, "Required"),
   topicsCovered: Yup.array().min(1, "Required"),
 
-   // Conditional Fields using function syntax
-  other_locationCheckups: Yup.string().when("locationCheckups", (locationCheckups: string[], schema: Yup.StringSchema) => {
-    return locationCheckups.includes("Other [Please Specify]")
-      ? schema.required("Required")
-      : schema;
+  // Conditional Fields using schema syntax
+  other_locationCheckups: Yup.string().when("locationCheckups", {
+    is: (locationCheckups: string[]) => locationCheckups.includes("Other [Please Specify]"),
+    then: (schema) => schema.required("Required"),
+    otherwise: (schema) => schema.notRequired(),
   }),
-  other_topicsCovered: Yup.string().when("topicsCovered", (topicsCovered: string[], schema: Yup.StringSchema) => {
-    return topicsCovered.includes("Other [Please Specify]")
-      ? schema.required("Required")
-      : schema;
+
+  other_topicsCovered: Yup.string().when("topicsCovered", {
+    is: (topicsCovered: string[]) => topicsCovered.includes("Other [Please Specify]"),
+    then: (schema) => schema.required("Required"),
+    otherwise: (schema) => schema.notRequired(),
   }),
 
   

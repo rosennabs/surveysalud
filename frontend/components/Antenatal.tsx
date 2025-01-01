@@ -9,30 +9,7 @@ import axiosInstance from '../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../contexts/AuthContext';
 import { useFormContext } from '../contexts/FormContext';
-import { antenatalSurvey, antenatalSurveyValidationSchema } from "../helpers/antenatalSurvey";
-
-
-interface AntenatalSurveyValues {
-  age: string;
-  gestationalAge: number;
-  numberOfCheckups: number;
-  timingFirstCheckup: string;
-  locationCheckups: string[];
-  other_locationCheckups: string;
-  accessibilityCare: string;
-  travelTime: string;
-  antenatalSupplements: string;
-  nutritionCounseling: string;
-  dietaryIntake: string;
-  vaccinationsReceived: string[];
-  screeningTests: string[];
-  healthEducationReceived: string;
-  topicsCovered: string[];
-  other_topicsCovered: string;
-  satisfactionCare: string;
-  areasImprovement: string;
-  additionalComments: string;
-}
+import { antenatalSurvey, AntenatalSurveyValues, antenatalSurveyValidationSchema } from "../helpers/antenatalSurvey";
 
 
 const validationSchema = antenatalSurveyValidationSchema;
@@ -131,7 +108,7 @@ function Antenatal() {
         >
           {({ isSubmitting, setFieldValue, values, status }) => {
             return (
-              <Form className="flex flex-wrap text-2xl">
+              <Form className="flex flex-wrap text-2xl justify-center">
                 <div>
                   {antenatalSurvey.map((question) => {
                     //Handle conditional rendering
