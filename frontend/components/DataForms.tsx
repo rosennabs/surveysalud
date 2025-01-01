@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Antenatal from './Antenatal';
 import ChildVaccination from './ChildVaccination';
+import ChildNutrition from './ChildNutrition';
 import Postnatal from './Postnatal';
 import { IoMdAddCircle } from "react-icons/io";
 
@@ -51,9 +52,12 @@ function DataForms({ data_forms, handleAddForm }) {
       </div>
 
       <div className='flex flex-col justify-center w-4/5'>
-        {activeMenuItem === "Antenatal Care Assessment" && <Antenatal />}
+        
         {activeMenuItem === "Child Vaccination" && <ChildVaccination />}
+        {activeMenuItem === "Child Nutrition" && <ChildNutrition />}
+        {activeMenuItem === "Antenatal Care Assessment" && <Antenatal />}
         {activeMenuItem === "Postnatal Care Assessment" && <Postnatal />}
+        
 
       </div>
     </div>

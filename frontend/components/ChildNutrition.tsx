@@ -7,13 +7,13 @@ import axiosInstance from '../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../contexts/AuthContext';
 import { useFormContext } from '../contexts/FormContext';
-import { childVaccinationSurvey, childVaccinationValidationSchema, ChildVaccinationValues } from "../helpers/childVaccination";
+import { childNutritionSurvey, childNutritionValidationSchema, ChildNutritionSurveyValues } from "../helpers/childNutritionSurvey";
 
 
-const validationSchema = childVaccinationValidationSchema;
+const validationSchema = childNutritionValidationSchema;
 
 
-function ChildVaccination() {
+function ChildNutrition() {
 
 
   const router = useRouter();
@@ -22,14 +22,14 @@ function ChildVaccination() {
   //const { selectedProgram, setSelectedProgram } = useFormContext();
 
 
-  const initialValues: ChildVaccinationValues = {
+  const initialValues: ChildNutritionSurveyValues = {
     age: "",
-    bcgVaccine: "",
-    opvVaccine: "",
-    dptVaccine: "",
-    measlesVaccine: "",
-    reasonForMissingVaccinations: "",
-    other_reasons: "",
+    childWeight: 0,
+    exclusiveBreastfeeding: "",
+    ageComplementaryFoods: 0,
+    mealFrequency: 0,
+    lastGrowthCheckup: "",
+    growthChartAtHome: "",
   };
 
 
@@ -51,7 +51,7 @@ function ChildVaccination() {
     return null; // Render nothing if not authenticated
   }
 
-  const handleSubmit = async (values: ChildVaccinationValues, actions: FormikHelpers<ChildVaccinationValues>) => {
+  const handleSubmit = async (values: ChildNutritionSurveyValues, actions: FormikHelpers<ChildNutritionSurveyValues>) => {
 
     try {
 
@@ -66,7 +66,7 @@ function ChildVaccination() {
       };
 
 
-      const response = await axiosInstance.post('http://localhost:8080/api/relationships', valuesWithUser);
+      const response = await axiosInstance.post('http://localhost:8080/api/knowledge_product', valuesWithUser);
 
       actions.resetForm();
       actions.setSubmitting(false);
@@ -82,10 +82,11 @@ function ChildVaccination() {
   };
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className=" w-full flex flex-col items-center">
 
-      <div className="flex flex-col items-center justify-center bg-light-teal py-16 px-28 w-full shadow-xl">
-        <h1 className="text-3xl pb-16">Child Vaccination</h1>
+
+      <div className="flex flex-col items-center justify-center  bg-light-teal py-16 px-28 w-full shadow-xl">
+        <h1 className="text-3xl pb-16">Child Nutrition</h1>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -95,17 +96,7 @@ function ChildVaccination() {
             return (
               <Form className="flex flex-col text-2xl justify-center w-full">
                 <div>
-                  {childVaccinationSurvey.map((question) => {
-                    //Handle conditional rendering
-                    if (question.conditional) {
-                      // Destructure and assign the field and value properties to a variable condField and condValue
-                      const { field: condField, value: condValue } = question.conditional;
-                      // if the form value of condField eg. locationCheckups does not include 'Other [Please Specify]'
-                      if (!values[condField].includes(condValue)) {
-                        return null; //Don't render this field
-                      }
-                    }
-
+                  {childNutritionSurvey.map((question) => {
                     return (
 
                       <FormField
@@ -134,4 +125,4 @@ function ChildVaccination() {
   );
 }
 
-export default ChildVaccination;
+export default ChildNutrition;

@@ -62,7 +62,7 @@ export const childVaccinationSurvey = [
 
 // Type Definitions
 export interface ChildVaccinationValues {
-  age: number;
+  age: string;
   bcgVaccine: string;
   opvVaccine: string;
   dptVaccine: string;

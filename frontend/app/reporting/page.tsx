@@ -17,6 +17,7 @@ interface FormValues {
 
 const data_forms: string[] = [
   "Child Vaccination",
+  "Child Nutrition",
   "Antenatal Care Assessment",
   "Postnatal Care Assessment",
 ];
