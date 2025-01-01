@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import Antenatal from './Antenatal';
 import Program from './Program';
-import Relationships from './Relationships';
+import Postnatal from './Postnatal';
 import { IoMdAddCircle } from "react-icons/io";
 
-const menuItem = 'flex items-center justify-center rounded-lg my-4 first:mt-0 cursor-pointer h-[80px]';
+const menuItem = 'flex items-center justify-center text-center rounded-lg my-4 first:mt-0 cursor-pointer h-[80px]';
 const activeMenuItemClass = 'bg-light-teal shadow-xl border border-light-grey text-black';
 
 
@@ -40,7 +40,7 @@ function DataForms({ data_forms, handleAddForm }) {
 
       <div className='flex flex-col w-1/6 text-white font-semibold'>
         {data_forms.map((form) => (
-          <p key={form} onClick={() => handleMenuClick(form)} className={`${menuItem} ${activeMenuItem === form ? activeMenuItemClass : 'bg-teal-500'}`}>{form}</p>
+          <span key={form} onClick={() => handleMenuClick(form)} className={`${menuItem} ${activeMenuItem === form ? activeMenuItemClass : 'bg-teal-500'}`}>{form}</span>
         ))}
 
         <div className='flex items-center justify-center space-x-4 mt-8 text-black w-full'>
@@ -53,7 +53,7 @@ function DataForms({ data_forms, handleAddForm }) {
       <div className='flex flex-col justify-center w-4/5'>
         {activeMenuItem === "Antenatal Care Assessment" && <Antenatal />}
         {activeMenuItem === "Program" && <Program />}
-        {activeMenuItem === "Relationships" && <Relationships />}
+        {activeMenuItem === "Postnatal Care Assessment" && <Postnatal />}
 
       </div>
     </div>

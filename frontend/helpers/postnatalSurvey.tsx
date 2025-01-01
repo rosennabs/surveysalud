@@ -61,6 +61,7 @@ export const postnatalSurvey = [
       field: "receivedBreastfeedingSupport",
       value: "Yes",
     },
+    placeholder: "Select an option",
   },
   {
     label: "Have you received any mental health support postpartum?",
