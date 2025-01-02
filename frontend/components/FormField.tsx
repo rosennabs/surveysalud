@@ -1,4 +1,4 @@
-import { useField } from "formik";
+import { useField, FormikHelpers } from "formik";
 import React from "react";
 
 
@@ -6,12 +6,13 @@ interface FormFieldProps {
   label: string;
   id: string;
   name: string;
-  placeholder: string;
+  placeholder?: string;
   options?: string[];
   type?: string;
   min?: number;
   max?: number;
   as?: string; // Optional prop
+  setFieldValue?: FormikHelpers<any>["setFieldValue"];
 }
 
 const FormField: React.FC<FormFieldProps> = ({

@@ -1,16 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
-import { Formik, Form } from "formik";
+import React, { useState, useEffect } from "react";
+import { Formik, Form, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
 import Button from "../../components/submitButton";
 import DataForms from "../../components/DataForms";
-import { useFormContext } from '../../contexts/FormContext';
 
 //Define types for form values
 interface FormValues {
-  program_name: string;
   data_forms: string[];
 }
 
@@ -30,35 +28,33 @@ const validationSchema = Yup.object({
 
 
 function Surveys() {
-
-  const { selectedProgram, setSelectedProgram } = useFormContext();
-  const [formValues, setFormValues] = useState<FormValues | null>(null);
+  const [formValues, setFormValues] = useState<string[]>([]);
   const [renderSurvey, setRenderSurvey] = useState(true);
 
-  const initialValues: FormValues = {
-    program_name: selectedProgram || localStorage.getItem('programSelection'),
-    data_forms: JSON.parse(localStorage.getItem('formSelections')) || [],
-  };
+  // Load data from localStorage only after the component has mounted in the browser.
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedSelections = JSON.parse(localStorage.getItem("formSelections") || "[]");
+      setFormValues(savedSelections); // Retain user's selection when the component rerenders
+    }
+  }, []);
 
 
-  const handleSubmit = async (values) => {
-
+  const handleSubmit = async (values: FormValues) => {
     try {
       setFormValues(values.data_forms);
-      localStorage.setItem('formSelections', JSON.stringify(values.data_forms)); //save user's selections to local storage
-      localStorage.setItem('programSelection', values.program_name);
+      localStorage.setItem("formSelections", JSON.stringify(values.data_forms)); // Set form values to local storage
       setRenderSurvey(false);
-    }
-    catch (error) {
-      console.error('Error saving selections:', error);
-
+    } catch (error) {
+      console.error("Error saving selections:", error);
     }
   };
 
   const handleAddForm = () => {
     setRenderSurvey(true);
   };
-
+ 
+  
   return (
     <>
       {renderSurvey ?
@@ -69,12 +65,15 @@ function Surveys() {
             <div className="bg-white border border-black border-opacity-15 p-16 shadow-xl w-[700px]">
 
               <Formik
-                initialValues={initialValues}
+                initialValues={{ data_forms: formValues }}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
               >
-                {({ isSubmitting, status, setFieldValue }) => {
-
+                {({ isSubmitting, status, setFieldValue }: {
+                  isSubmitting: boolean;
+                  status?: string;
+                  setFieldValue: FormikHelpers<FormValues>["setFieldValue"];
+                }) => {
 
                   return (
                     <Form className="flex flex-col text-2xl">

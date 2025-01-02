@@ -1,10 +1,8 @@
 
 import React, { useEffect } from "react";
 import { Formik, Form, FormikHelpers } from "formik";
-import * as Yup from "yup";
 import FormField from "./FormField";
 import Button from "./submitButton";
-import { programs } from "../helpers/globalOptions";
 import axiosInstance from '../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../contexts/AuthContext';
