@@ -27,13 +27,9 @@ function Postnatal() {
     receivedPostnatalCheckups: "",
     numberOfPostnatalVisits: 0,
     experiencedComplications: "",
-    newbornExamination: "",
     receivedBreastfeedingSupport: "",
-    satisfactionBreastfeedingSupport: "",
     receivedMentalHealthSupport: "",
     providedNewbornCareInfo: "",
-    newbornCareTopics: [],
-    otherNewbornCareTopics: "",
     additionalComments: "",
   };
 

@@ -36,13 +36,6 @@ export const postnatalSurvey = [
     options: ["Yes", "No"],
     as: "radio",
   },
-  {
-    label: "Has your newborn been examined by a healthcare worker since birth?",
-    id: "newbornExamination",
-    name: "newbornExamination",
-    options: ["Yes", "No"],
-    as: "radio",
-  },
 
   {
     label: "Have you received breastfeeding support after delivery?",
@@ -51,18 +44,7 @@ export const postnatalSurvey = [
     options: ["Yes", "No"],
     as: "radio",
   },
-  {
-    label: "How satisfied are you with the breastfeeding support you received?",
-    id: "satisfactionBreastfeedingSupport",
-    name: "satisfactionBreastfeedingSupport",
-    options: ["Very Satisfied", "Satisfied", "Neutral", "Dissatisfied", "Very Dissatisfied"],
-    as: "select",
-    conditional: {
-      field: "receivedBreastfeedingSupport",
-      value: "Yes",
-    },
-    placeholder: "Select an option",
-  },
+
   {
     label: "Have you received any mental health support postpartum?",
     id: "receivedMentalHealthSupport",
@@ -77,29 +59,7 @@ export const postnatalSurvey = [
     options: ["Yes", "No"],
     as: "radio",
   },
-  {
-    label: "Which topics were covered? (Select all that apply)",
-    id: "newbornCareTopics",
-    name: "newbornCareTopics",
-    placeholder: "Select all that apply",
-    options: ["Feeding", "Bathing", "Sleeping", "Immunizations", "Others"],
-    as: "checkbox",
-    conditional: {
-      field: "providedNewbornCareInfo",
-      value: "Yes",
-    },
-  },
-  {
-    label: "Please specify other topics covered:",
-    id: "otherNewbornCareTopics",
-    name: "otherNewbornCareTopics",
-    placeholder: "Enter other topics",
-    type: "text",
-    conditional: {
-      field: "newbornCareTopics",
-      value: "Others",
-    },
-  },
+
   {
     label: "Please share any additional comments or suggestions regarding your postnatal care experience.",
     id: "additionalComments",
@@ -115,13 +75,9 @@ export interface PostnatalSurveyValues {
   receivedPostnatalCheckups: string;
   numberOfPostnatalVisits: number | undefined;
   experiencedComplications: string;
-  newbornExamination: string;
   receivedBreastfeedingSupport: string;
-  satisfactionBreastfeedingSupport: string;
   receivedMentalHealthSupport: string;
   providedNewbornCareInfo: string;
-  newbornCareTopics: string[];
-  otherNewbornCareTopics: string;
   additionalComments: string;
 }
 
@@ -133,7 +89,6 @@ export const postnatalValidationSchema = Yup.object({
   // Radio Button Fields
   receivedPostnatalCheckups: Yup.string().required("Required"),
   experiencedComplications: Yup.string().required("Required"),
-  newbornExamination: Yup.string().required("Required"),
   receivedBreastfeedingSupport: Yup.string().required("Required"),
   receivedMentalHealthSupport: Yup.string().required("Required"),
   providedNewbornCareInfo: Yup.string().required("Required"),
@@ -147,27 +102,6 @@ export const postnatalValidationSchema = Yup.object({
       otherwise: (schema) => schema.notRequired(),
     }),
   
-  satisfactionBreastfeedingSupport: Yup.string().when("receivedBreastfeedingSupport", {
-    is: "Yes",
-    then: (schema) =>
-      schema.required("Required"),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-
-  // Conditional Checkbox Group
-  newbornCareTopics: Yup.array().when("providedNewbornCareInfo", {
-    is: "Yes",
-    then: (schema) =>
-      schema.min(1, "Select at least one topic").required("Required"),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-
-  // Conditional Text Field for 'Others'
-  otherNewbornCareTopics: Yup.string().when("newbornCareTopics", {
-    is: (topics: string[]) => topics.includes("Others"),
-    then: (schema) => schema.required("Required"),
-    otherwise: (schema) => schema.notRequired(),
-  }),
   
   additionalComments: Yup.string(), // Assuming this is optional
 

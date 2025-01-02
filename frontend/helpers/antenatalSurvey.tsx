@@ -27,49 +27,13 @@ export const antenatalSurvey = [
     min: 0,
     max: 45,
   },
-  {
-    label: "In which trimester did you have your first checkup?",
-    id: "timingFirstCheckup",
-    name: "timingFirstCheckup",
-    placeholder: "Select an option",
-    options: ["First", "Second", "Third"],
-    as: "select"
-  },
-  {
-    label: "Where do you receive your checkups?",
-    id: "locationCheckups",
-    name: "locationCheckups",
-    placeholder: "Select all that apply",
-    options: ["Hospital", "Community Clinic", "Private Doctor", "Mobile Health Unit", "Other [Please Specify]"],
-    as: "checkbox"
-  },
-
-  // Conditional field for specifying "Other" locations
-  {
-    label: "Please specify other locations:",
-    id: "other_locationCheckups",
-    name: "other_locationCheckups",
-    placeholder: "Enter other locations",
-    type: "text",
-    conditional: {
-      field: "locationCheckups",
-      value: "Other [Please Specify]",
-    },
-  },
+  
   {
     label: "How would you rate the accessibility of your antenatal care services?",
     id: "accessibilityCare",
     name: "accessibilityCare",
     placeholder: "Select an option",
     options: ["Very Accessible", "Accessible", "Neutral", "Inaccessible", "Very Inaccessible"],
-    as: "select"
-  },
-  {
-    label: "On average, how long does it take you to travel to your antenatal care provider?",
-    id: "travelTime",
-    name: "travelTime",
-    placeholder: "Select an option",
-    options: ["Less than 15 minutes", "15-30 minutes", "31-60 minutes", "More than 60 minutes"],
     as: "select"
   },
   {
@@ -82,34 +46,18 @@ export const antenatalSurvey = [
   },
   
   {
-    label: "Have you received any nutritional counseling during your pregnancy?",
-    id: "nutritionCounseling",
-    name: "nutritionCounseling",
-    placeholder: "Select an option",
-    options: ["Yes", "No"],
-    as: "radio"
-  },
-  {
-    label: "How would you describe your daily dietary intake?",
-    id: "dietaryIntake",
-    name: "dietaryIntake",
-    placeholder: "Select an option",
-    options: ["Balanced and nutritious", "Moderately balanced", "Poorly balanced", "Not sure"],
-    as: "select"
-  },
-  {
     label: "Which of the following vaccinations have you received during your pregnancy?",
     id: "vaccinationsReceived",
     name: "vaccinationsReceived",
-    placeholder: "Select an option",
+    placeholder: "Select all that",
     options: ["Influenza (Flu)", "Tetanus, Diphtheria, and Pertussis (Tdap)", "COVID-19", "Hepatitis B", "None"],
-    as: "select"
+    as: "checkbox"
   },
   {
     label: "Have you undergone any of the following screening tests?",
     id: "screeningTests",
     name: "screeningTests",
-    placeholder: "Select an option",
+    placeholder: "Select all that apply",
     options: [
       "Blood Pressure Measurement",
       "Blood Tests (e.g., anemia, blood type)",
@@ -118,7 +66,7 @@ export const antenatalSurvey = [
       "Glucose Screening for Gestational Diabetes",
       "None"
     ],
-    as: "select"
+    as: "checkbox"
   },
   {
     label: "Have you received any health education or counseling during your antenatal visits?",
@@ -128,35 +76,7 @@ export const antenatalSurvey = [
     options: ["Yes", "No"],
     as: "radio"
   },
-  {
-    label: "Which topics were covered in your antenatal health education sessions?",
-    id: "topicsCovered",
-    name: "topicsCovered",
-    placeholder: "Select all that apply",
-    options: [
-      "Nutrition and Diet",
-      "Exercise and Physical Activity",
-      "Warning Signs and Complications",
-      "Breastfeeding",
-      "Postnatal Care",
-      "Infant Care",
-      "Family Planning",
-      "Other [Please Specify]"
-    ],
-    as: "checkbox"
-  },
-  // Conditional field for specifying "Other" topics covered
-  {
-    label: "Please specify other topics covered:",
-    id: "other_topicsCovered",
-    name: "other_topicsCovered",
-    placeholder: "Enter other topics",
-    type: "text",
-    conditional: {
-      field: "topicsCovered",
-      value: "Other [Please Specify]",
-    },
-  },
+  
   {
     label: "How satisfied are you with the antenatal care you have received so far?",
     id: "satisfactionCare",
@@ -181,19 +101,11 @@ export interface AntenatalSurveyValues {
   age: string;
   gestationalAge: number;
   numberOfCheckups: number;
-  timingFirstCheckup: string;
-  locationCheckups: string[];
-  other_locationCheckups: string;
   accessibilityCare: string;
-  travelTime: string;
   antenatalSupplements: string;
-  nutritionCounseling: string;
-  dietaryIntake: string;
   vaccinationsReceived: string[];
   screeningTests: string[];
   healthEducationReceived: string;
-  topicsCovered: string[];
-  other_topicsCovered: string;
   satisfactionCare: string;
   areasImprovement: string;
   additionalComments: string;
@@ -207,13 +119,11 @@ export const antenatalSurveyValidationSchema = Yup.object({
   age: Yup.string().required("Required"),
   timingFirstCheckup: Yup.string().required("Required"),
   accessibilityCare: Yup.string().required("Required"),
-  travelTime: Yup.string().required("Required"),
-  dietaryIntake: Yup.string().required("Required"),
   satisfactionCare: Yup.string().required("Required"),
 
   // Radio Button Fields
   antenatalSupplements: Yup.string().required("Required"),
-  nutritionCounseling: Yup.string().required("Required"),
+  
   healthEducationReceived: Yup.string().required("Required"),
 
   // Numbers
@@ -227,20 +137,13 @@ export const antenatalSurveyValidationSchema = Yup.object({
     .required("Required"),
 
   // Checkbox Fields
-  locationCheckups: Yup.array().min(1, "Required"),
+  locationCheckups: Yup.string().required("Required"),
   vaccinationsReceived: Yup.array().min(1, "Required"),
   screeningTests: Yup.array().min(1, "Required"),
-  topicsCovered: Yup.array().min(1, "Required"),
 
   // Conditional Fields using schema syntax
   other_locationCheckups: Yup.string().when("locationCheckups", {
-    is: (locationCheckups: string[]) => locationCheckups.includes("Other [Please Specify]"),
-    then: (schema) => schema.required("Required"),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-
-  other_topicsCovered: Yup.string().when("topicsCovered", {
-    is: (topicsCovered: string[]) => topicsCovered.includes("Other [Please Specify]"),
+    is: "Other [Please Specify]",
     then: (schema) => schema.required("Required"),
     otherwise: (schema) => schema.notRequired(),
   }),
