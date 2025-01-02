@@ -65,6 +65,8 @@ function ChildVaccination() {
         reported_by: `${user.first_name} ${user.last_name}`,
       };
 
+      console.log("Child Vaccination Survey: ", values);
+      
 
       const response = await axiosInstance.post('http://localhost:8080/api/relationships', valuesWithUser);
 

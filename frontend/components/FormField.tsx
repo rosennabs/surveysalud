@@ -20,7 +20,7 @@ const FormField: React.FC<FormFieldProps> = ({
   id,
   name,
   placeholder,
-  options,
+  options, // Default to an empty array to prevent errors
   as = "input", // Default to 'input' if 'as' is not provided,
   ...props 
 }) => {
@@ -34,6 +34,7 @@ const FormField: React.FC<FormFieldProps> = ({
           <select
             {...field}
             {...props}
+            value={field.value || ""}
             className={`border-solid border w-full rounded-lg p-2 h-12 ${meta.touched && meta.error ? "border-red-600" : "border-teal-500"
               }`}
           >
