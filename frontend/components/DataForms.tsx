@@ -46,7 +46,7 @@ function DataForms({ data_forms, handleAddForm }) {
 
         <div className='flex items-center justify-center space-x-4 mt-8 text-black w-full'>
           <IoMdAddCircle onClick={() => handleAddForm()}  className='text-3xl text-green-600 hover:text-gray-400 cursor-pointer' />
-          <span>Add form</span>
+          <span>Add Survey</span>
         </div>
 
       </div>

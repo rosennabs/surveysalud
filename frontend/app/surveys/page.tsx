@@ -6,7 +6,6 @@ import * as Yup from "yup";
 import FormField from "../../components/FormField";
 import Button from "../../components/submitButton";
 import DataForms from "../../components/DataForms";
-import { programs } from "../../helpers/globalOptions";
 import { useFormContext } from '../../contexts/FormContext';
 
 //Define types for form values
@@ -25,13 +24,12 @@ const data_forms: string[] = [
 
 
 const validationSchema = Yup.object({
-  program_name: Yup.string().required("Required"),
   data_forms: Yup.array().min(1, "At least one form is required").required("Required"),
 });
 
 
 
-function ReportingSurvey() {
+function Surveys() {
 
   const { selectedProgram, setSelectedProgram } = useFormContext();
   const [formValues, setFormValues] = useState<FormValues | null>(null);
@@ -79,22 +77,11 @@ function ReportingSurvey() {
 
 
                   return (
-                    <Form className="flex flex-wrap text-2xl">
+                    <Form className="flex flex-col text-2xl">
+                      <h4>Select applicable survey(s):</h4>
+    
                       <FormField
-                        label="Select program:"
-                        name="program_name"
-                        id="program_name"
-                        as="select"
-                        options={programs}
-                        onChange={(e) => {
-                          const selectedValue = e.target.value;
-                          setSelectedProgram(selectedValue);
-                          setFieldValue('program_name', selectedValue);
-                        }}
-                      />
-
-                      <FormField
-                        label="Select applicable reporting form(s):"
+                        label=""
                         as="checkbox"
                         id="data_forms"
                         name="data_forms"
@@ -103,7 +90,7 @@ function ReportingSurvey() {
                       />
 
 
-                      <Button isSubmitting={isSubmitting} status={status} text={"Start"} />
+                      <Button isSubmitting={isSubmitting} status={status} text={"Enter"} />
                     </Form>
                   );
                 }}
@@ -120,4 +107,4 @@ function ReportingSurvey() {
 
 }
 
-export default ReportingSurvey;
+export default Surveys;

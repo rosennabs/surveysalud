@@ -50,8 +50,8 @@ function Login() {
       actions.setSubmitting(false);
 
 
-      if (activeNav === "reporting") {
-        router.push('/reporting');
+      if (activeNav === "surveys") {
+        router.push('/surveys');
       } else {
         router.push('/'); //Navigate to the homepage
       }

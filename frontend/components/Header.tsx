@@ -93,16 +93,16 @@ export default function Header() {
           </div>
         </Link>
 
-        <Link href={isAuthenticated ? "/reporting" : "/login"}>
+        <Link href={isAuthenticated ? "/surveys" : "/login"}>
           <div
-            onClick={() => handleNavClick("reporting")}
+            onClick={() => handleNavClick("surveys")}
             className={
-              activeNav === "reporting"
+              activeNav === "surveys"
                 ? activeNavClassName
                 : "hover:underline hover:underline-offset-8 hover:text-teal-600 mr-8"
             }
           >
-            Reporting
+            Surveys
           </div>
         </Link>
 
