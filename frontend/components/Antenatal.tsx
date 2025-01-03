@@ -6,7 +6,6 @@ import Button from "./submitButton";
 import axiosInstance from '../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../contexts/AuthContext';
-import { useFormContext } from '../contexts/FormContext';
 import { antenatalSurvey, AntenatalSurveyValues, antenatalSurveyValidationSchema } from "../helpers/antenatalSurvey";
 
 
@@ -19,7 +18,6 @@ function Antenatal() {
   const router = useRouter();
 
   const { isAuthenticated, user, loading } = useAuth();
-  //const { selectedProgram, setSelectedProgram } = useFormContext();
 
 
   const initialValues: AntenatalSurveyValues = {
@@ -32,7 +30,6 @@ function Antenatal() {
     screeningTests: [],
     healthEducationReceived: "",
     satisfactionCare: "",
-    areasImprovement: "",
     additionalComments: "",
   };
 
@@ -56,7 +53,7 @@ function Antenatal() {
   }
 
   const handleSubmit = async (values: AntenatalSurveyValues, actions: FormikHelpers<AntenatalSurveyValues>) => {
-
+    
     try {
 
       if (!user) {
@@ -68,18 +65,19 @@ function Antenatal() {
         ...values,
         reported_by: `${user.first_name} ${user.last_name}`,
       };
-
-
-      const response = await axiosInstance.post('http://localhost:8080/api/knowledge_product', valuesWithUser);
+      
+      const response = await axiosInstance.post('http://localhost:8080/api/antenatal_survey', valuesWithUser);
+      console.log("Antenatal Responses saved to db: ", response);
+      
 
       actions.resetForm();
       actions.setSubmitting(false);
     }
     catch (error) {
-      console.error('Error saving KP:', error);
+      console.error('Error saving data:', error);
 
       // Display an error message to the user
-      actions.setStatus({ error: 'An error occurred while saving data!' });
+      actions.setStatus({ error: 'An error occurred while submitting data!' });
       actions.setSubmitting(false);
     }
 
@@ -94,23 +92,17 @@ function Antenatal() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}
+          onSubmit={(values, actions) => {
+            console.log("Formik onSubmit triggered"); // Debug log
+            handleSubmit(values, actions);
+          }}
         >
-          {({ isSubmitting, setFieldValue, values, status }) => {
+          {({ isSubmitting, status }) => {
             return (
               <Form className="flex flex-wrap text-2xl justify-center">
                 <div>
                   {antenatalSurvey.map((question) => {
-                    //Handle conditional rendering
-                    if (question.conditional) {
-                      // Destructure and assign the field and value properties to a variable condField and condValue
-                      const { field: condField, value: condValue } = question.conditional;
-                      // if the form value of condField eg. locationCheckups does not include 'Other [Please Specify]'
-                      if (!values[condField].includes(condValue)) {
-                        return null; //Don't render this field
-                      }
-                    }
-
+                    
                     return (
 
                     <FormField
@@ -128,22 +120,7 @@ function Antenatal() {
 
                   })}
                 </div>
-                
-                {/* <FormField
-                  label="Program"
-                  name="program"
-                  id="program"
-                  as="select"
-                  options={programs}
-
-                  onChange={(e) => {
-                    const selectedValue = e.target.value;
-                    setSelectedProgram(selectedValue);
-                    setFieldValue('program', selectedValue);
-                  }}
-                /> */}
-                
-                
+               
                 <Button isSubmitting={isSubmitting} status={status} text={"Submit"} />
               </Form>
             );

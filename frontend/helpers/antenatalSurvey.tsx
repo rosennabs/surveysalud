@@ -107,7 +107,6 @@ export interface AntenatalSurveyValues {
   screeningTests: string[];
   healthEducationReceived: string;
   satisfactionCare: string;
-  areasImprovement: string;
   additionalComments: string;
 }
 
@@ -117,7 +116,6 @@ export interface AntenatalSurveyValues {
 export const antenatalSurveyValidationSchema = Yup.object({
   // Dropdown (Select) Fields
   age: Yup.string().required("Required"),
-  timingFirstCheckup: Yup.string().required("Required"),
   accessibilityCare: Yup.string().required("Required"),
   satisfactionCare: Yup.string().required("Required"),
 
@@ -137,16 +135,8 @@ export const antenatalSurveyValidationSchema = Yup.object({
     .required("Required"),
 
   // Checkbox Fields
-  locationCheckups: Yup.string().required("Required"),
   vaccinationsReceived: Yup.array().min(1, "Required"),
   screeningTests: Yup.array().min(1, "Required"),
-
-  // Conditional Fields using schema syntax
-  other_locationCheckups: Yup.string().when("locationCheckups", {
-    is: "Other [Please Specify]",
-    then: (schema) => schema.required("Required"),
-    otherwise: (schema) => schema.notRequired(),
-  }),
 
   
   // Text Areas

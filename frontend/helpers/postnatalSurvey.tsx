@@ -73,7 +73,7 @@ export const postnatalSurvey = [
 export interface PostnatalSurveyValues {
   age: string;
   receivedPostnatalCheckups: string;
-  numberOfPostnatalVisits: number | undefined;
+  numberOfPostnatalVisits: number;
   experiencedComplications: string;
   receivedBreastfeedingSupport: string;
   receivedMentalHealthSupport: string;

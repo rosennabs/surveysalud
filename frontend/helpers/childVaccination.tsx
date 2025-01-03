@@ -43,7 +43,7 @@ export const childVaccinationSurvey = [
     id: "reasonForMissingVaccinations",
     name: "reasonForMissingVaccinations",
     placeholder: "Select an option",
-    options: ["Distance", "Cost", "Lack of Information", "Fear", "Other"],
+    options: ["Distance", "Cost", "Lack of Information", "Fear", "Child not of age", "Other"],
     as: "select",
   },
   // Conditional field for specifying "Other"
@@ -80,8 +80,6 @@ export const childVaccinationValidationSchema = Yup.object({
   dptVaccine: Yup.string().required("Required"),
   measlesVaccine: Yup.string().required("Required"),
   reasonForMissingVaccinations: Yup.string().required("Required"),
-
-
   other_reasons: Yup.string().when("reasonForMissingVaccinations", {
     is: "Other", // Directly compare the value to "Other"
     then: (schema) => schema.required("Required"),
