@@ -6,7 +6,6 @@ import Button from "./submitButton";
 import axiosInstance from '../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../contexts/AuthContext';
-import { useFormContext } from '../contexts/FormContext';
 import { childNutritionSurvey, childNutritionValidationSchema, ChildNutritionSurveyValues } from "../helpers/childNutritionSurvey";
 
 
@@ -19,7 +18,6 @@ function ChildNutrition() {
   const router = useRouter();
 
   const { isAuthenticated, user, loading } = useAuth();
-  //const { selectedProgram, setSelectedProgram } = useFormContext();
 
 
   const initialValues: ChildNutritionSurveyValues = {
@@ -66,16 +64,18 @@ function ChildNutrition() {
       };
 
 
-      const response = await axiosInstance.post('http://localhost:8080/api/knowledge_product', valuesWithUser);
+      const response = await axiosInstance.post('http://localhost:8080/api/child_nutrition', valuesWithUser);
+      //console.log("Child Nutrition Responses: ", response.data);
+      
 
       actions.resetForm();
       actions.setSubmitting(false);
     }
     catch (error) {
-      console.error('Error saving KP:', error);
+      console.error('Error saving data:', error);
 
       // Display an error message to the user
-      actions.setStatus({ error: 'An error occurred while saving data!' });
+      actions.setStatus({ error: 'An error occurred while submitting data!' });
       actions.setSubmitting(false);
     }
 

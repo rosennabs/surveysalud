@@ -17,17 +17,17 @@ export const childNutritionSurvey = [
     placeholder: "kg",
     type: "number",
     min: 0,
-    max: 100,
+    max: 50,
   },
   {
-    label: "Is your child exclusively breastfed?",
+    label: "Is/Was your child exclusively breastfed?",
     id: "exclusiveBreastfeeding",
     name: "exclusiveBreastfeeding",
     options: ["Yes", "No"],
     as: "radio",
   },
   {
-    label: "At what age did you introduce complementary foods?",
+    label: "At what age (months) did you introduce complementary foods?",
     id: "ageComplementaryFoods",
     name: "ageComplementaryFoods",
     placeholder: "Enter age in months",
@@ -62,10 +62,10 @@ export const childNutritionSurvey = [
 // Type Definitions
 export interface ChildNutritionSurveyValues {
   age: string;
-  childWeight: number | undefined;
+  childWeight: number;
   exclusiveBreastfeeding: string;
-  ageComplementaryFoods: number | undefined;
-  mealFrequency: number | undefined;
+  ageComplementaryFoods: number;
+  mealFrequency: number;
   lastGrowthCheckup: string;
   growthChartAtHome: string;
 }
@@ -75,6 +75,12 @@ export interface ChildNutritionSurveyValues {
 
 export const childNutritionValidationSchema = Yup.object({
   age: Yup.string().required("Required"),
+
+  childWeight: Yup.number()
+    .required("Required")
+    .min(0, "Weight cannot be less than 0")
+    .max(50, "Weight cannot exceed 50kg"),
+  
   exclusiveBreastfeeding: Yup.string().required("Required"),
   ageComplementaryFoods: Yup.number()
     .required("Required")

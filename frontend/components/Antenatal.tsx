@@ -67,7 +67,7 @@ function Antenatal() {
       };
       
       const response = await axiosInstance.post('http://localhost:8080/api/antenatal_survey', valuesWithUser);
-      console.log("Antenatal Responses saved to db: ", response);
+      //console.log("Antenatal Responses saved to db: ", response);
       
 
       actions.resetForm();
