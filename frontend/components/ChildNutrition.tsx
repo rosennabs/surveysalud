@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 import { Formik, Form, FormikHelpers } from "formik";
 import FormField from "./FormField";
 import Button from "./submitButton";
-import axiosInstance from '../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../contexts/AuthContext';
+import { useFormContext } from '../contexts/FormContext';
 import { childNutritionSurvey, childNutritionValidationSchema, ChildNutritionSurveyValues } from "../helpers/childNutritionSurvey";
 
 
@@ -17,7 +17,8 @@ function ChildNutrition() {
 
   const router = useRouter();
 
-  const { isAuthenticated, user, loading } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
+  const { handleSubmit } = useFormContext();
 
 
   const initialValues: ChildNutritionSurveyValues = {
@@ -49,37 +50,6 @@ function ChildNutrition() {
     return null; // Render nothing if not authenticated
   }
 
-  const handleSubmit = async (values: ChildNutritionSurveyValues, actions: FormikHelpers<ChildNutritionSurveyValues>) => {
-
-    try {
-
-      if (!user) {
-        throw new Error('User not found');
-      }
-
-      // Include the user's email in the values object
-      const valuesWithUser = {
-        ...values,
-        reported_by: `${user.first_name} ${user.last_name}`,
-      };
-
-
-      const response = await axiosInstance.post('http://localhost:8080/api/child_nutrition', valuesWithUser);
-      //console.log("Child Nutrition Responses: ", response.data);
-      
-
-      actions.resetForm();
-      actions.setSubmitting(false);
-    }
-    catch (error) {
-      console.error('Error saving data:', error);
-
-      // Display an error message to the user
-      actions.setStatus({ error: 'An error occurred while submitting data!' });
-      actions.setSubmitting(false);
-    }
-
-  };
 
   return (
     <div className=" w-full flex flex-col items-center">
@@ -90,9 +60,12 @@ function ChildNutrition() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}
+
+          onSubmit={(values: ChildNutritionSurveyValues, actions: FormikHelpers<ChildNutritionSurveyValues>) => {
+            handleSubmit(values, actions, "child_nutrition");
+          }}
         >
-          {({ isSubmitting, setFieldValue, values, status }) => {
+          {({ isSubmitting, status }) => {
             return (
               <Form className="flex flex-col text-2xl justify-center w-full">
                 <div>

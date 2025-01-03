@@ -17,7 +17,7 @@ function Antenatal() {
 
   const router = useRouter();
 
-  const { isAuthenticated, user, loading } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
   const { handleSubmit } = useFormContext();
 
 
@@ -53,36 +53,7 @@ function Antenatal() {
     return null; // Render nothing if not authenticated
   }
 
-  // const handleSubmit = async (values: AntenatalSurveyValues, actions: FormikHelpers<AntenatalSurveyValues>) => {
     
-  //   try {
-
-  //     if (!user) {
-  //       throw new Error('User not found');
-  //     }
-
-  //     // Include the user's email in the values object
-  //     const valuesWithUser = {
-  //       ...values,
-  //       reported_by: `${user.first_name} ${user.last_name}`,
-  //     };
-      
-  //     const response = await axiosInstance.post('http://localhost:8080/api/antenatal_survey', valuesWithUser);
-  //     //console.log("Antenatal Responses saved to db: ", response);
-      
-
-  //     actions.resetForm();
-  //     actions.setSubmitting(false);
-  //   }
-  //   catch (error) {
-  //     console.error('Error saving data:', error);
-
-  //     // Display an error message to the user
-  //     actions.setStatus({ error: 'An error occurred while submitting data!' });
-  //     actions.setSubmitting(false);
-  //   }
-
-  // };
 
   return (
     <div className=" w-full flex flex-col items-center">
@@ -95,7 +66,7 @@ function Antenatal() {
           validationSchema={validationSchema}
 
           onSubmit={(values: AntenatalSurveyValues, actions: FormikHelpers<AntenatalSurveyValues>) => {
-            handleSubmit(values, actions, "antenatal_survey");
+            handleSubmit(values, actions, "antenatal_survey"); 
           }}
         >
           {({ isSubmitting, status }) => {

@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { Formik, Form, FormikHelpers } from "formik";
 import FormField from "./FormField";
 import Button from "./submitButton";
-import axiosInstance from '../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../contexts/AuthContext';
 import { useFormContext } from '../contexts/FormContext';
@@ -18,8 +17,8 @@ function Postnatal() {
 
   const router = useRouter();
 
-  const { isAuthenticated, user, loading } = useAuth();
-  //const { selectedProgram, setSelectedProgram } = useFormContext();
+  const { isAuthenticated, loading } = useAuth();
+  const { handleSubmit } = useFormContext();
 
 
   const initialValues: PostnatalSurveyValues = {
@@ -52,37 +51,7 @@ function Postnatal() {
     return null; // Render nothing if not authenticated
   }
 
-  const handleSubmit = async (values: PostnatalSurveyValues, actions: FormikHelpers<PostnatalSurveyValues>) => {
 
-    try {
-
-      if (!user) {
-        throw new Error('User not found');
-      }
-
-      // Include the user's email in the values object
-      const valuesWithUser = {
-        ...values,
-        reported_by: `${user.first_name} ${user.last_name}`,
-      };
-
-
-      const response = await axiosInstance.post('http://localhost:8080/api/postnatal_survey', valuesWithUser);
-      //console.log("Postnatal Survey Responses: ", response.data);
-      
-
-      actions.resetForm();
-      actions.setSubmitting(false);
-    }
-    catch (error) {
-      console.error('Error saving KP:', error);
-
-      // Display an error message to the user
-      actions.setStatus({ error: 'An error occurred while saving data!' });
-      actions.setSubmitting(false);
-    }
-
-  };
 
   return (
     <div className=" w-full flex flex-col items-center">
@@ -93,9 +62,11 @@ function Postnatal() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}
+          onSubmit={(values: PostnatalSurveyValues, actions: FormikHelpers<PostnatalSurveyValues>) => {
+            handleSubmit(values, actions, "postnatal_survey");
+          }}
         >
-          {({ isSubmitting, setFieldValue, values, status }) => {
+          {({ isSubmitting, values, status }) => {
             return (
               <Form className="flex flex-wrap text-2xl justify-center">
                 <div>

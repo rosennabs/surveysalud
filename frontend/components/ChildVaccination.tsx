@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { Formik, Form, FormikHelpers } from "formik";
 import FormField from "./FormField";
 import Button from "./submitButton";
-import axiosInstance from '../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../contexts/AuthContext';
 import { useFormContext } from '../contexts/FormContext';
@@ -18,8 +17,8 @@ function ChildVaccination() {
 
   const router = useRouter();
 
-  const { isAuthenticated, user, loading } = useAuth();
-  //const { selectedProgram, setSelectedProgram } = useFormContext();
+  const { isAuthenticated, loading } = useAuth();
+  const { handleSubmit } = useFormContext();
 
 
   const initialValues: ChildVaccinationValues = {
@@ -51,36 +50,6 @@ function ChildVaccination() {
     return null; // Render nothing if not authenticated
   }
 
-  const handleSubmit = async (values: ChildVaccinationValues, actions: FormikHelpers<ChildVaccinationValues>) => {
-
-    try {
-
-      if (!user) {
-        throw new Error('User not found');
-      }
-
-      // Include the user's email in the values object
-      const valuesWithUser = {
-        ...values,
-        reported_by: `${user.first_name} ${user.last_name}`,
-      };
-      
-
-      const response = await axiosInstance.post('http://localhost:8080/api/child_vaccination', valuesWithUser);
-      //console.log("Child Vaccination Survey: ", response.data);
-
-      actions.resetForm();
-      actions.setSubmitting(false);
-    }
-    catch (error) {
-      console.error('Error saving KP:', error);
-
-      // Display an error message to the user
-      actions.setStatus({ error: 'An error occurred while saving data!' });
-      actions.setSubmitting(false);
-    }
-
-  };
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -90,9 +59,12 @@ function ChildVaccination() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}
+
+          onSubmit={(values: ChildVaccinationValues, actions: FormikHelpers<ChildVaccinationValues>) => {
+            handleSubmit(values, actions, "child_vaccination");
+          }}
         >
-          {({ isSubmitting, setFieldValue, values, status }) => {
+          {({ isSubmitting, values, status }) => {
             return (
               <Form className="flex flex-col text-2xl justify-center w-full">
                 <div>
