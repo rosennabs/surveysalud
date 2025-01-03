@@ -67,7 +67,9 @@ function Postnatal() {
       };
 
 
-      //const response = await axiosInstance.post('http://localhost:8080/api/relationships', valuesWithUser);
+      const response = await axiosInstance.post('http://localhost:8080/api/postnatal_survey', valuesWithUser);
+      //console.log("Postnatal Survey Responses: ", response.data);
+      
 
       actions.resetForm();
       actions.setSubmitting(false);
