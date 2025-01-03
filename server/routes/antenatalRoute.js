@@ -1,26 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const { saveKnowledgeProduct, fetchKnowledgeProducts } = require('../db/queries/kp');
+const {saveAntenatalResponses, fetchAntenatalResponses} = require("../db/queries/antenatal");
 
 router.post('/', async (req, res) => {
   try {
-    const knowledge_product = await saveKnowledgeProduct(req.body);
+    const response = await saveAntenatalResponses(req.body);
     
-    res.status(201).json(knowledge_product);
+    res.status(201).json(response);
   }
   catch (error) {
     
-      console.error("Error saving program to database:", error);
+      console.error("Error saving data to database:", error);
       res.status(500).json({ error: "Internal Server Error" });
     }
 
 });
 
-router.get('/all', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const kp_data = await fetchKnowledgeProducts();
+    const response = await fetchAntenatalResponses();
     
-    res.status(201).json(kp_data);
+    res.status(201).json(response);
   }
   catch (error) {
     
