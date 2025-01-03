@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 import { Formik, Form, FormikHelpers } from "formik";
 import FormField from "./FormField";
 import Button from "./submitButton";
-import axiosInstance from '../helpers/axiosInstance';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../contexts/AuthContext';
+import { useFormContext } from '../contexts/FormContext';
 import { antenatalSurvey, AntenatalSurveyValues, antenatalSurveyValidationSchema } from "../helpers/antenatalSurvey";
 
 
@@ -18,6 +18,7 @@ function Antenatal() {
   const router = useRouter();
 
   const { isAuthenticated, user, loading } = useAuth();
+  const { handleSubmit } = useFormContext();
 
 
   const initialValues: AntenatalSurveyValues = {
@@ -52,36 +53,36 @@ function Antenatal() {
     return null; // Render nothing if not authenticated
   }
 
-  const handleSubmit = async (values: AntenatalSurveyValues, actions: FormikHelpers<AntenatalSurveyValues>) => {
+  // const handleSubmit = async (values: AntenatalSurveyValues, actions: FormikHelpers<AntenatalSurveyValues>) => {
     
-    try {
+  //   try {
 
-      if (!user) {
-        throw new Error('User not found');
-      }
+  //     if (!user) {
+  //       throw new Error('User not found');
+  //     }
 
-      // Include the user's email in the values object
-      const valuesWithUser = {
-        ...values,
-        reported_by: `${user.first_name} ${user.last_name}`,
-      };
+  //     // Include the user's email in the values object
+  //     const valuesWithUser = {
+  //       ...values,
+  //       reported_by: `${user.first_name} ${user.last_name}`,
+  //     };
       
-      const response = await axiosInstance.post('http://localhost:8080/api/antenatal_survey', valuesWithUser);
-      //console.log("Antenatal Responses saved to db: ", response);
+  //     const response = await axiosInstance.post('http://localhost:8080/api/antenatal_survey', valuesWithUser);
+  //     //console.log("Antenatal Responses saved to db: ", response);
       
 
-      actions.resetForm();
-      actions.setSubmitting(false);
-    }
-    catch (error) {
-      console.error('Error saving data:', error);
+  //     actions.resetForm();
+  //     actions.setSubmitting(false);
+  //   }
+  //   catch (error) {
+  //     console.error('Error saving data:', error);
 
-      // Display an error message to the user
-      actions.setStatus({ error: 'An error occurred while submitting data!' });
-      actions.setSubmitting(false);
-    }
+  //     // Display an error message to the user
+  //     actions.setStatus({ error: 'An error occurred while submitting data!' });
+  //     actions.setSubmitting(false);
+  //   }
 
-  };
+  // };
 
   return (
     <div className=" w-full flex flex-col items-center">
@@ -92,9 +93,9 @@ function Antenatal() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values, actions) => {
-            console.log("Formik onSubmit triggered"); // Debug log
-            handleSubmit(values, actions);
+
+          onSubmit={(values: AntenatalSurveyValues, actions: FormikHelpers<AntenatalSurveyValues>) => {
+            handleSubmit(values, actions, "antenatal_survey");
           }}
         >
           {({ isSubmitting, status }) => {
@@ -116,8 +117,6 @@ function Antenatal() {
                       as={question.as}
                       />
                     )
-
-
                   })}
                 </div>
                

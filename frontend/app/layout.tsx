@@ -27,9 +27,8 @@ export default function RootLayout({
     <html lang="en">
 
       <body className="flex flex-col h-screen justify-between montserrat-light my-8 bg-off-white">
-
+        <AuthProvider>
         <FormProvider>
-          <AuthProvider>
 
             <Header />
             <div className="border-b-2 border-teal-600"></div>
@@ -48,8 +47,8 @@ export default function RootLayout({
               </footer>
             )}
 
-          </AuthProvider>
-        </FormProvider>
+          </FormProvider>
+        </AuthProvider>
 
 
       </body>

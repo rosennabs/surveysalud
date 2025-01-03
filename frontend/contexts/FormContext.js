@@ -1,6 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
+import { useAuth } from "./AuthContext";
+import axiosInstance from "../helpers/axiosInstance";
 //import { usePathname } from "next/navigation";
 
 // Create FormContext
@@ -19,16 +21,57 @@ const activeNavClassName =
 
 
 export const FormProvider = ({ children }) => {
-  const [selectedProgram, setSelectedProgram] = useState('');
-  const [activeButton, setActiveButton] = useState (baseButtonClassName);
+  const [selectedProgram, setSelectedProgram] = useState("");
+  const [activeButton, setActiveButton] = useState(baseButtonClassName);
   const [activeNav, setActiveNav] = useState(null);
+  //State for handling the success modal
+  const [successMessage, setSuccessMessage] = useState(false);
+  const { user } = useAuth();
   
+
+  // const toggleModal = (): void => {
+  //   setSuccessMessage(!successMessage);
+  // };
+  // const toggleModal = () => {
+  //   setSuccessMessage(!successMessage);
+  // };
+
   const handleButtonClick = (button) => {
     setActiveButton(button);
   };
 
-   //const pathname = usePathname();
-   //const isDashboard = pathname === "/dashboard";
+  // Handles all survey submissions
+ const handleSubmit = async (values, actions, survey) => {
+   try {
+     if (!user) {
+       throw new Error("User not found");
+     }
+
+     // Include the user's email in the values object
+     const valuesWithUser = {
+       ...values,
+       reported_by: `${user.first_name} ${user.last_name}`,
+     };
+
+     const response = await axiosInstance.post(
+       `http://localhost:8080/api/${survey}`,
+       valuesWithUser
+     );
+     console.log(`${survey} saved to db: `, response.data);
+
+     actions.resetForm();
+     actions.setSubmitting(false);
+   } catch (error) {
+     console.error("Error saving data:", error);
+
+     // Display an error message to the user
+     actions.setStatus({ error: "An error occurred while submitting data!" });
+     actions.setSubmitting(false);
+   }
+ };
+
+  //const pathname = usePathname();
+  //const isDashboard = pathname === "/dashboard";
 
   return (
     <FormContext.Provider
@@ -43,13 +86,12 @@ export const FormProvider = ({ children }) => {
         activeButtonClassName,
         activeNavClassName,
         handleButtonClick,
-  
+        handleSubmit
       }}
     >
       {children}
     </FormContext.Provider>
   );
-  
 };
 
 // Custom hook to use the FormContext

@@ -1,7 +1,6 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { useFormContext } from "./FormContext";
 
 //Create AuthContext
 const AuthContext = createContext();
@@ -10,7 +9,6 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { setSelectedProgram } = useFormContext();
 
   useEffect(() => {
     const storedUser = JSON.parse(sessionStorage.getItem("user"));
@@ -34,12 +32,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    console.log("logging out");
     sessionStorage.clear();
     localStorage.clear();
     setUser(null);
     setIsAuthenticated(false);
-    setSelectedProgram(""); // Clear the selected program
   };
 
   return (
