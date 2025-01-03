@@ -32,9 +32,9 @@ export const FormProvider = ({ children }) => {
   // const toggleModal = (): void => {
   //   setSuccessMessage(!successMessage);
   // };
-  // const toggleModal = () => {
-  //   setSuccessMessage(!successMessage);
-  // };
+  const toggleModal = () => {
+    setSuccessMessage(!successMessage);
+  };
 
   const handleButtonClick = (button) => {
     setActiveButton(button);
@@ -57,7 +57,11 @@ export const FormProvider = ({ children }) => {
        `http://localhost:8080/api/${survey}`,
        valuesWithUser
      );
-     console.log(`${survey} saved to db: `, response.data);
+     //console.log(`${survey} saved to db: `, response.data);
+     
+     // Scroll to the top of the page
+     window.scrollTo({ top: 0, behavior: "smooth" });
+     toggleModal();
 
      actions.resetForm();
      actions.setSubmitting(false);
@@ -86,7 +90,9 @@ export const FormProvider = ({ children }) => {
         activeButtonClassName,
         activeNavClassName,
         handleButtonClick,
-        handleSubmit
+        handleSubmit,
+        successMessage,
+        setSuccessMessage
       }}
     >
       {children}

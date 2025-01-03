@@ -20,7 +20,7 @@ export const childNutritionSurvey = [
     max: 50,
   },
   {
-    label: "Is/Was your child exclusively breastfed?",
+    label: "Is or Was your child exclusively breastfed?",
     id: "exclusiveBreastfeeding",
     name: "exclusiveBreastfeeding",
     options: ["Yes", "No"],

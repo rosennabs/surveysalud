@@ -79,7 +79,14 @@ export const childVaccinationValidationSchema = Yup.object({
   opvVaccine: Yup.string().required("Required"),
   dptVaccine: Yup.string().required("Required"),
   measlesVaccine: Yup.string().required("Required"),
-  reasonForMissingVaccinations: Yup.string().required("Required"),
+  reasonForMissingVaccinations: Yup.string().when(
+    ["bcgVaccine", "opvVaccine", "dptVaccine", "measlesVaccine"],
+    {
+      is: (...vaccineStatuses: string[]) => vaccineStatuses.includes("No"),
+      then: (schema) => schema.required("Please provide a reason for missing vaccinations"),
+      otherwise: (schema) => schema.notRequired(),
+    }
+  ),
   other_reasons: Yup.string().when("reasonForMissingVaccinations", {
     is: "Other", // Directly compare the value to "Other"
     then: (schema) => schema.required("Required"),

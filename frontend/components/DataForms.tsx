@@ -5,6 +5,8 @@ import ChildVaccination from './ChildVaccination';
 import ChildNutrition from './ChildNutrition';
 import Postnatal from './Postnatal';
 import { IoMdAddCircle } from "react-icons/io";
+import SuccessModal from './SuccessModal';
+import { useFormContext } from '../contexts/FormContext';
 
 const menuItem = 'flex items-center justify-center text-center rounded-lg my-4 first:mt-0 cursor-pointer h-[80px]';
 const activeMenuItemClass = 'bg-light-teal shadow-xl border border-light-grey text-black';
@@ -12,6 +14,7 @@ const activeMenuItemClass = 'bg-light-teal shadow-xl border border-light-grey te
 
 
 function DataForms({ data_forms, handleAddForm }) {
+  const { successMessage } = useFormContext();
 
   // Initialize state with the value from local storage or default to 'Program'
   const [activeMenuItem, setActiveMenuItem] = useState(data_forms[0]);
@@ -60,6 +63,16 @@ function DataForms({ data_forms, handleAddForm }) {
         
 
       </div>
+
+      {successMessage && (
+        <>
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center">
+            <SuccessModal />
+          </div >
+          
+        </>
+
+      )}
     </div>
   );
 }
