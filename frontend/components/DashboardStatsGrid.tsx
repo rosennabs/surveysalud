@@ -83,15 +83,13 @@ function DashboardStatsGrid() {
 
   }, []);
 
-  const chartMapping: Record<string, 'bar' | 'pie' | 'line'> = {
+  const chartMapping: Record<string, 'bar' | 'pie'> = {
     age: 'bar',
     bcg_vaccine: 'pie',
     opv_vaccine: 'pie',
     dpt_vaccine: 'pie',
     measles_vaccine: 'pie',
     reason_for_missing_vaccinations: 'bar',
-    // other_reasons: 'line',
-    // reported_by: 'line',
   };
 
   const barCharts = ['age', 'reason_for_missing_vaccinations'];
@@ -103,14 +101,13 @@ function DashboardStatsGrid() {
       <div className="flex flex-row gap-4">
         {barCharts.map((key) => (
           vaccineData[key] && (
-            <div key={key} className="chart-container bg-white p-4 rounded shadow-lg flex-1">
+            <div key={key} className="bg-white p-4 rounded shadow-lg flex-1">
               <h5>{key.replace(/_/g, " ").toUpperCase()}</h5>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={vaccineData[key]}>
                   <XAxis dataKey="key" />
                   <YAxis />
                   <Tooltip />
-                  <Legend />
                   <Bar dataKey="count" fill="#8884d8" />
                 </BarChart>
               </ResponsiveContainer>
@@ -123,7 +120,7 @@ function DashboardStatsGrid() {
       <div className="flex flex-row gap-4">
         {pieCharts.map((key) => (
           vaccineData[key] && (
-            <div key={key} className="chart-container bg-white p-4 rounded shadow-lg flex-1">
+            <div key={key} className=" bg-white p-4 rounded shadow-lg flex-1">
               <h5>{key.replace(/_/g, " ").toUpperCase()}</h5>
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
@@ -133,13 +130,14 @@ function DashboardStatsGrid() {
                     nameKey="key"
                     cx="50%"
                     cy="50%"
-                    outerRadius={100}
+                    outerRadius={80}
                     label={(entry) => entry.key}
                   >
                     {vaccineData[key].map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={['#8884d8', '#83a6ed', '#8dd1e1'][index % 3]} />
+                      <Cell key={`cell-${entry.key}`} fill={entry.key === "Yes" ? '#00C49F' : '#FFBB28'} />
                     ))}
                   </Pie>
+                  <Tooltip/>
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -148,7 +146,7 @@ function DashboardStatsGrid() {
       </div>
 
       {/* Line Chart for Daily Entries */}
-      <div className="chart-container bg-white p-4 rounded shadow-lg">
+      <div className=" bg-white p-4 rounded shadow-lg">
         <h5>TOTAL ENTRIES BY MONTH</h5>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={monthlyEntries}>
@@ -162,8 +160,7 @@ function DashboardStatsGrid() {
               const [year, monthNumber] = month.split('-');
               return `${new Date(year, monthNumber - 1).toLocaleString('default', { month: 'short' })} ${year}`;
             }} />
-            <Legend />
-            <Line type="monotone" dataKey="total_entries" stroke="#8884d8" />
+            <Line type="monotone" dataKey="total_entries" stroke="#8884d8" strokeWidth={3} />
           </LineChart>
         </ResponsiveContainer>
       </div>

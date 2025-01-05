@@ -79,15 +79,11 @@ body {
 
 
 /* Dashboard Styling: side menu*/
-.container {
-  position: relative;
-  width: 100%;
 
-}
 
 .navigation {
-  position: fixed;
-  height: 100%;
+  position: relative;
+  min-height: 100vh;
   background: teal;
   border-left: 10px solid teal;
   transition: 0.5s;

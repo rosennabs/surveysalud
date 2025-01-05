@@ -17,7 +17,7 @@ function Dashboard() {
 
 
   return (
-    <div className="container">
+    <div className="flex mb-12">
 
       {/* side menu */}
       <div className={`navigation ${isMenuExpanded ? "w-[250px]" : "w-[80px]"} transition-all duration-500`}>
@@ -76,8 +76,8 @@ function Dashboard() {
 
 
       {/* chart area */}
-      <div className={`absolute ${isMenuExpanded ? "w-[calc(100%-150px)] left-[300px]" : "w-full left-[150px]"
-        } min-h-screen transition-all duration-500 px-8`}>
+      <div className={`${isMenuExpanded ? "w-[calc(100%-150px)] left-[300px]" : "w-full left-[150px]"
+        } min-h-screen transition-all duration-500 px-8 `}>
         
         <div className="topbar">
           <div className="toggle cursor-pointer" onClick={toggleMenu}>
