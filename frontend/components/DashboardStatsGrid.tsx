@@ -2,164 +2,172 @@ import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, LabelList, Tooltip, Legend, Rectangle, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, CartesianGrid } from 'recharts';
 import axiosInstance from '../helpers/axiosInstance';
 
-// Sample data with dates
-const data = [
-  { date: '2024-01-15', value: 30 },
-  { date: '2024-04-15', value: 45 },
-  { date: '2024-07-15', value: 65 },
-  { date: '2024-10-15', value: 85 },
-  { date: '2025-01-15', value: 95 },
-];
+
+interface DataValues {
+  id: number;
+  age: string;
+  bcgVaccine: string;
+  opvVaccine: string;
+  dptVaccine: string;
+  measlesVaccine: string;
+  reasonForMissingVaccinations: string;
+}
+
+interface VaccineDataCounts {
+  key: string;
+  count: number;
+}
+
+
+// Count occurrences of specific values in the array of objects i.e data based on the given attribute/key
+const countByAttribute = (data: DataValues[], attribute: string): VaccineDataCounts[] => {
+
+  // <Record<string, number>> is a TypeScript type annotation specifying that the acc will be an object with keys of type string and values/count of type number
+  const counts = data.reduce<Record<string, number>>((acc, item) => {
+    const key = item[attribute]; // e.g bcgVaccine
+
+    // Skip counting if the key is empty or null
+    if (!key || key.trim() === "") {
+      return acc;
+    }
+
+    acc[key] = (acc[key] || 0) + 1; // checks if key exists in acc and increments count by 1
+    return acc; // returns an object containing each key attribute and its count
+  }, {});
+ 
+  return Object.entries(counts).map(([key, count]) => ({ key, count })); //Converts the counts object into an array of key-value pairs. Each element in the resulting array is a tuple [key, count]. Destructure each tuple into variables.
+}
+
 
 function DashboardStatsGrid() {
+  const [vaccineData, setVaccineData] = useState<Record<string, VaccineDataCounts[]>>({});
+  const [monthlyEntries, setMonthlyEntries] = useState<{ date: string; total_entries: number; }[]>([]);
 
-  const [kpData, setKpData] = useState({
-    type: [],
-    purpose: [],
-    language: [],
-    audience: []
-  });
 
   useEffect(() => {
-    const fetchKpData = async () => {
+    const fetchVaccineData = async () => {
       try {
-        const response = await axiosInstance.get('http://localhost:8080/api/knowledge_product/all');
+        const response = await axiosInstance.get<DataValues[]>('http://localhost:8080/api/child_vaccination');
         const data = response.data;
 
-        //Function to count Kp by any attribute
-        const countByAttribute = (data, attribute) => {
-          return data.reduce((acc, element) => {
-            const key = element[attribute];
-            if (acc[key]) { //if the key already exists in the accumulator, increment the count value
-              acc[key]++;
-            } else {
-              acc[key] = 1; //else create and count the key
-            }
-            return acc; //returns an object with each kp type and their count
-          }, {});
-        };
+        const keysToCount = [
+          "age",
+          "bcg_vaccine",
+          "opv_vaccine",
+          "dpt_vaccine",
+          "measles_vaccine",
+          "reason_for_missing_vaccinations",
+        ];
+        
+        const processedData: Record<string, VaccineDataCounts[]> = keysToCount.reduce((acc, key) => {
+          acc[key] = countByAttribute(data, key);
+          return acc;
+        }, {});
 
-        //Use the function for different attributes
-        const typeCounts = countByAttribute(data, 'type');
-        const purposeCounts = countByAttribute(data, 'purpose');
-        const languageCounts = countByAttribute(data, 'language');
-        const audienceCounts = countByAttribute(data, 'audience');
+        setVaccineData(processedData);
+        //console.log("Logging processed data: ", processedData);
 
-        // Convert the resulting object to an array of objects with each attribute and their counts.
-        setKpData({
-          type: Object.keys(typeCounts).map(key => ({ key, count: typeCounts[key] })),
-          purpose: Object.keys(purposeCounts).map(key => ({ key, count: purposeCounts[key] })),
-          language: Object.keys(languageCounts).map(key => ({ key, count: languageCounts[key] })),
-          audience: Object.keys(audienceCounts).map(key => ({ key, count: audienceCounts[key] })),
-
-        });
-
+        // Fetch daily entries - date
+        const monthlyResponse = await axiosInstance.get('http://localhost:8080/api/child_vaccination/monthly_entries');
+        setMonthlyEntries(monthlyResponse.data);
 
       }
       catch (error) {
-        console.error('Error fetching KP data:', error);
+        console.error('Error fetching data from db:', error);
       }
 
     };
 
 
-    fetchKpData();
+    fetchVaccineData();
 
   }, []);
 
-  // Colors for pie slices
-  const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300'];
-
-
-  //Calculate the position where a % label should be placed inside each pie slice in a pie chart. gotten from rechart docs
-  const RADIAN = Math.PI / 180;
-  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.35;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    return (
-      <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-        {`${(percent * 100).toFixed(0)}%`}
-      </text>
-    );
-
+  const chartMapping: Record<string, 'bar' | 'pie' | 'line'> = {
+    age: 'bar',
+    bcg_vaccine: 'pie',
+    opv_vaccine: 'pie',
+    dpt_vaccine: 'pie',
+    measles_vaccine: 'pie',
+    reason_for_missing_vaccinations: 'bar',
+    // other_reasons: 'line',
+    // reported_by: 'line',
   };
 
-  const getQuarter = (dateStr) => {
-    const date = new Date(dateStr); // Converts the date string into a javascript date object
-    const month = date.getMonth() + 1; // Months are 0-based in JavaScript, add 1 to get the right month value
-    const year = date.getFullYear();
-
-    if (month >= 1 && month <= 3) return `Q1 ${year}`;
-    if (month >= 4 && month <= 6) return `Q2 ${year}`;
-    if (month >= 7 && month <= 9) return `Q3 ${year}`;
-    if (month >= 10 && month <= 12) return `Q4 ${year}`;
-  };
-
+  const barCharts = ['age', 'reason_for_missing_vaccinations'];
+  const pieCharts = ['bcg_vaccine', 'opv_vaccine', 'dpt_vaccine', 'measles_vaccine'];
 
   return (
-    <div className='flex flex-col'>
-      <div className='flex gap-4 w-full my-8'>
-        <BoxWrapper>Kp count</BoxWrapper>
-        <BoxWrapper>Program count</BoxWrapper>
-        <BoxWrapper>Relationships reach</BoxWrapper>
-        <BoxWrapper>Users</BoxWrapper>
+    <div className="flex flex-col w-full mt-8 gap-8">
+      {/* Row for Bar Charts */}
+      <div className="flex flex-row gap-4">
+        {barCharts.map((key) => (
+          vaccineData[key] && (
+            <div key={key} className="chart-container bg-white p-4 rounded shadow-lg flex-1">
+              <h5>{key.replace(/_/g, " ").toUpperCase()}</h5>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={vaccineData[key]}>
+                  <XAxis dataKey="key" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="count" fill="#8884d8" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          )
+        ))}
       </div>
 
-      <div className='flex justify-between'>
-
-        <div className='flex-1'>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={kpData.type} margin={{ top: 20, right: 0, bottom: 0, left: 20 }}>
-              <YAxis />
-              <XAxis dataKey="key" />
-              <Tooltip />
-              <Bar dataKey="count" fill="#82ca9d" activeBar={<Rectangle fill="teal" />}>
-                <LabelList dataKey="count" position="top" /> {/* Add count values to the bar */}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div className='flex-1 my-8'>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie data={kpData.language} fill="#8884d8"
-                dataKey="count" nameKey="key" outerRadius={120} innerRadius={50} labelLine={false} label={renderCustomizedLabel}>
-
-                {kpData.language.map((entry, index) => (
-
-                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
-
-                ))}
-
-              </Pie>
-              <Legend layout='vertical' align='right' verticalAlign='middle' />
-
-            </PieChart>
-          </ResponsiveContainer>
-
-        </div>
-
+      {/* Row for Pie Charts */}
+      <div className="flex flex-row gap-4">
+        {pieCharts.map((key) => (
+          vaccineData[key] && (
+            <div key={key} className="chart-container bg-white p-4 rounded shadow-lg flex-1">
+              <h5>{key.replace(/_/g, " ").toUpperCase()}</h5>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={vaccineData[key]}
+                    dataKey="count"
+                    nameKey="key"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={100}
+                    label={(entry) => entry.key}
+                  >
+                    {vaccineData[key].map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={['#8884d8', '#83a6ed', '#8dd1e1'][index % 3]} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          )
+        ))}
       </div>
 
-      <div>
-        <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+      {/* Line Chart for Daily Entries */}
+      <div className="chart-container bg-white p-4 rounded shadow-lg">
+        <h5>TOTAL ENTRIES BY MONTH</h5>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={monthlyEntries}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis
-              dataKey="date"
-              tickFormatter={getQuarter} // Format the dates as quarters
-            />
+            <XAxis dataKey="month" tickFormatter={(month) => {
+              const [year, monthNumber] = month.split('-');
+              return `${new Date(year, monthNumber - 1).toLocaleString('default', { month: 'short' })} ${year}`;
+            }} />
             <YAxis />
-            <Tooltip labelFormatter={getQuarter} /> {/* Show quarters in the tooltip as well */}
-            <Line type="monotone" dataKey="value" stroke="#8884d8" />
+            <Tooltip labelFormatter={(month) => {
+              const [year, monthNumber] = month.split('-');
+              return `${new Date(year, monthNumber - 1).toLocaleString('default', { month: 'short' })} ${year}`;
+            }} />
+            <Legend />
+            <Line type="monotone" dataKey="total_entries" stroke="#8884d8" />
           </LineChart>
         </ResponsiveContainer>
       </div>
     </div>
-
   );
 }
 

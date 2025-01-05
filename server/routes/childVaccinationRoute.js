@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   saveChildVaccinationResponses,
   fetchChildVaccinationResponses,
+ fetchChildVaccinationEntriesByMonth
 } = require("../db/queries/child_vaccination");
 
 router.post("/", async (req, res) => {
@@ -18,6 +19,17 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const response = await fetchChildVaccinationResponses();
+
+    res.status(201).json(response);
+  } catch (error) {
+    console.error("Error fetching data from database:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.get("/monthly_entries", async (req, res) => {
+  try {
+    const response = await fetchChildVaccinationEntriesByMonth();
 
     res.status(201).json(response);
   } catch (error) {

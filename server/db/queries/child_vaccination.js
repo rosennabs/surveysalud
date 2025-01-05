@@ -47,13 +47,27 @@ INSERT INTO child_vaccination (
   }
 };
 
-//Fetch all KP entries
+//Fetch all entries
 async function fetchChildVaccinationResponses() {
   const data = await db.query("SELECT * FROM child_vaccination;");
   return data.rows;
 }
 
+// Fetch total entries grouped by date
+async function fetchChildVaccinationEntriesByMonth() {
+  const data = await db.query(`
+   SELECT 
+      DATE_TRUNC('month', created_at) AS month, 
+      COUNT(*) AS total_entries
+    FROM child_vaccination
+    GROUP BY month
+    ORDER BY month;
+  `);
+  return data.rows; // Returns { date: 'YYYY-MM-DD', total_entries: number } truncated to the first day of each month
+}
+
 module.exports = {
   saveChildVaccinationResponses,
   fetchChildVaccinationResponses,
+  fetchChildVaccinationEntriesByMonth
 };

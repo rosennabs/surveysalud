@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import "../globals.css";
 import { FaHome, FaUser, FaSignOutAlt, FaLock, FaSearch, FaRegUserCircle } from "react-icons/fa";
 import { MdMessage, MdOutlineLiveHelp, MdOutlineSettings, MdMenu } from "react-icons/md";
@@ -9,37 +9,18 @@ import DashboardStatsGrid from "../../components/DashboardStatsGrid";
 
 function Dashboard() {
 
-  useEffect(() => {
-    // Dashboard: add hovered class to selected list item
+  const [isMenuExpanded, setIsMenuExpanded] = useState(true);
 
-    const listItems = document.querySelectorAll('.navigation li');
+  const toggleMenu = () => {
+    setIsMenuExpanded(!isMenuExpanded);
+  };
 
-    function activeLink() {
-      listItems.forEach((item) =>
-        item.classList.remove('hovered'));
-      this.classList.add('hovered');
-    }
-
-    listItems.forEach((item) =>
-      item.addEventListener('mouseover', activeLink));
-
-    //Menu toggle
-    const toggle = document.querySelector('.toggle');
-    const navigation = document.querySelector('.navigation');
-    const dashboard = document.querySelector('.dashboard');
-
-    toggle.onclick = function () {
-      navigation.classList.toggle('active');
-      dashboard.classList.toggle('active');
-    };
-
-  }, []);
 
   return (
     <div className="container">
 
       {/* side menu */}
-      <div className="navigation">
+      <div className={`navigation ${isMenuExpanded ? "w-[250px]" : "w-[80px]"} transition-all duration-500`}>
         <ul>
           <li>
             <a href="#">
@@ -94,10 +75,12 @@ function Dashboard() {
       </div>
 
 
-      {/* top menu */}
-      <div className="dashboard">
+      {/* chart area */}
+      <div className={`absolute ${isMenuExpanded ? "w-[calc(100%-150px)] left-[300px]" : "w-full left-[150px]"
+        } min-h-screen transition-all duration-500 px-8`}>
+        
         <div className="topbar">
-          <div className="toggle">
+          <div className="toggle cursor-pointer" onClick={toggleMenu}>
             <MdMenu />
           </div>
 
