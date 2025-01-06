@@ -6,69 +6,67 @@ import axiosInstance from '../helpers/axiosInstance';
 interface DataValues {
   id: number;
   age: string;
-  bcgVaccine: string;
-  opvVaccine: string;
-  dptVaccine: string;
-  measlesVaccine: string;
-  reasonForMissingVaccinations: string;
+  // childWeight: number;
+  exclusiveBreastfeeding: string;
+  ageComplementaryFoods: number;
+  mealFrequency: number;
+  lastGrowthCheckup: string;
+  growthChartAtHome: string;
 }
 
-interface VaccineDataCounts {
+interface NutritionDataCounts {
   key: string;
   count: number;
 }
 
 
 // Count occurrences of specific values in the array of objects i.e data based on the given attribute/key
-const countByAttribute = (data: DataValues[], attribute: string): VaccineDataCounts[] => {
+const countByAttribute = (data: DataValues[], attribute: string): NutritionDataCounts[] => {
 
   // <Record<string, number>> is a TypeScript type annotation specifying that the acc will be an object with keys of type string and values/count of type number
   const counts = data.reduce<Record<string, number>>((acc, item) => {
     const key = item[attribute]; // e.g bcgVaccine
 
-    // Skip counting if the key is empty or null
-    if (!key || key.trim() === "") {
-      return acc;
-    }
-
     acc[key] = (acc[key] || 0) + 1; // checks if key exists in acc and increments count by 1
     return acc; // returns an object containing each key attribute and its count
   }, {});
- 
+
   return Object.entries(counts).map(([key, count]) => ({ key, count })); //Converts the counts object into an array of key-value pairs. Each element in the resulting array is a tuple [key, count]. Destructure each tuple into variables.
-}
+};
 
 
-function VaccineDashboard() {
-  const [vaccineData, setVaccineData] = useState<Record<string, VaccineDataCounts[]>>({});
+function NutritionDashboard() {
+  const [nutritionData, setnutritionData] = useState<Record<string, NutritionDataCounts[]>>({});
   const [monthlyEntries, setMonthlyEntries] = useState<{ date: string; total_entries: number; }[]>([]);
 
 
   useEffect(() => {
-    const fetchVaccineData = async () => {
+    const fetchnutritionData = async () => {
       try {
-        const response = await axiosInstance.get<DataValues[]>('http://localhost:8080/api/child_vaccination');
+        const response = await axiosInstance.get<DataValues[]>('http://localhost:8080/api/child_nutrition');
         const data = response.data;
 
         const keysToCount = [
+          "id",
           "age",
-          "bcg_vaccine",
-          "opv_vaccine",
-          "dpt_vaccine",
-          "measles_vaccine",
-          "reason_for_missing_vaccinations",
+          // "child_weight",
+          "exclusive_breastfeeding",
+          "age_complementary_foods",
+          "meal_frequency",
+          "last_growth_checkup",
+          "growth_chart_at_home",
         ];
-        
-        const processedData: Record<string, VaccineDataCounts[]> = keysToCount.reduce((acc, key) => {
+
+        const processedData: Record<string, NutritionDataCounts[]> = keysToCount.reduce((acc, key) => {
           acc[key] = countByAttribute(data, key);
           return acc;
         }, {});
 
-        setVaccineData(processedData);
+        setnutritionData(processedData);
         //console.log("Logging processed data: ", processedData);
 
         // Fetch daily entries - date
-        const monthlyResponse = await axiosInstance.get('http://localhost:8080/api/child_vaccination/monthly_entries');
+        const monthlyResponse = await axiosInstance.get('http://localhost:8080/api/child_nutrition/monthly_entries');
         setMonthlyEntries(monthlyResponse.data);
 
       }
@@ -79,29 +77,31 @@ function VaccineDashboard() {
     };
 
 
-    fetchVaccineData();
+    fetchnutritionData();
 
   }, []);
 
 
 
-  const barCharts = ['age', 'reason_for_missing_vaccinations'];
-  const pieCharts = ['bcg_vaccine', 'opv_vaccine', 'dpt_vaccine', 'measles_vaccine'];
+  const barCharts = ['age', "age_complementary_foods", "meal_frequency", "last_growth_checkup",];
+  const pieCharts = ['exclusive_breastfeeding', "growth_chart_at_home"];
 
   return (
     <div className="flex flex-col w-full mt-8 gap-8">
       {/* Row for Bar Charts */}
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-wrap gap-4">
         {barCharts.map((key) => (
-          vaccineData[key] && (
-            <div key={key} className="bg-white p-4 rounded shadow-lg flex-1">
+          nutritionData[key] && (
+            <div key={key} className="bg-white p-4 rounded shadow-lg flex-[1_1_48%]">
               <h5>{key.replace(/_/g, " ").toUpperCase()}</h5>
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={vaccineData[key]}>
+                <BarChart data={nutritionData[key]}>
                   <XAxis dataKey="key" />
-                  <YAxis />
+                  <YAxis allowDecimals={false} />
                   <Tooltip />
-                  <Bar dataKey="count" fill="#8884d8" />
+                  <Bar dataKey="count" fill="#8884d8">
+                    <LabelList dataKey="count" position="insideTop" fill="#FFFFFF" />
+                  </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -112,13 +112,13 @@ function VaccineDashboard() {
       {/* Row for Pie Charts */}
       <div className="flex flex-row gap-4">
         {pieCharts.map((key) => (
-          vaccineData[key] && (
+          nutritionData[key] && (
             <div key={key} className=" bg-white p-4 rounded shadow-lg flex-1">
               <h5>{key.replace(/_/g, " ").toUpperCase()}</h5>
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie
-                    data={vaccineData[key]}
+                    data={nutritionData[key]}
                     dataKey="count"
                     nameKey="key"
                     cx="50%"
@@ -126,11 +126,11 @@ function VaccineDashboard() {
                     outerRadius={80}
                     label={(entry) => entry.key}
                   >
-                    {vaccineData[key].map((entry, index) => (
+                    {nutritionData[key].map((entry, index) => (
                       <Cell key={`cell-${entry.key}`} fill={entry.key === "Yes" ? '#00C49F' : '#FFBB28'} />
                     ))}
                   </Pie>
-                  <Tooltip/>
+                  <Tooltip />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -161,7 +161,7 @@ function VaccineDashboard() {
   );
 }
 
-export default VaccineDashboard;
+export default NutritionDashboard;
 
 // DRY up code by creating a wrapping component with the repetitive stylings
 function BoxWrapper({ children }) {

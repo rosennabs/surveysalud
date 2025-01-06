@@ -63,5 +63,17 @@ async function fetchAntenatalResponses() {
   return data.rows;
 }
 
+// Fetch total entries grouped by date
+async function fetchAntenatalEntriesByMonth() {
+  const data = await db.query(`
+   SELECT 
+      DATE_TRUNC('month', created_at) AS month, 
+      COUNT(*) AS total_entries
+    FROM antenatal_survey
+    GROUP BY month
+    ORDER BY month;
+  `);
+  return data.rows; // Returns { date: 'YYYY-MM-DD', total_entries: number } truncated to the first day of each month
+}
 
-module.exports = { saveAntenatalResponses, fetchAntenatalResponses };
+module.exports = { saveAntenatalResponses, fetchAntenatalResponses, fetchAntenatalEntriesByMonth };

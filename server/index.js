@@ -13,8 +13,11 @@ server.use("/api/user", require("./routes/userRoutes"));
 server.use("/api/child_vaccination", require("./routes/childVaccinationRoute"));
 server.use("/monthly_entries", require("./routes/childVaccinationRoute"));
 server.use("/api/antenatal_survey", require("./routes/antenatalRoute"));
+server.use("/monthly_entries", require("./routes/antenatalRoute"));
 server.use("/api/child_nutrition", require("./routes/childNutritionRoute"));
+server.use("/monthly_entries", require("./routes/childNutritionRoute"));
 server.use("/api/postnatal_survey", require("./routes/postnatalRoute"));
+server.use("/monthly_entries", require("./routes/postnatalRoute"));
 server.use("/api/surveys", require("./routes/surveyRoute"));
 
 // Handle other requests (Next.js)

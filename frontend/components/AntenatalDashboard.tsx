@@ -1,74 +1,79 @@
 import React, { useEffect, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, LabelList, Tooltip, Legend, Rectangle, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, CartesianGrid } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, LabelList, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, CartesianGrid } from 'recharts';
 import axiosInstance from '../helpers/axiosInstance';
 
 
 interface DataValues {
-  id: number;
   age: string;
-  bcgVaccine: string;
-  opvVaccine: string;
-  dptVaccine: string;
-  measlesVaccine: string;
-  reasonForMissingVaccinations: string;
+  gestationalAge: number;
+  numberOfCheckups: number;
+  accessibilityCare: string;
+  antenatalSupplements: string;
+  vaccinationsReceived: string[];
+  screeningTests: string[];
+  healthEducationReceived: string;
+  satisfactionCare: string;
 }
 
-interface VaccineDataCounts {
+interface AntenatalDataCounts {
   key: string;
   count: number;
 }
 
 
 // Count occurrences of specific values in the array of objects i.e data based on the given attribute/key
-const countByAttribute = (data: DataValues[], attribute: string): VaccineDataCounts[] => {
+const countByAttribute = (data: DataValues[], attribute: string): AntenatalDataCounts[] => {
 
   // <Record<string, number>> is a TypeScript type annotation specifying that the acc will be an object with keys of type string and values/count of type number
   const counts = data.reduce<Record<string, number>>((acc, item) => {
-    const key = item[attribute]; // e.g bcgVaccine
+    const values = Array.isArray(item[attribute]) ? item[attribute] : [item[attribute]];
 
-    // Skip counting if the key is empty or null
-    if (!key || key.trim() === "") {
-      return acc;
-    }
+    values.forEach((value) => {
+      if (value) {
+        acc[value] = (acc[value] || 0) + 1;
+      }
+    });
 
-    acc[key] = (acc[key] || 0) + 1; // checks if key exists in acc and increments count by 1
-    return acc; // returns an object containing each key attribute and its count
+    return acc;
   }, {});
- 
+
   return Object.entries(counts).map(([key, count]) => ({ key, count })); //Converts the counts object into an array of key-value pairs. Each element in the resulting array is a tuple [key, count]. Destructure each tuple into variables.
-}
+};
 
 
-function VaccineDashboard() {
-  const [vaccineData, setVaccineData] = useState<Record<string, VaccineDataCounts[]>>({});
+function AntenatalDashboard() {
+  const [antenatalData, setAntenatalData] = useState<Record<string, AntenatalDataCounts[]>>({});
   const [monthlyEntries, setMonthlyEntries] = useState<{ date: string; total_entries: number; }[]>([]);
 
 
   useEffect(() => {
-    const fetchVaccineData = async () => {
+    const fetchAntenatalData = async () => {
       try {
-        const response = await axiosInstance.get<DataValues[]>('http://localhost:8080/api/child_vaccination');
+        const response = await axiosInstance.get<DataValues[]>('http://localhost:8080/api/antenatal_survey');
         const data = response.data;
 
         const keysToCount = [
           "age",
-          "bcg_vaccine",
-          "opv_vaccine",
-          "dpt_vaccine",
-          "measles_vaccine",
-          "reason_for_missing_vaccinations",
+          "gestational_age",
+          "number_of_checkups",
+          "accessibility_care",
+          "antenatal_supplements",
+          "vaccinations_received",
+          "screening_tests",
+          "health_education_received",
+          "satisfaction_care",
         ];
-        
-        const processedData: Record<string, VaccineDataCounts[]> = keysToCount.reduce((acc, key) => {
+
+        const processedData: Record<string, AntenatalDataCounts[]> = keysToCount.reduce((acc, key) => {
           acc[key] = countByAttribute(data, key);
           return acc;
         }, {});
 
-        setVaccineData(processedData);
+        setAntenatalData(processedData);
         //console.log("Logging processed data: ", processedData);
 
         // Fetch daily entries - date
-        const monthlyResponse = await axiosInstance.get('http://localhost:8080/api/child_vaccination/monthly_entries');
+        const monthlyResponse = await axiosInstance.get('http://localhost:8080/api/antenatal_survey/monthly_entries');
         setMonthlyEntries(monthlyResponse.data);
 
       }
@@ -79,29 +84,32 @@ function VaccineDashboard() {
     };
 
 
-    fetchVaccineData();
+    fetchAntenatalData();
 
   }, []);
 
 
 
-  const barCharts = ['age', 'reason_for_missing_vaccinations'];
-  const pieCharts = ['bcg_vaccine', 'opv_vaccine', 'dpt_vaccine', 'measles_vaccine'];
+  const barCharts = ['age', "gestational_age", "number_of_checkups", "accessibility_care", "satisfaction_care"];
+  const arrayCharts = ['vaccinations_received', 'screening_tests'];
+  const pieCharts = ["antenatal_supplements", "health_education_received"];
 
   return (
     <div className="flex flex-col w-full mt-8 gap-8">
-      {/* Row for Bar Charts */}
-      <div className="flex flex-row gap-4">
-        {barCharts.map((key) => (
-          vaccineData[key] && (
-            <div key={key} className="bg-white p-4 rounded shadow-lg flex-1">
-              <h5>{key.replace(/_/g, " ").toUpperCase()}</h5>
+      
+
+      {/* Row for Array-Based Bar Charts */}
+      <div className="flex flex-wrap gap-4">
+        {arrayCharts.map((key) => (
+          antenatalData[key] && (
+            <div key={key} className="bg-white p-4 rounded shadow-lg flex-[1_1_48%]">
+              <h5>{key.replace(/_/g, ' ').toUpperCase()}</h5>
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={vaccineData[key]}>
+                <BarChart data={antenatalData[key]}>
                   <XAxis dataKey="key" />
-                  <YAxis />
+                  <YAxis allowDecimals={false} />
                   <Tooltip />
-                  <Bar dataKey="count" fill="#8884d8" />
+                  <Bar dataKey="count" fill="#82ca9d" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -109,16 +117,17 @@ function VaccineDashboard() {
         ))}
       </div>
 
+      
       {/* Row for Pie Charts */}
       <div className="flex flex-row gap-4">
         {pieCharts.map((key) => (
-          vaccineData[key] && (
+          antenatalData[key] && (
             <div key={key} className=" bg-white p-4 rounded shadow-lg flex-1">
               <h5>{key.replace(/_/g, " ").toUpperCase()}</h5>
               <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie
-                    data={vaccineData[key]}
+                    data={antenatalData[key]}
                     dataKey="count"
                     nameKey="key"
                     cx="50%"
@@ -126,12 +135,33 @@ function VaccineDashboard() {
                     outerRadius={80}
                     label={(entry) => entry.key}
                   >
-                    {vaccineData[key].map((entry, index) => (
+                    {antenatalData[key].map((entry, index) => (
                       <Cell key={`cell-${entry.key}`} fill={entry.key === "Yes" ? '#00C49F' : '#FFBB28'} />
                     ))}
                   </Pie>
-                  <Tooltip/>
+                  <Tooltip />
                 </PieChart>
+              </ResponsiveContainer>
+            </div>
+          )
+        ))}
+      </div>
+
+      {/* Row for Bar Charts */}
+      <div className="flex flex-wrap gap-4">
+        {barCharts.map((key) => (
+          antenatalData[key] && (
+            <div key={key} className="bg-white p-4 rounded shadow-lg flex-[1_1_48%]">
+              <h5>{key.replace(/_/g, " ").toUpperCase()}</h5>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={antenatalData[key]}>
+                  <XAxis dataKey="key" />
+                  <YAxis allowDecimals={false} />
+                  <Tooltip />
+                  <Bar dataKey="count" fill="#8884d8">
+                    <LabelList dataKey="count" position="insideTop" fill="#FFFFFF" />
+                  </Bar>
+                </BarChart>
               </ResponsiveContainer>
             </div>
           )
@@ -161,7 +191,7 @@ function VaccineDashboard() {
   );
 }
 
-export default VaccineDashboard;
+export default AntenatalDashboard;
 
 // DRY up code by creating a wrapping component with the repetitive stylings
 function BoxWrapper({ children }) {

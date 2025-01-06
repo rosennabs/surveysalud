@@ -4,7 +4,10 @@ import React, { useState } from "react";
 import "../globals.css";
 import { FaHome, FaUser, FaSignOutAlt, FaLock, FaSearch, FaRegUserCircle } from "react-icons/fa";
 import { MdMessage, MdOutlineLiveHelp, MdOutlineSettings, MdMenu } from "react-icons/md";
-import DashboardStatsGrid from "../../components/DashboardStatsGrid";
+import VaccineDashboard from "../../components/DashboardStatsGrid";
+import NutritionDashboard from "../../components/NutritionDashboard";
+import AntenatalDashboard from "../../components/AntenatalDashboard";
+import PostnatalDashboard from "../../components/PostnatalDashboard";
 
 
 function Dashboard() {
@@ -102,7 +105,7 @@ function Dashboard() {
           </div>
         </div>
 
-        <DashboardStatsGrid />
+        <PostnatalDashboard/>
 
       </div>
 

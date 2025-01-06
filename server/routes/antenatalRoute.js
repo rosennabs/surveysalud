@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {saveAntenatalResponses, fetchAntenatalResponses} = require("../db/queries/antenatal");
+const {saveAntenatalResponses, fetchAntenatalResponses, fetchAntenatalEntriesByMonth} = require("../db/queries/antenatal");
 
 router.post('/', async (req, res) => {
   try {
@@ -28,6 +28,17 @@ router.get('/', async (req, res) => {
       res.status(500).json({ error: "Internal Server Error" });
     }
 
+});
+
+router.get("/monthly_entries", async (req, res) => {
+  try {
+    const response = await fetchAntenatalEntriesByMonth();
+
+    res.status(201).json(response);
+  } catch (error) {
+    console.error("Error fetching data from database:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 module.exports = router;

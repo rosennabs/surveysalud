@@ -53,4 +53,16 @@ async function fetchChildNutritionResponses() {
   return data.rows;
 }
 
-module.exports = { saveChildNutritionResponses, fetchChildNutritionResponses };
+// Fetch total entries grouped by date
+async function fetchChildNutritionEntriesByMonth() {
+  const data = await db.query(`
+   SELECT 
+      DATE_TRUNC('month', created_at) AS month, 
+      COUNT(*) AS total_entries
+    FROM child_nutrition
+    GROUP BY month
+    ORDER BY month;
+  `);
+  return data.rows; // Returns { date: 'YYYY-MM-DD', total_entries: number } truncated to the first day of each month
+}
+module.exports = { saveChildNutritionResponses, fetchChildNutritionResponses, fetchChildNutritionEntriesByMonth };
