@@ -2,8 +2,10 @@
 
 import React, { useState } from "react";
 import "../globals.css";
-import { FaHome, FaUser, FaSignOutAlt, FaLock, FaSearch, FaRegUserCircle } from "react-icons/fa";
-import { MdMessage, MdOutlineLiveHelp, MdOutlineSettings, MdMenu } from "react-icons/md";
+import { FaHome, FaChartLine, FaBabyCarriage, FaNutritionix, FaSearch, FaRegUserCircle } from "react-icons/fa";
+import { FaPersonPregnant } from "react-icons/fa6";
+import { IoIosArrowDown } from "react-icons/io";
+import { MdOutlineLiveHelp, MdVaccines, MdMenu} from "react-icons/md";
 import VaccineDashboard from "../../components/DashboardStatsGrid";
 import NutritionDashboard from "../../components/NutritionDashboard";
 import AntenatalDashboard from "../../components/AntenatalDashboard";
@@ -13,11 +15,15 @@ import PostnatalDashboard from "../../components/PostnatalDashboard";
 function Dashboard() {
 
   const [isMenuExpanded, setIsMenuExpanded] = useState(true);
+  const [isReportClicked, setIsReportClicked] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuExpanded(!isMenuExpanded);
   };
 
+  const toggleReport = () => {
+    setIsReportClicked(!isReportClicked);
+  }
 
   return (
     <div className="flex mb-12">
@@ -28,24 +34,57 @@ function Dashboard() {
           <li>
             <a href="#">
               <span className="icon"><FaHome /></span>
-              <span className="title">Dashboard</span>
+              <span className="title">Home</span>
             </a>
 
           </li>
-          <li>
+          <li onClick={() => toggleReport()}>
             <a href="#">
-              <span className="icon"><FaUser /></span>
-              <span className="title">Customers</span>
+              <span className="icon"><FaChartLine /></span>
+              <span className="title mr-4">Reports </span>
+              <span ><IoIosArrowDown /> </span>
             </a>
 
           </li>
-          <li>
-            <a href="#">
-              <span className="icon"><MdMessage /></span>
-              <span className="title">Message</span>
-            </a>
 
-          </li>
+        
+            <div className={`ml-4 overflow-hidden transition-all duration-500 ease-in-out ${
+            isReportClicked ? "max-h-[500px]" : "max-h-0"
+          }`}>
+              <li>
+                <a href="#">
+                  <span className="icon"><FaPersonPregnant /></span>
+                  <span className="title">Antenatal</span>
+                </a>
+
+              </li>
+              <li>
+                <a href="#">
+                  <span className="icon"><FaNutritionix /></span>
+                  <span className="title">Nutrition</span>
+                </a>
+
+              </li>
+
+              <li>
+                <a href="#">
+                  <span className="icon"><FaBabyCarriage /></span>
+                  <span className="title">Postnatal</span>
+                </a>
+
+              </li>
+              <li>
+                <a href="#">
+                  <span className="icon"><MdVaccines /></span>
+                  <span className="title">Vaccination</span>
+                </a>
+
+              </li>
+
+            </div>
+          
+         
+         
           <li>
             <a href="#">
               <span className="icon"><MdOutlineLiveHelp /></span>
@@ -53,27 +92,7 @@ function Dashboard() {
             </a>
 
           </li>
-          <li>
-            <a href="#">
-              <span className="icon"><MdOutlineSettings /></span>
-              <span className="title">Settings</span>
-            </a>
-
-          </li>
-          <li>
-            <a href="#">
-              <span className="icon"><FaLock /></span>
-              <span className="title">Password</span>
-            </a>
-
-          </li>
-          <li>
-            <a href="#">
-              <span className="icon"><FaSignOutAlt /></span>
-              <span className="title">Sign Out</span>
-            </a>
-
-          </li>
+      
         </ul>
       </div>
 
