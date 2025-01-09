@@ -19,6 +19,7 @@ server.use("/monthly_entries", require("./routes/childNutritionRoute"));
 server.use("/api/postnatal_survey", require("./routes/postnatalRoute"));
 server.use("/monthly_entries", require("./routes/postnatalRoute"));
 server.use("/api/surveys", require("./routes/surveyRoute"));
+server.use("/api/total_entries", require("./routes/totalEntriesRoute"));
 
 // Handle other requests (Next.js)
 server.get("*", (req, res) => {

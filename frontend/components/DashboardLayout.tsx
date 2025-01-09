@@ -124,7 +124,6 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
             {pathname === "/nutrition" && "CHILD NUTRITION"}
             {pathname === "/postnatal" && "POSTNATAL"}
             {pathname === "/vaccination" && "CHILD VACCINATION"}
-            {pathname === "/dashboard" && "HOME"}
             {pathname === "/help" && "DATA NOTES"}
           </h4>        
         </div>
