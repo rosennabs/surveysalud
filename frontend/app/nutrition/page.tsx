@@ -103,7 +103,7 @@ function NutritionDashboard() {
                   <XAxis dataKey="key" />
                   <YAxis allowDecimals={false} />
                   <Tooltip />
-                  <Bar dataKey="count" fill="#8884d8">
+                  <Bar dataKey="count" fill="#82ca9d">
                     <LabelList dataKey="count" position="insideTop" fill="#FFFFFF" />
                   </Bar>
                 </BarChart>
@@ -157,7 +157,7 @@ function NutritionDashboard() {
               const [year, monthNumber] = month.split('-');
               return `${new Date(year, monthNumber - 1).toLocaleString('default', { month: 'short' })} ${year}`;
             }} />
-            <Line type="monotone" dataKey="total_entries" stroke="#8884d8" strokeWidth={3} />
+              <Line type="monotone" dataKey="total_entries" stroke="#FFBB28" strokeWidth={3} />
           </LineChart>
         </ResponsiveContainer>
       </div>

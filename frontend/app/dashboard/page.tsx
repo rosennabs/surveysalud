@@ -46,7 +46,7 @@ const DashboardHome = () => {
                 const [year, monthNumber] = month.split('-');
                 return `${new Date(year, monthNumber - 1).toLocaleString('default', { month: 'short' })} ${year}`;
               }} />
-              <Line type="monotone" dataKey="total_entries" stroke="#8884d8" strokeWidth={3} />
+              <Line type="monotone" dataKey="total_entries" stroke="#82ca9d" strokeWidth={3} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -72,7 +72,7 @@ const DashboardHome = () => {
                 return `${new Date(year, monthNumber - 1).toLocaleString('default', { month: 'short' })} ${year}`;
               }}
             />
-            <Bar dataKey="total_entries" fill="#8884d8">
+            <Bar dataKey="total_entries" fill="#82ca9d">
               <LabelList dataKey="total_entries" position="insideTop" fill="#FFFFFF" />
             </Bar>
           </BarChart>

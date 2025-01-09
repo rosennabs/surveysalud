@@ -105,7 +105,7 @@ function VaccinationDashboard() {
                   <XAxis dataKey="key" />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="count" fill="#8884d8" />
+                  <Bar dataKey="count" fill="#82ca9d" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -157,7 +157,7 @@ function VaccinationDashboard() {
               const [year, monthNumber] = month.split('-');
               return `${new Date(year, monthNumber - 1).toLocaleString('default', { month: 'short' })} ${year}`;
             }} />
-            <Line type="monotone" dataKey="total_entries" stroke="#8884d8" strokeWidth={3} />
+              <Line type="monotone" dataKey="total_entries" stroke="#FFBB28" strokeWidth={3} />
           </LineChart>
         </ResponsiveContainer>
       </div>
