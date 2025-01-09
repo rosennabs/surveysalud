@@ -31,10 +31,6 @@ export const FormProvider = ({ children }) => {
   const [successMessage, setSuccessMessage] = useState(false);
   const { user } = useAuth();
   
-
-  // const toggleModal = (): void => {
-  //   setSuccessMessage(!successMessage);
-  // };
   const toggleModal = () => {
     setSuccessMessage(!successMessage);
   };

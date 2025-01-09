@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "../app/globals.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaHome, FaChartLine, FaBabyCarriage, FaNutritionix, FaSearch, FaRegUserCircle } from "react-icons/fa";
+import { FaHome, FaChartLine, FaBabyCarriage, FaNutritionix } from "react-icons/fa";
 import { FaPersonPregnant } from "react-icons/fa6";
 import { IoIosArrowDown } from "react-icons/io";
 import { MdOutlineLiveHelp, MdVaccines, MdMenu } from "react-icons/md";
@@ -52,7 +52,7 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
           </li>
 
 
-          <div className={` pl-4 py-6 overflow-hidden transition-all duration-500 ease-in-out ${isReportClicked ? "max-h-[500px]" : "max-h-0 py-0"
+          <div className={` pl-4 overflow-hidden transition-all duration-500 ease-in-out ${isReportClicked ? "max-h-[500px] py-6" : "max-h-0"
             }`}>
             <li>
               <Link href="/antenatal"
@@ -97,7 +97,9 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
 
 
           <li>
-            <Link href="#">
+            <Link href="/help"
+              className={pathname === "/help" ? "active" : ""}
+            >
               <span className="icon"><MdOutlineLiveHelp /></span>
               <span className="title">Help</span>
             </Link>
@@ -112,28 +114,19 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
       <div className={`${isMenuExpanded ? "w-[calc(100%-150px)] left-[300px]" : "w-full left-[150px]"
         } min-h-screen transition-all duration-500 px-8 `}>
 
-        <div className="topbar">
+        <div className="topbar gap-4">
           <div className="toggle cursor-pointer" onClick={toggleMenu}>
             <MdMenu />
           </div>
 
-          {/* search bar */}
-          <div className="search">
-            <label>
-              <input
-                type='text'
-                placeholder="Search here"
-              />
-              <FaSearch className="absolute top-0 left-4" />
-
-            </label>
-          </div>
-
-          {/* user profile */}
-          <div className="user">
-            <FaRegUserCircle className="relative text-3xl cursor-pointer" />
-          </div>
-
+          <h4 className="">
+            {pathname === "/antenatal" && "ANTENATAL"}
+            {pathname === "/nutrition" && "CHILD NUTRITION"}
+            {pathname === "/postnatal" && "POSTNATAL"}
+            {pathname === "/vaccination" && "CHILD VACCINATION"}
+            {pathname === "/dashboard" && "HOME"}
+            {pathname === "/help" && "DATA NOTES"}
+          </h4>        
         </div>
 
         <main>{children}</main>
