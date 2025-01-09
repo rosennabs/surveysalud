@@ -25,6 +25,7 @@ export const FormProvider = ({ children }) => {
   const [activeButton, setActiveButton] = useState(baseButtonClassName);
   const [activeNav, setActiveNav] = useState(null);
   const [isReportClicked, setIsReportClicked] = useState(false);
+  const [isMenuExpanded, setIsMenuExpanded] = useState(true);
 
   //State for handling the success modal
   const [successMessage, setSuccessMessage] = useState(false);
@@ -97,6 +98,8 @@ export const FormProvider = ({ children }) => {
         setSuccessMessage,
         isReportClicked,
         setIsReportClicked,
+        isMenuExpanded,
+        setIsMenuExpanded,
       }}
     >
       {children}

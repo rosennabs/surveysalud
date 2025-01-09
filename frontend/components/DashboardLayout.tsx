@@ -16,8 +16,7 @@ interface LayoutProps {
 
 const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
 
-  const [isMenuExpanded, setIsMenuExpanded] = useState(true);
-  const { isReportClicked, setIsReportClicked } = useFormContext();
+  const { isReportClicked, setIsReportClicked, isMenuExpanded, setIsMenuExpanded } = useFormContext();
   
   const pathname = usePathname();
 
@@ -34,7 +33,7 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
     <div className="flex mb-12">
 
       {/* side menu */}
-      <div className={`navigation ${isMenuExpanded ? "w-[250px]" : "w-[80px]"} transition-all duration-500`}>
+      <div className={`navigation ${isMenuExpanded ? "w-[250px]" : "w-[90px]"} transition-all duration-500`}>
         <ul>
           <li>
             <Link href="/dashboard">
@@ -53,7 +52,7 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
           </li>
 
 
-          <div className={`pl-4 overflow-hidden transition-all duration-500 ease-in-out ${isReportClicked ? "max-h-[500px]" : "max-h-0"
+          <div className={` pl-4 py-6 overflow-hidden transition-all duration-500 ease-in-out ${isReportClicked ? "max-h-[500px]" : "max-h-0 py-0"
             }`}>
             <li>
               <Link href="/antenatal"

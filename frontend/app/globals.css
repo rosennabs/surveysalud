@@ -141,7 +141,7 @@ body {
   position: relative;
   display: block;
   min-width: 60px;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
 }
 .navigation ul li a .title{
   position: relative;
@@ -154,7 +154,7 @@ body {
 }
 
 /* curve outside */
-.navigation ul li:hover a::before {
+.navigation ul li:hover a::before{
   content: '';
   position: absolute;
   right: 0;
