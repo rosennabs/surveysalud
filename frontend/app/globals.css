@@ -92,9 +92,6 @@ body {
   
 }
 
-.navigation.active {
-  width: 80px;
-}
 
 .navigation ul {
   position: absolute;
@@ -118,6 +115,13 @@ body {
   background: white;
 }
 
+.navigation ul li a.active {
+
+  color: yellow;
+  font-weight: bold;
+ 
+ 
+}
 
 .navigation ul li a {
   position: relative;

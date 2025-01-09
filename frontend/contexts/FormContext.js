@@ -24,6 +24,8 @@ export const FormProvider = ({ children }) => {
   const [selectedProgram, setSelectedProgram] = useState("");
   const [activeButton, setActiveButton] = useState(baseButtonClassName);
   const [activeNav, setActiveNav] = useState(null);
+  const [isReportClicked, setIsReportClicked] = useState(false);
+
   //State for handling the success modal
   const [successMessage, setSuccessMessage] = useState(false);
   const { user } = useAuth();
@@ -58,7 +60,7 @@ export const FormProvider = ({ children }) => {
        valuesWithUser
      );
      //console.log(`${survey} saved to db: `, response.data);
-     
+
      // Scroll to the top of the page
      window.scrollTo({ top: 0, behavior: "smooth" });
      toggleModal();
@@ -92,7 +94,9 @@ export const FormProvider = ({ children }) => {
         handleButtonClick,
         handleSubmit,
         successMessage,
-        setSuccessMessage
+        setSuccessMessage,
+        isReportClicked,
+        setIsReportClicked,
       }}
     >
       {children}
