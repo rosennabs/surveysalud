@@ -68,7 +68,7 @@ export default function Home() {
               initial={{ opacity: 0, x: 100 }} // Start off-screen to the right
               whileInView={{ opacity: 1, x: 0 }} // Move into view
               transition={{ duration: 2, ease: "easeOut" }} // Animation duration
-              viewport={{ once: false, margin: "-100px" }} // Animation only happens once
+              viewport={{ margin: "-100px" }} 
             >
             <h1 className="pb-8 leading-tight">
             Empower your community through data-driven healthcare decisions with SurveySalud.
@@ -96,10 +96,10 @@ export default function Home() {
 
       <section className="relative flex items-center justify-center">
         <motion.div
-          initial={{ opacity: 0, y: 100 }} // Start off-screen to the right
+          initial={{ opacity: 0, y: 100 }} // Start off-screen to the top
           whileInView={{ opacity: 1, y: 0 }} // Move into view
           transition={{ duration: 4, ease: "easeOut" }} // Animation duration
-          viewport={{ once: false, margin: "-100px" }} // Animation only happens once
+          viewport={{ margin: "-100px" }} 
 
         >
           <img
