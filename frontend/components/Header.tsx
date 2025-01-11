@@ -58,7 +58,7 @@ export default function Header() {
   }, [dropdownMenu]);
 
   return (
-    <header className="flex items-center justify-between text-m lg:flex pb-4 mx-24">
+    <header className="flex items-center justify-between text-m lg:flex pb-4 px-16">
       <Link href="/">
         <div onClick={() => setActiveNav(null)}>
           <img src="/logo.png" alt="logo" className="w-[120px]" />
