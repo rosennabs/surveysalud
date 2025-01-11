@@ -10,7 +10,7 @@ const FormContext = createContext();
 
 // Dynamic button styling
 const baseButtonClassName =
-  "bg-gradient-to-b from-primary-start to-primary-end rounded-lg shadow-xl min-w-[100px] h-10 text-white hover:text-gray-600 px-8";
+  "bg-gradient-to-b from-primary-start to-primary-end rounded-lg shadow-xl min-w-[100px] h-10 text-white px-8";
 const activeButtonClassName =
   "rounded-lg shadow-xl min-w-[100px] h-10 border-2 border-teal-500 px-8";
 

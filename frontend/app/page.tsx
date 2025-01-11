@@ -4,6 +4,7 @@ import React, { useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useFormContext } from "../contexts/FormContext";
+import { motion } from "motion/react";
 import OurServices from "../components/OurServices";
 import ContactForm from "../components/ContactForm";
 import OurTeam from "../components/OurTeam";
@@ -51,47 +52,84 @@ export default function Home() {
   return (
     <div className="">
 
-      <section className="relative flex items-center justify-center ">
+      <section className="relative flex items-center justify-center h-screen">
  
           {/* Background Image */}
           <img
             src="/sthethoscope.jpg"
             alt="Image of a sthethoscope"
-          className="relative w-full h-auto"
+          className="absolute inset-0 w-full h-full object-cover"
           />
 
           {/* Text Content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-white pl-24 w-1/2">
-        <div>
+          <div>
+            <motion.div
+              initial={{ opacity: 0, x: 100 }} // Start off-screen to the right
+              whileInView={{ opacity: 1, x: 0 }} // Move into view
+              transition={{ duration: 2, ease: "easeOut" }} // Animation duration
+              viewport={{ once: false, margin: "-100px" }} // Animation only happens once
+            >
             <h1 className="pb-8 leading-tight">
-           
             Empower your community through data-driven healthcare decisions with SurveySalud.
-            {/* Welcome to SurveySalud – your all-in-one platform for managing maternal and child health surveys. Designed for NGOs, health workers, and community leaders, SurveySalud empowers you to collect, monitor, and analyze critical health data. From antenatal care to postnatal follow-ups, child vaccinations to nutrition monitoring, our dynamic system puts actionable insights at your fingertips. Tailor surveys to meet your community's needs and drive meaningful improvements in healthcare delivery */}
-          </h1>
+            </h1>
+        
 
           <Link href="/learn-more">
-            <button
-              onClick={() => handleButtonClick("learn more")}
-              className={
-                activeButton === "learn more"
-                  ? activeButtonClassName
-                  : baseButtonClassName
-              }
-            >
-              Learn more
-            </button>
-            </Link>
+              <motion.button
+                whileHover={{ scale: 1.4 }}
+                whileTap={{ scale: 0.95 }}
+              
+                className={baseButtonClassName}
+              >
+                Learn more
+              </motion.button>
+              </Link>
+              
+            </motion.div>
           </div>
         </div>
 
       </section>
-      <img
-        src="/baby.jpg"
-        alt="Picture of a baby"
-        className="relative w-full h-auto"
-      />
-      <section>
 
+      <div className="h-[10px]"></div> {/* Add whitespace */}
+
+      <section className="relative flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 100 }} // Start off-screen to the right
+          whileInView={{ opacity: 1, y: 0 }} // Move into view
+          transition={{ duration: 4, ease: "easeOut" }} // Animation duration
+          viewport={{ once: false, margin: "-100px" }} // Animation only happens once
+
+        >
+          <img
+            src="/baby.jpg"
+            alt="Picture of a baby"
+            className="relative w-full h-auto"
+          />
+        
+
+        {/* Text Content */}
+        <div className="absolute inset-0 flex flex-col items-end justify-center z-10 text-white pr-24">
+          <div className="absolute flex flex-col items-end w-1/2 pt-20">
+            
+            <h1 className="relative pb-8 leading-tight z-10 text-right">
+              Your all-in-one platform for managing maternal and child health surveys. 
+            </h1>
+
+            <Link href="/learn-more">
+              <motion.button
+                whileHover={{ scale: 1.4 }}
+                whileTap={{ scale: 0.95 }}
+
+                  className={baseButtonClassName}
+              >
+                Learn more
+              </motion.button>
+            </Link>
+          </div>
+          </div>
+        </motion.div>
       </section>
 
      

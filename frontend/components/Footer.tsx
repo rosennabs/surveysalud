@@ -3,7 +3,7 @@ import React from 'react';
 
 function Footer() {
   return (
-    <footer className='flex items-center justify-between text-sm px-16'>
+    <footer className='flex items-center justify-between text-sm px-16 py-8'>
       <span>© 2025 SurveySalud. All rights reserved.</span>
       <div className='flex gap-8'>
         <span>Privacy</span>
