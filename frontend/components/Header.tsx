@@ -66,7 +66,7 @@ export default function Header() {
       </Link>
 
       <div className="flex items-center w-90">
-        <div className=" flex relative group" ref={dropdownRef}>
+        {/* <div className=" flex relative group" ref={dropdownRef}>
           <div
             onClick={() => handleNavClick("about")}
             className={`flex items-center cursor-pointer ${activeNav === "about"
@@ -78,7 +78,18 @@ export default function Header() {
             <MdOutlineKeyboardArrowDown className="ml-2" />
           </div>
           {activeNav === "about" && dropdownMenu && <AboutDropDown />}
-        </div>
+        </div> */}
+
+        <Link href="/about_us">
+          <div
+            onClick={() => handleNavClick("about_us")} className={
+            activeNav === "about_us"
+              ? activeNavClassName
+              : "hover:underline hover:underline-offset-8 hover:text-teal-600 mr-8"
+          }>
+            About Us
+          </div>
+        </Link>
 
         <Link href="/dashboard">
           <div

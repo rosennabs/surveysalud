@@ -38,23 +38,13 @@ export default function Home() {
   }, [searchParams]);
 
 
-  // useEffect(() => {
-  //   if (window.location.hash) {
-  //     const element = document.getElementById(window.location.hash.substring(1)); // extract the id name from the url ignoring the hash
-  //     if (element) {
-  //       element.scrollIntoView({ behavior: "smooth" });
-  //     }
-  //   }
-  // }, []);
-
-
 
   return (
     <div className="">
 
       <section className="relative flex items-center justify-center h-screen">
  
-          {/* Background Image */}
+          {/* First background Image */}
           <img
             src="/sthethoscope.jpg"
             alt="Image of a sthethoscope"
@@ -92,6 +82,8 @@ export default function Home() {
 
       </section>
 
+      {/* Second background Image */}
+
       <div className="h-[10px]"></div> {/* Add whitespace */}
 
       <section className="relative flex items-center justify-center">
@@ -124,7 +116,7 @@ export default function Home() {
 
                   className={baseButtonClassName}
               >
-                Learn more
+               Contact Us
               </motion.button>
             </Link>
           </div>

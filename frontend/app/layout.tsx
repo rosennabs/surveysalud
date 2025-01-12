@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
 
-      <body className="flex flex-col h-screen justify-between montserrat-light my-8 bg-off-white">
+      <body className="flex flex-col h-screen justify-between montserrat-light my-8">
         <AuthProvider>
         <FormProvider>
 

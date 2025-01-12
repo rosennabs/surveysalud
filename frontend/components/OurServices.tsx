@@ -35,39 +35,3 @@ function Services() {
 }
 
 export default Services;
-
-
-
-
-// Introduction;
-// "At SurveySalud, we believe in the power of data to transform healthcare outcomes. Our platform enables NGOs, health workers, and community leaders to design and manage surveys tailored to the unique needs of their communities. By focusing on maternal and child health, SurveySalud helps you gather and analyze data on antenatal care, postnatal follow-ups, child vaccinations, and nutrition—all in one place."
-
-// Mission Statement;
-// "Our mission is to simplify the collection and analysis of healthcare data, empowering communities to make informed decisions and improve health outcomes for mothers and children."
-
-// Vision Statement;
-// "We envision a world where every community has access to accurate health data, enabling better planning, resource allocation, and healthcare delivery."
-
-// Core Values;
-
-// Community - Centric: We prioritize the needs of local communities.
-//   Empowerment: We enable users to take control of their healthcare data.
-//     Innovation: We use technology to bridge gaps in healthcare.
-//       Integrity: We are committed to data security and ethical practices.
-// How SurveySalud Works;
-// "SurveySalud streamlines the entire process of maternal and child health data collection. NGOs and health workers can design surveys, deploy them to communities, and monitor results in real-time. With our intuitive dashboards, users can identify trends, track progress, and implement actionable solutions—all from a single platform."
-
-// Who We Serve
-
-// NGOs working in maternal and child health.
-// Community leaders aiming to improve healthcare access.
-// Health workers managing local or regional health programs.
-// Why Choose SurveySalud ?
-
-//   Customizable Surveys: Tailor surveys to your community's needs.
-// Centralized Management: Manage multiple surveys in one platform.
-//   Real - Time Insights: Visualize data with dynamic dashboards.
-//     Scalable: Suitable for communities of any size.
-// Call to Action;
-// "Join the growing number of organizations using SurveySalud to make informed decisions and improve maternal and child health outcomes. Start exploring our features or get in touch with our team today."
-
