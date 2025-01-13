@@ -28,7 +28,7 @@ export default function RootLayout({
         <FormProvider>
 
             <Header />
-            <div className="border-b-2 border-teal-600"></div>
+            <div className="border-b-2 border-yellow-500"></div>
 
             <main className="flex-grow">
               {children}

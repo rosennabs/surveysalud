@@ -8,13 +8,6 @@ import { useFormContext } from "@/contexts/FormContext";
 
 const AboutUs = () => {
 
-  const {
-    baseButtonClassName,
-    activeButtonClassName,
-    activeButton,
-    handleButtonClick,
-  } = useFormContext();
-
   return (
     <div className='text-xl'>
 

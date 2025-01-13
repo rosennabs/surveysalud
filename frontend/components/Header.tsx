@@ -6,10 +6,11 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import { useFormContext } from "../contexts/FormContext";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { AboutDropDown } from "./DropDown";
+
 import ProfileDropDown from "./Profile";
 import { FaRegUserCircle } from "react-icons/fa";
 
+const navOnHover = "hover:underline hover:underline-offset-8 decoration-yellow-500 decoration-4 cursor-pointer"
 
 export default function Header() {
   const router = useRouter();
@@ -25,11 +26,15 @@ export default function Header() {
 
   const handleNavClick = (nav: string) => {
     setActiveNav(nav);
-    nav === "about" || nav === "profile" ? setDropdownMenu(true) : setDropdownMenu(false);
+    nav === "profile" && setDropdownMenu(true);
 
     if (nav === "resources") {
       router.push("/?scrollTo=resource-hub"); //Navigate to homepage with the provided query parameter
     }
+  };
+  const toggleDropdown = () => {
+    setDropdownMenu(!dropdownMenu); // Toggle dropdown visibility
+    setActiveNav((prev) => (prev === "profile" ? null : "profile")); // Toggle activeNav
   };
 
 
@@ -66,86 +71,77 @@ export default function Header() {
       </Link>
 
       <div className="flex items-center w-90">
-        {/* <div className=" flex relative group" ref={dropdownRef}>
-          <div
-            onClick={() => handleNavClick("about")}
-            className={`flex items-center cursor-pointer ${activeNav === "about"
-              ? activeNavClassName
-              : "hover:underline hover:underline-offset-8 hover:text-teal-600 mr-8"
-              }`}
-          >
-            About
-            <MdOutlineKeyboardArrowDown className="ml-2" />
-          </div>
-          {activeNav === "about" && dropdownMenu && <AboutDropDown />}
-        </div> */}
 
-        <Link href="/about_us">
-          <div
-            onClick={() => handleNavClick("about_us")} className={
-            activeNav === "about_us"
-              ? activeNavClassName
-              : "hover:underline hover:underline-offset-8 hover:text-teal-600 mr-8"
-          }>
-            About Us
-          </div>
-        </Link>
+        <div className="flex gap-8">
+          <Link href="/about_us">
+            <div
+              onClick={() => handleNavClick("about_us")} className={
+                activeNav === "about_us"
+                  ? activeNavClassName
+                  : navOnHover
+              }>
+              About Us
+            </div>
+          </Link>
 
-        <Link href="/dashboard">
+          <Link href="/dashboard">
+            <div
+              onClick={() => handleNavClick("dashboard")}
+              className={
+                activeNav === "dashboard"
+                  ? activeNavClassName
+                  : navOnHover
+              }
+            >
+              Dashboard
+            </div>
+          </Link>
+
+          <Link href={isAuthenticated ? "/surveys" : "/login"}>
+            <div
+              onClick={() => handleNavClick("surveys")}
+              className={
+                activeNav === "surveys"
+                  ? activeNavClassName
+                  : navOnHover
+              }
+            >
+              Surveys
+            </div>
+          </Link>
+
           <div
-            onClick={() => handleNavClick("dashboard")}
+            onClick={() => handleNavClick("resources")}
             className={
-              activeNav === "dashboard"
+              activeNav === "resources"
                 ? activeNavClassName
-                : "hover:underline hover:underline-offset-8 hover:text-teal-600 mr-8"
+                : navOnHover
             }
           >
-            Dashboard
+            Resources
           </div>
-        </Link>
-
-        <Link href={isAuthenticated ? "/surveys" : "/login"}>
-          <div
-            onClick={() => handleNavClick("surveys")}
-            className={
-              activeNav === "surveys"
-                ? activeNavClassName
-                : "hover:underline hover:underline-offset-8 hover:text-teal-600 mr-8"
-            }
-          >
-            Surveys
-          </div>
-        </Link>
-
-        <div
-          onClick={() => handleNavClick("resources")}
-          className={
-            activeNav === "resources"
-              ? activeNavClassName
-              : "hover:underline hover:underline-offset-8 hover:text-teal-600 cursor-pointer"
-          }
-        >
-          Resources
         </div>
-      </div>
+        </div>
+        
 
       <div className="flex items-center space-x-8">
         {isAuthenticated && (
           <>
             <p>Hello, {user.first_name}</p>
 
-            <div className=" flex relative group" ref={dropdownRef}>
-              <div onClick={() => handleNavClick("profile")}
-                className={`flex items-center cursor-pointer ${activeNav === "profile"
-                  ? activeNavClassName
-                  : "hover:underline hover:underline-offset-8 hover:text-teal-600 mr-8"
-                  }`} >
+            <div className="flex relative group" ref={dropdownRef}>
+              <div onClick={() => toggleDropdown()}
+                className={`flex items-center cursor-pointer ${dropdownMenu
+                  ? "text-yellow-600" : ""
+                  }`}
+                >
 
                 <FaRegUserCircle className="text-2xl mr-2" />
                 <MdOutlineKeyboardArrowDown />
-              </div>
-              {activeNav === "profile" && dropdownMenu && <ProfileDropDown />}
+              </div>    
+                {dropdownMenu && <ProfileDropDown />}   
             </div>
+            
 
           </>
         )}

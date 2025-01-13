@@ -5,9 +5,8 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useFormContext } from "../contexts/FormContext";
 import { motion } from "motion/react";
-import OurServices from "../components/OurServices";
 import ContactForm from "../components/ContactForm";
-import OurTeam from "../components/OurTeam";
+
 
 const resourceCard =
   "flex flex-col bg-white cursor-pointer border rounded-2xl border-neutral-200 w-[350px] h-[150px] p-4 hover:bg-teal-600 hover:text-white";

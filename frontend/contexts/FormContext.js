@@ -15,7 +15,7 @@ const activeButtonClassName =
   "rounded-lg shadow-xl min-w-[100px] h-10 border-2 border-teal-500 px-8";
 
 const activeNavClassName =
-  "underline underline-offset-8 text-teal-600 font-bold mr-8";
+  "underline underline-offset-8 decoration-yellow-500 decoration-4 font-bold";
 
   
 
