@@ -76,9 +76,13 @@ function Login() {
   };
 
   return (
-    <div className="mt-32 w-full flex flex-col items-center">
-
-      <div className="bg-white border border-black border-opacity-15 w-[500px] text-xl p-8">
+    <div className="h-screen flex items-center bg-gradient-to-b from-amber-500 via-amber-200 to-white">
+      <img
+        src="/nutrition.jpg"
+        alt="Image of a sthethoscope"
+        className="w-1/2 h-full object-cover"
+      />
+      <div className="text-xl w-1/2 p-8">
 
         <Formik
           initialValues={initialValues}

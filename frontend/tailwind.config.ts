@@ -14,8 +14,8 @@ const config: Config = {
         'light-teal': '#E1FEFB'
       },
       gradientColorStops: {
-        'primary-start': '#14b8a6',
-        'primary-end': '#134e4a',
+        'primary-start': '#fbbf24',
+        'primary-end': '#92400e',
       },
       fontFamily: {
         'montserrat': ['Montserrat', 'sans-serif'],

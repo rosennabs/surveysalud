@@ -64,14 +64,14 @@ export default function Home() {
             </h1>
         
 
-          <Link href="/learn-more">
+          <Link href="/registration">
               <motion.button
                 whileHover={{ scale: 1.4 }}
                 whileTap={{ scale: 0.95 }}
               
                 className={baseButtonClassName}
               >
-                Learn more
+                Get Started
               </motion.button>
               </Link>
               

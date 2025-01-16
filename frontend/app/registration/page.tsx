@@ -63,10 +63,14 @@ function Register() {
 
 
   return (
-    <div className="pt-32 w-full flex flex-col items-center">
+    <div className=" flex h-screen items-center bg-gradient-to-b from-amber-500 via-amber-200 to-white">
 
-
-      <div className="bg-white border border-black border-opacity-15 w-[500px] text-xl p-8">
+      <img
+        src="/nutrition.jpg"
+        alt="Image of a sthethoscope"
+        className="w-1/2 h-full object-cover"
+      />
+      <div className="w-1/2 text-xl p-8">
 
         <Formik
           initialValues={initialValues}
@@ -118,6 +122,12 @@ function Register() {
                 />
                 <Button status={status} text={"Sign up"} />
 
+                <div className="flex gap-4 justify-center">
+                  <span>Already have an account ?</span>
+                  <a href="/login" className="text-blue-500 underline underline-offset-8">Login here</a>
+
+                </div>
+                
               </Form>
             );
           }
