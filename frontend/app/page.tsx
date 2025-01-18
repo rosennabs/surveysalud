@@ -39,7 +39,7 @@ export default function Home() {
 
 
   return (
-    <div className="">
+    <div>
 
       <section className="relative flex items-center justify-center h-screen">
  
@@ -85,45 +85,11 @@ export default function Home() {
 
       <div className="h-[10px]"></div> {/* Add whitespace */}
 
-      <section className="relative flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, y: 100 }} // Start off-screen to the top
-          whileInView={{ opacity: 1, y: 0 }} // Move into view
-          transition={{ duration: 4, ease: "easeOut" }} // Animation duration
-          viewport={{ margin: "-100px" }} 
-
-        >
-          <img
-            src="/baby.jpg"
-            alt="Picture of a baby"
-            className="relative w-full h-auto"
-          />
-        
-
-        {/* Text Content */}
-        <div className="absolute inset-0 flex flex-col items-end justify-center z-10 text-white pr-24">
-          <div className="absolute flex flex-col items-end w-1/2 pt-20">
-            
-            <h1 className="relative pb-8 leading-tight z-10 text-right">
-              Your all-in-one platform for managing maternal and child health surveys. 
-            </h1>
-
-            <Link href="/learn-more">
-              <motion.button
-                whileHover={{ scale: 1.4 }}
-                whileTap={{ scale: 0.95 }}
-
-                  className={baseButtonClassName}
-              >
-               Contact Us
-              </motion.button>
-            </Link>
-          </div>
-          </div>
-        </motion.div>
-      </section>
+      
 
      
     </div>
   );
 }
+
+

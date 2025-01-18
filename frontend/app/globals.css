@@ -34,7 +34,7 @@ body {
     @apply text-2xl font-bold;
   }
   h5 {
-    @apply text-base mb-6;
+    @apply text-lg font-bold mb-6;
   }
 }
 

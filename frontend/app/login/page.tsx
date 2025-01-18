@@ -79,7 +79,7 @@ function Login() {
     <div className="h-screen flex items-center bg-gradient-to-b from-amber-500 via-amber-200 to-white">
       <img
         src="/nutrition.jpg"
-        alt="Image of a sthethoscope"
+        alt="Image of food"
         className="w-1/2 h-full object-cover"
       />
       <div className="text-xl w-1/2 p-8">

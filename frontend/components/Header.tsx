@@ -110,16 +110,19 @@ export default function Header() {
             </div>
           </Link>
 
-          <div
-            onClick={() => handleNavClick("resources")}
-            className={
-              activeNav === "resources"
-                ? activeNavClassName
-                : navOnHover
-            }
-          >
-            Resources
-          </div>
+          <Link href="/resources">
+            <div
+              onClick={() => handleNavClick("resources")}
+              className={
+                activeNav === "resources"
+                  ? activeNavClassName
+                  : navOnHover
+              }
+            >
+              Resources
+            </div>
+          </Link>
+          
         </div>
         </div>
         

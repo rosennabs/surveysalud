@@ -67,7 +67,7 @@ function Register() {
 
       <img
         src="/nutrition.jpg"
-        alt="Image of a sthethoscope"
+        alt="Image of food"
         className="w-1/2 h-full object-cover"
       />
       <div className="w-1/2 text-xl p-8">
