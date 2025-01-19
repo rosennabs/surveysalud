@@ -1,4 +1,8 @@
 "use client";
+import { MdKeyboardDoubleArrowDown } from "react-icons/md";
+import Button from "../../components/submitButton";
+import { motion } from "motion/react";
+
 
 const news = [
   {
@@ -55,6 +59,14 @@ const Resources = () => {
         ))}
      
       </div>
+
+      <div className="flex justify-center">
+ 
+          <Button text={"Load More"} />
+     
+      </div>
+     
+      
       
     </div>
   )
