@@ -119,7 +119,7 @@ export default function Header() {
                   : navOnHover
               }
             >
-              Resources
+              News
             </div>
           </Link>
           

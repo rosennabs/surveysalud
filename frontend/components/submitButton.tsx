@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "motion/react";
 
 
-function Button({ isSubmitting, status, text }) {
+function Button({ isSubmitting, status, text, onClick }) {
  
   return (
     <div className="flex flex-col w-full">
@@ -15,7 +15,8 @@ function Button({ isSubmitting, status, text }) {
           whileTap={{ scale: 0.95 }}
           className={`py-3 px-8 bg-gradient-to-b from-primary-start to-primary-end text-white hover:text-light-grey rounded-xl shadow-xl ${isSubmitting ? 'opacity-60 cursor-not-allowed' : ''}`}   
         type="submit"
-        disabled={isSubmitting}
+          disabled={isSubmitting}
+          onClick={onClick}
         
         > {text}</motion.button>
       
