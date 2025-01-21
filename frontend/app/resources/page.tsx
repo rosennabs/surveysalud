@@ -1,74 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import Button from "../../components/submitButton";
-
-
-const news = [
-  {
-    id: 1,
-    title: "'I would need to meet your mother': Doctors refuse women's requests for sterilisation",
-    author: "Jane Doe",
-    country: "Thialand",
-    time: "3 Hours Ago",
-    category: "health"
-  },
-  {
-    id: 2,
-    title: "Canada has a doctor shortage. So why can't foreign-trained physicians practice here?",
-    author: "Adam Will",
-    country: "Canada",
-    time: "5 Hours Ago",
-    category: "general"
-  },
-  {
-    id: 3,
-    title: "Fourteen new cases of monkey-pox discovered in Congo",
-    author: "Elliot Mike",
-    country: "Congo",
-    time: "4 Hours Ago",
-    category: "health"
-  },
-  {
-    id: 4,
-    title: "What the World Health Organization (WHO) has to say about child nutrition",
-    author: "Amanda Smith",
-    country: "Peru",
-    time: "2 Hours Ago",
-    category: "health"
-  },
-  {
-    id: 1,
-    title: "'I would need to meet your mother': Doctors refuse women's requests for sterilisation",
-    author: "Jane Doe",
-    country: "Thialand",
-    time: "3 Hours Ago",
-    category: "general"
-  },
-  {
-    id: 2,
-    title: "Canada has a doctor shortage. So why can't foreign-trained physicians practice here?",
-    author: "Adam Will",
-    country: "Canada",
-    time: "5 Hours Ago",
-    category: "health"
-  },
-  {
-    id: 3,
-    title: "Fourteen new cases of monkey-pox discovered in Congo",
-    author: "Elliot Mike",
-    country: "Congo",
-    time: "4 Hours Ago",
-    category: "health"
-  },
-  {
-    id: 4,
-    title: "What the World Health Organization (WHO) has to say about child nutrition",
-    author: "Amanda Smith",
-    country: "Peru",
-    time: "2 Hours Ago",
-    category: "health"
-  },
-]
+import { newsData } from "@/helpers/newsData";
+import { format } from "date-fns";
+import Link from "next/link";
 
 
 
@@ -83,6 +18,9 @@ const Resources = () => {
     setShowMoreNews(true);
   };
 
+  const formatPublishedDate = (date) => {
+    return format(new Date(date), "MMM d, yyyy");
+  };
 
   return (
     <div className="mx-24 my-16">
@@ -92,21 +30,23 @@ const Resources = () => {
       <h2 className="border-b-4 py-2 mb-12">Latest News</h2>
 
       <div className="grid grid-cols-4 gap-4">
-        {news.slice(0,8).map((item) => (
-          <div key={item.id} className="border border-gray-300 hover:outline hover:outline-yellow-500 hover:outline-2 cursor-pointer transition-all duration-300">
+        {newsData.slice(0, 8).map((item, index) => (
+          <Link href={item.url} target="_blank" rel="noopener noreferrer">
+          <div key={index} className="border border-gray-300 hover:outline hover:outline-yellow-500 hover:outline-2 cursor-pointer transition-all duration-300">
             <img
-              src="/sthethoscope.jpg"
+              src={item.image ? item.image : "/sthethoscope.jpg"}
               alt="Image of a sthethoscope"
-              className="h-[200px] w-full"
+              className="h-[200px] w-full object-cover"
             />
 
             <div className="flex flex-col p-4">
-              <h5 className="line-clamp-3">{item.title}</h5>
-              <span>{item.author}</span>
-              <span>{`${item.country} | ${item.time}`}</span>
+              <h5 className="line-clamp-2">{item.title}</h5>
+              <span>{item.source}</span>
+              <span>{`${item.country} | ${formatPublishedDate(item.published_at)}`}</span>
             </div>
 
-          </div>
+            </div>
+          </Link>
         ))}
      
       </div>
@@ -123,27 +63,31 @@ const Resources = () => {
 
       {showMoreNews && (
         <>
-      <h2 className="border-b-4 py-2 my-20">More Health News</h2>
+          <h2 className="border-b-4 py-2 my-20">More Health News</h2>
+          
       <div className="grid grid-cols-4 gap-4">
-        {news.slice(0,20).map((item) => (
+            {newsData.slice(8, 20).map((item) => (
+              <Link href={item.url} target="_blank" rel="noopener noreferrer">
           <div key={item.id} className="border border-gray-300 hover:outline hover:outline-yellow-500 hover:outline-2 cursor-pointer transition-all duration-300">
  
             <div className="flex p-4">
               <h5 className="line-clamp-3">{item.title}</h5>
               <img
-                src="/sthethoscope.jpg"
+                src={item.image ? item.image : "/vaccine.jpg"}
                 alt="Image of a sthethoscope"
-                className="h-[100px] w-[100px]"
+                className="h-[100px] w-[100px] object-cover"
               />
             </div>
             <div className="flex flex-col p-4">
-              <span>{item.author}</span>
-              <span>{`${item.country} | ${item.time}`}</span>
+              <span>{item.source}</span>
+              <span>{`${item.country} | ${formatPublishedDate(item.published_at)}`}</span>
             </div>
-          </div>
+                </div>
+              </Link>
         ))}
 
-      </div>
+            </div>
+          
       
           {section === "more news" && (
       <div className="flex justify-center">
@@ -167,21 +111,26 @@ const Resources = () => {
               <th className="py-6 px-4">News</th>
               <th className="py-6 px-4">Date</th>
               <th className="py-6 px-4">Country</th>
-              <th className="py-6 px-4">Author</th>
-              <th className="py-6 px-4">Category</th>
+              <th className="py-6 px-4">Source</th>
             </tr>
           </thead>
 
           {/* Table Body */}
           <tbody>
-            {news.map((item, index) => (
-              <tr key={index} className="border-b-8 border-white cursor-pointer hover:bg-yellow-400 transition">
-                <td className="p-4">{item.title}</td>
-                <td className="p-4">{item.time}</td>
-                <td className="p-4">{item.country}</td>
-                <td className="p-4">{item.author}</td>
-                <td className="p-4">{item.category}</td>
-              </tr>
+              {newsData.map((item, index) => (
+                
+                <tr key={index} className="border-b-8 border-white cursor-pointer hover:bg-yellow-400 transition">
+                  <td className="p-4">
+                    <Link href={item.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                      {item.title}
+                    </Link>
+                  </td>
+                  <td className="p-4 w-[150px]">{formatPublishedDate(item.published_at)}</td>
+                <td className="p-4 w-[150px]">{item.country}</td>
+                  <td className="p-4">{item.source}</td>
+            
+                  </tr>
+                
             ))}
           </tbody>
           </table>
