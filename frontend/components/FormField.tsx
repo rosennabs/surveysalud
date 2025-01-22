@@ -4,7 +4,7 @@ import React from "react";
 
 interface FormFieldProps {
   label: string;
-  id: string;
+  id?: string;
   name: string;
   placeholder?: string;
   options?: string[];

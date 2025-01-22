@@ -18,7 +18,7 @@ const Resources = () => {
     setShowMoreNews(true);
   };
 
-  const formatPublishedDate = (date) => {
+  const formatPublishedDate = (date: string) => {
     return format(new Date(date), "MMM d, yyyy");
   };
 
@@ -53,7 +53,12 @@ const Resources = () => {
 
       {!showMoreNews && (
       <div className="flex justify-center">
-          <Button text={"Load More"} onClick={()=> handleLoadMore("more news")}/>   
+          <Button
+            text={"Load More"}
+            onClick={() => handleLoadMore("more news")}
+            isSubmitting={false}
+            status={null}
+          />   
         </div>
       )}
 
@@ -91,7 +96,12 @@ const Resources = () => {
       
           {section === "more news" && (
       <div className="flex justify-center">
-            <Button text={"Load More"} onClick={() => handleLoadMore("table view")} />
+              <Button
+                text={"Load More"}
+                onClick={() => handleLoadMore("table view")}
+                isSubmitting={false}
+                status={null}
+              />
             </div>
           )}
         </>

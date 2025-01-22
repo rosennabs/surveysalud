@@ -1,8 +1,15 @@
 import React from "react";
 import { motion } from "motion/react";
+import { Interface } from "readline";
 
+interface ButtonProps {
+  isSubmitting?: boolean;
+  status?: any;
+  text: string;
+  onClick?: () => void;
+};
 
-function Button({ isSubmitting, status, text, onClick }) {
+const Button = ({ isSubmitting, status, text, onClick }: ButtonProps) => {
  
   return (
     <div className="flex flex-col w-full">

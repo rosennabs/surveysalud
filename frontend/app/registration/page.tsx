@@ -12,8 +12,8 @@ interface FormValues {
   first_name: string;
   last_name: string;
   email: string;
-  password: string | number;
-  confirm_password: string | number;
+  password: string;
+  confirm_password: string;
 }
 
 const initialValues: FormValues = {
@@ -32,6 +32,44 @@ const validationSchema = Yup.object({
   confirm_password: Yup.string().oneOf([Yup.ref('password'), ''], 'Passwords must match').required("Required"),
 });
 
+interface formQuestionType {
+  label: string;
+  name: string;
+  placeholder: string;
+  type?: string
+}
+
+const formQuestion: formQuestionType[] = [
+  {
+    label: "First Name",
+    name: "first_name",
+    placeholder: "First Name",
+  },
+  {
+    label: "Last Name",
+    name: "last_name",
+    placeholder: "Last Name",
+  },
+  {
+    label: "Email",
+    name: "email",
+    type: "email",
+    placeholder: "Email",
+  },
+  {
+    label: "Password",
+    name: "password",
+    type: "password",
+    placeholder: "Password",
+  },
+  {
+    label: "Confirm Password",
+    name: "confirm_password",
+    type: "password",
+    placeholder: "Confirm Password",
+  }
+ 
+];
 
 function Register() {
 
@@ -39,6 +77,8 @@ function Register() {
 
 
   const handleSubmit = async (values, actions) => {
+    console.log("submit button clicked");
+    
 
     try {
       const response = await axios.post('http://localhost:8080/api/user/register', values);
@@ -86,40 +126,32 @@ function Register() {
                 <h2 className="flex justify-center pb-16 mt-8">Create an account</h2>
 
 
-                <div className="flex">
+                <div className="flex flex-col">
+                  {/* Grouping the first two fields */}
+                  <div className="flex flex-row space-x-4">
+                    {formQuestion.slice(0, 2).map((question, index) => (
+                      <FormField
+                        key={index}
+                        label={question.label}
+                        name={question.name}
+                        placeholder={question.placeholder}
+                        type={question.type}
+                      />
+                    ))}
+                  </div>
 
-                  <FormField
-                    label='First name'
-                    name='first_name'
-                    placeholder='First Name'
-                  />
-                  <FormField
-                    label='Last name'
-                    name='last_name'
-                    placeholder='Last Name'
-                  />
+                  {/* Remaining fields */}
+                  {formQuestion.slice(2).map((question, index) => (
+                    <div key={index} className="flex flex-col">
+                      <FormField
+                        label={question.label}
+                        name={question.name}
+                        placeholder={question.placeholder}
+                        type={question.type}
+                      />
+                    </div>
+                  ))}
                 </div>
-
-                <FormField
-                  label='Email'
-                  name='email'
-                  type='email'
-                  placeholder='Email'
-                />
-
-                <FormField
-                  label='Password'
-                  name='password'
-                  type='password'
-
-                />
-
-                <FormField
-                  label='Confirm Password'
-                  name='confirm_password'
-                  type='password'
-
-                />
                 <Button status={status} text={"Sign up"} />
 
                 <div className="flex gap-4 justify-center">
