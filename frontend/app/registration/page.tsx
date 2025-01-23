@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikHelpers } from "formik";
 import { useRouter } from 'next/navigation';
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
@@ -76,7 +76,7 @@ function Register() {
   const router = useRouter(); // Use useRouter from next/router
 
 
-  const handleSubmit = async (values, actions) => {
+  const handleSubmit = async (values:FormValues, actions:FormikHelpers<FormValues>) => {
     console.log("submit button clicked");
     
 

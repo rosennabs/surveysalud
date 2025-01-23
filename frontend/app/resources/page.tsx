@@ -79,7 +79,7 @@ const Resources = () => {
               <h5 className="line-clamp-3">{item.title}</h5>
               <img
                 src={item.image ? item.image : "/vaccine.jpg"}
-                alt="Image of a sthethoscope"
+                alt="Image of a syringe"
                 className="h-[100px] w-[100px] object-cover"
               />
             </div>
