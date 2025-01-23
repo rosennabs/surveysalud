@@ -21,7 +21,7 @@ export default function Header() {
     setActiveNav,
   } = useFormContext();
 
-  const [dropdownMenu, setDropdownMenu] = useState(false);
+  const [dropdownMenu, setDropdownMenu] = useState<boolean>(false);
   const dropdownRef = useRef(null);
 
   const handleNavClick = (nav: string) => {
@@ -142,7 +142,7 @@ export default function Header() {
                 <FaRegUserCircle className="text-2xl mr-2" />
                 <MdOutlineKeyboardArrowDown />
               </div>    
-                {dropdownMenu && <ProfileDropDown />}   
+              {dropdownMenu && <ProfileDropDown setDropdownMenu={setDropdownMenu}/>}   
             </div>
             
 
