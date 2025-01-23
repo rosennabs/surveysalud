@@ -21,18 +21,17 @@ function ProfileDropDown(props) {
 
   return (
     <DropDownContainer>
-      <p className={dropdownMenu} onClick={() => handleClick()}>
+      
         <Link
           href="/profile"
-        > My Profile
-        </Link >
-      </p >
-      <p className={dropdownMenu} onClick={() => handleClick()}>
-        <Link
-          href="/records"
-        > My Records
-        </Link >
-      </p >
+        > <p className={dropdownMenu} onClick={() => handleClick()}>My Profile</p >
+      </Link >
+
+      <Link
+        href="/records"
+      > <p className={dropdownMenu} onClick={() => handleClick()}>My Records</p >
+      </Link >
+
       <p className={dropdownMenu} onClick={() => handleLogout()}>Sign out</p>
 
     </DropDownContainer>

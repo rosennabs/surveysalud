@@ -65,8 +65,9 @@ export default function Header() {
   return (
     <header className="flex items-center justify-between text-m lg:flex pb-4 px-16">
       <Link href="/">
-        <div onClick={() => setActiveNav(null)}>
-          <img src="/logo.png" alt="logo" className="w-[120px]" />
+        <div onClick={() => setActiveNav(null)} className="flex">
+          <span className="text-lg font-mono text-yellow-500">Survey</span>
+          <span className="text-lg font-bold text-yellow-600">Salud</span>
         </div>
       </Link>
 
