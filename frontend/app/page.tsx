@@ -1,26 +1,25 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { Suspense, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { useFormContext } from "../contexts/FormContext";
 import { motion } from "motion/react";
-import ContactForm from "../components/ContactForm";
 
-
-const resourceCard =
-  "flex flex-col bg-white cursor-pointer border rounded-2xl border-neutral-200 w-[350px] h-[150px] p-4 hover:bg-teal-600 hover:text-white";
-const text = "ml-16 -mt-2 mb-2 text-xs";
-const titleContainer = "flex flex-row space-x-2 m-4";
-const image = "bg-teal-100 p-2 w-[35px]";
+//Next.js 13.4 + enforces a rule that client components using useSearchParams (and some other hooks like useRouter) need to be wrapped in a < Suspense > boundary, so the framework can properly handle hydration and pre - rendered content.
 
 export default function Home() {
-  const {
-    baseButtonClassName,
-    activeButtonClassName,
-    activeButton,
-    handleButtonClick,
-  } = useFormContext();
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeContent />
+    </Suspense>
+  );
+}
+
+// All logic using useSearchParams goes here
+function HomeContent() {
+  const {baseButtonClassName} = useFormContext();
 
   //Navigate to the resource hub in the homepage by searching for query parameter provided when resources is clicked
   const searchParams = useSearchParams();
@@ -44,10 +43,11 @@ export default function Home() {
       <section className="relative flex items-center justify-center h-screen">
  
           {/* First background Image */}
-          <img
+          <Image
             src="/sthethoscope.jpg"
-            alt="Image of a sthethoscope"
-          className="absolute inset-0 w-full h-full object-cover"
+          alt="Image of a sthethoscope"
+          fill
+          style={{ objectFit: 'cover' }}
           />
 
           {/* Text Content */}

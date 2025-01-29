@@ -4,6 +4,7 @@ import React from "react";
 import { useRouter } from 'next/navigation';
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import Image from "next/image";
 import FormField from "../../components/FormField";
 import Button from "../../components/submitButton";
 import { useAuth } from '../../contexts/AuthContext';
@@ -77,9 +78,12 @@ function Login() {
 
   return (
     <div className="h-screen flex items-center bg-gradient-to-b from-amber-500 via-amber-200 to-white">
-      <img
+
+      <Image
         src="/nutrition.jpg"
         alt="Image of food"
+        width={1000}
+        height={0}
         className="w-1/2 h-full object-cover"
       />
       <div className="text-xl w-1/2 p-8">

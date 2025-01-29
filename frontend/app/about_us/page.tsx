@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { motion } from "motion/react";
-import Link from "next/link";
-import { useFormContext } from "@/contexts/FormContext";
+import Image from "next/image";
 
 
 const AboutUs = () => {
@@ -22,19 +21,20 @@ const AboutUs = () => {
           viewport={{ once: true}}
 
       >
-        <img
-          src="/about_us.jpg"
-          alt="Picture of a team"
-          className="relative w-full h-auto"
-        />
-
+          <Image
+            src="/about_us.jpg"
+            alt="Picture of a team"
+            width={1250}          
+            height={500}          
+            className="relative w-full h-auto"
+/>
 
         {/* Text Content */}
         <div className="absolute inset-0 flex flex-col items-end justify-center z-10 text-white pr-24">
           <div className="absolute flex flex-col items-end w-1/2 pt-20">
 
             <h1 className="relative pb-8 leading-tight z-10 text-right">
-              "Our mission is to simplify the collection and analysis of healthcare data, empowering communities to improve health outcomes for mothers and children."
+                &quot;Our mission is to simplify the collection and analysis of healthcare data, empowering communities to improve health outcomes for mothers and children.&quot;
             </h1>
  
           </div>
@@ -63,21 +63,25 @@ const AboutUs = () => {
           <div className='flex flex-col ml-24 w-1/2'>
             <h2 className='border-b border-yellow-500 pb-4'> Who We Serve </h2>
 
-            <p className='mt-12'>We envision a world where maternal and child health is prioritized, and every community is empowered with the tools and knowledge to ensure healthier generations through better care, informed decisions, and equitable healthcare delivery.</p>
+              <div className='pr-12 space-y-8'>
+                <p className='mt-12'>We envision a world where maternal and child health is prioritized, and every community is empowered with the tools and knowledge to ensure healthier generations through better care, informed decisions, and equitable healthcare delivery.</p>
 
-            <strong className='my-4'>Our platform is targetted at :</strong>
+                <p className='font-bold'>Our platform is targetted at :</p>
+
+                <ul className='list-disc ml-8 space-y-4'>
+                  <li>NGOs working in maternal and child health.</li>
+                  <li>Community leaders aiming to improve healthcare access.</li>
+                  <li >Health workers managing local or regional health programs.</li>
+                </ul>
+              </div>
             
-            <ul className='list-disc ml-8'>
-                <li className="mb-4">NGOs working in maternal and child health.</li>
-                <li className="mb-4">Community leaders aiming to improve healthcare access.</li>
-                <li className="mb-4">Health workers managing local or regional health programs.</li>
-            </ul>
           </div>
 
-          <img
+          <Image
             src="/workers.jpg"
-            alt="Photo of a team"
-            className="relative h-[500px]"
+              alt="Photo of a team"
+              width={700}
+              height={300}
           />
           </div>
         </motion.div>
@@ -99,10 +103,11 @@ const AboutUs = () => {
           viewport={{ once: false}}
         >
           <div className='flex justify-between mt-12 '>
-            <img
+            <Image
               src="/core_values.jpg"
               alt="Photo of children"
-              className="relative h-[500px]"
+              width={700}
+              height={300}
             />
 
             <div className='flex flex-col mr-24 w-1/2'>

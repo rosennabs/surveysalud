@@ -3,6 +3,7 @@
 import React from "react";
 import { Formik, Form, FormikHelpers } from "formik";
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
 import * as Yup from "yup";
 import FormField from "../../components/FormField";
 import Button from "../../components/submitButton";
@@ -105,9 +106,11 @@ function Register() {
   return (
     <div className=" flex h-screen items-center bg-gradient-to-b from-amber-500 via-amber-200 to-white">
 
-      <img
+      <Image
         src="/nutrition.jpg"
         alt="Image of food"
+        width={1000}
+        height={0}  
         className="w-1/2 h-full object-cover"
       />
       <div className="w-1/2 text-xl p-8">

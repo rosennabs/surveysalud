@@ -60,7 +60,7 @@ export default function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
 
-  }, [dropdownMenu]);
+  }, [dropdownMenu, handleClickOutside]);
 
   return (
     <header className="flex items-center justify-between text-m lg:flex pb-4 px-16">

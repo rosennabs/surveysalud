@@ -31,8 +31,8 @@ const Resources = () => {
 
       <div className="grid grid-cols-4 gap-4">
         {newsData.slice(0, 8).map((item, index) => (
-          <Link href={item.url} target="_blank" rel="noopener noreferrer">
-          <div key={index} className="border border-gray-300 hover:outline hover:outline-yellow-500 hover:outline-2 cursor-pointer transition-all duration-300">
+          <Link key={index} href={item.url} target="_blank" rel="noopener noreferrer">
+          <div className="border border-gray-300 hover:outline hover:outline-yellow-500 hover:outline-2 cursor-pointer transition-all duration-300">
             <img
               src={item.image ? item.image : "/sthethoscope.jpg"}
               alt="Image of a sthethoscope"
@@ -72,8 +72,8 @@ const Resources = () => {
           
       <div className="grid grid-cols-4 gap-4">
             {newsData.slice(8, 20).map((item) => (
-              <Link href={item.url} target="_blank" rel="noopener noreferrer">
-          <div key={item.id} className="border border-gray-300 hover:outline hover:outline-yellow-500 hover:outline-2 cursor-pointer transition-all duration-300">
+              <Link key={item.id} href={item.url} target="_blank" rel="noopener noreferrer">
+          <div  className="border border-gray-300 hover:outline hover:outline-yellow-500 hover:outline-2 cursor-pointer transition-all duration-300">
  
             <div className="flex p-4">
               <h5 className="line-clamp-3">{item.title}</h5>
