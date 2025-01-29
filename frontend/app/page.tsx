@@ -47,6 +47,7 @@ function HomeContent() {
             src="/sthethoscope.jpg"
           alt="Image of a sthethoscope"
           fill
+          priority
           style={{ objectFit: 'cover' }}
           />
 

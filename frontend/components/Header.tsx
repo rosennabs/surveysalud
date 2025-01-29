@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useCallback, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import { useFormContext } from "../contexts/FormContext";
@@ -38,13 +38,13 @@ export default function Header() {
   };
 
 
-  const handleClickOutside = (e) => {
+  const handleClickOutside = useCallback((e) => {
     if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
       //checks if the dropdown element exists and if the clicked element is outside the dropdown.
       setDropdownMenu(false);
       setActiveNav(null);
     }
-  };
+  }, [dropdownRef, setDropdownMenu, setActiveNav]);
 
   useEffect(() => {
     if (dropdownMenu) {
