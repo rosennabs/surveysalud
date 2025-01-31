@@ -22,7 +22,7 @@ Visit the live SurveySalud app on Vercel:
 
 - Node.js + Express 
 - PostgreSQL 
-- PostgreSQL vis Supabase (in production) 
+- PostgreSQL via Supabase (in production) 
 
 ---
 

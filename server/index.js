@@ -5,8 +5,34 @@ const PORT = 8080;
 
 const server = express();
 
+const corsOptions = {
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      "http://localhost:3000", // local frontend
+      process.env.NEXT_PUBLIC_FRONTEND_URL ||
+        "https://surveysalud.vercel.app", // Production frontend
+    ];
+
+    // Allow Vercel preview URLs dynamically
+    const isVercelPreview = origin && origin.endsWith(".vercel.app");
+
+    // Check if origin is allowed
+    if (!origin || allowedOrigins.includes(origin) || isVercelPreview) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS")); // Reject the request
+    }
+  },
+  methods: "GET,POST,OPTIONS",
+  allowedHeaders: ["Content-Type", "Authorization"], // Add other headers as needed
+};
+
 //Middleware
-server.use(cors());
+server.use(cors(corsOptions));
+
+// Explicitly handle preflight OPTIONS requests
+server.options("*", cors(corsOptions));
+
 server.use(bodyParser.json());
 
 server.use("/api/user", require("./routes/userRoutes"));

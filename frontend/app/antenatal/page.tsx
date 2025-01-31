@@ -48,11 +48,16 @@ function AntenatalDashboard() {
   const [antenatalData, setAntenatalData] = useState<Record<string, AntenatalDataCounts[]>>({});
   const [monthlyEntries, setMonthlyEntries] = useState<{ date: string; total_entries: number; }[]>([]);
 
-
+  // Determine the API URL based on the environment
+  const apiUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:8080/api/antenatal_survey" // Development URL
+      : process.env.NEXT_PUBLIC_BACKEND_URL + "/api/antenatal_survey"; // Production URL
+  
   useEffect(() => {
     const fetchAntenatalData = async () => {
       try {
-        const response = await axiosInstance.get<DataValues[]>('http://localhost:8080/api/antenatal_survey');
+        const response = await axiosInstance.get<DataValues[]>(apiUrl);
         const data = response.data;
 
         const keysToCount = [
@@ -76,7 +81,7 @@ function AntenatalDashboard() {
         //console.log("Logging processed data: ", processedData);
 
         // Fetch daily entries - date
-        const monthlyResponse = await axiosInstance.get('http://localhost:8080/api/antenatal_survey/monthly_entries');
+        const monthlyResponse = await axiosInstance.get(apiUrl + '/monthly_entries');
         setMonthlyEntries(monthlyResponse.data);
 
       }

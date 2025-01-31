@@ -2,17 +2,24 @@
 
 import React, { useEffect, useState } from 'react';
 import DashboardLayout from "../../components/DashboardLayout";
-import { BarChart, Bar, XAxis, YAxis, LabelList, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, CartesianGrid } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, LabelList, Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid } from 'recharts';
 import axiosInstance from '@/helpers/axiosInstance';
 
 const DashboardHome = () => {
+
+  // Determine the API URL based on the environment
+  const apiUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:8080/api/total_entries" // Development URL
+      : process.env.NEXT_PUBLIC_BACKEND_URL + "/api/total_entries"; // Production URL
+  
 
   useEffect(() => {
     const fetchTotalEntries = async () => {
       try {
 
         // Fetch daily entries - date
-        const response = await axiosInstance.get('http://localhost:8080/api/total_entries');
+        const response = await axiosInstance.get(apiUrl);
         
         setTotalEntries(response.data);
 

@@ -76,13 +76,19 @@ function Register() {
 
   const router = useRouter(); // Use useRouter from next/router
 
+  // Determine the API URL based on the environment
+  const apiUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:8080/api/user/register" // Development URL
+      : process.env.NEXT_PUBLIC_BACKEND_URL + "/api/user/register"; // Production URL
+
 
   const handleSubmit = async (values:FormValues, actions:FormikHelpers<FormValues>) => {
     console.log("submit button clicked");
     
 
     try {
-      const response = await axios.post('http://localhost:8080/api/user/register', values);
+      const response = await axios.post(apiUrl, values);
 
       actions.resetForm();
       actions.setSubmitting(false);

@@ -42,17 +42,21 @@ function NutritionDashboard() {
   const [nutritionData, setnutritionData] = useState<Record<string, NutritionDataCounts[]>>({});
   const [monthlyEntries, setMonthlyEntries] = useState<{ date: string; total_entries: number; }[]>([]);
 
+  // Determine the API URL based on the environment
+  const apiUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:8080/api/child_nutrition" // Development URL
+      : process.env.NEXT_PUBLIC_BACKEND_URL + "/api/child_nutrition"; // Production URL
 
   useEffect(() => {
     const fetchnutritionData = async () => {
       try {
-        const response = await axiosInstance.get<DataValues[]>('http://localhost:8080/api/child_nutrition');
-        const data = response.data;
+        const response = await axiosInstance.get<DataValues[]>(apiUrl);
+        const data = response.data;  
 
         const keysToCount = [
           "id",
           "age",
-          // "child_weight",
           "exclusive_breastfeeding",
           "age_complementary_foods",
           "meal_frequency",
@@ -66,10 +70,9 @@ function NutritionDashboard() {
         }, {});
 
         setnutritionData(processedData);
-        //console.log("Logging processed data: ", processedData);
 
         // Fetch daily entries - date
-        const monthlyResponse = await axiosInstance.get('http://localhost:8080/api/child_nutrition/monthly_entries');
+        const monthlyResponse = await axiosInstance.get( apiUrl + '/monthly_entries');
         setMonthlyEntries(monthlyResponse.data);
 
       }

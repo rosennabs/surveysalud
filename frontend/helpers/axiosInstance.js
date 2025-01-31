@@ -3,9 +3,15 @@
 import axios from "axios";
 
 
+  // Determine the API URL based on the environment
+  const apiUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:8080/api" // Development URL
+      : process.env.NEXT_PUBLIC_BACKEND_URL + "/api"; // Production URL
+
 // Create an axios instance
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: apiUrl,
 });
 
 // Add a request interceptor to include the token

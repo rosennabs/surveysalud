@@ -38,10 +38,17 @@ function Login() {
     activeNav,
   } = useFormContext();
 
+  // Determine the API URL based on the environment
+  const apiUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:8080/api/user/login" // Development URL
+      : process.env.NEXT_PUBLIC_BACKEND_URL + "/api/user/login"; // Production URL
+  
+
   const handleSubmit = async (values, actions) => {
 
     try {
-      const response = await axios.post('http://localhost:8080/api/user/login', values);
+      const response = await axios.post(apiUrl, values);
 
       // Fetch the user's token
       const { token, user } = response.data;
