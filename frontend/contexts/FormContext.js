@@ -30,7 +30,7 @@ export const FormProvider = ({ children }) => {
   //State for handling the success modal
   const [successMessage, setSuccessMessage] = useState(false);
   const { user } = useAuth();
-  
+
   const toggleModal = () => {
     setSuccessMessage(!successMessage);
   };
@@ -39,42 +39,48 @@ export const FormProvider = ({ children }) => {
     setActiveButton(button);
   };
 
+
+
+  
   // Handles all survey submissions
- const handleSubmit = async (values, actions, survey) => {
-   try {
-     if (!user) {
-       throw new Error("User not found");
-     }
+  const handleSubmit = async (values, actions, survey) => {
 
-     // Include the user's email in the values object
-     const valuesWithUser = {
-       ...values,
-       reported_by: `${user.first_name} ${user.last_name}`,
-     };
+    // Determine the API URL based on the environment
+    const apiUrl =
+      process.env.NODE_ENV === "development"
+        ? `http://localhost:8080/api/${survey}` // Development URL
+        : process.env.NEXT_PUBLIC_BACKEND_URL + `/${survey}`; // Production URL
 
-     const response = await axiosInstance.post(
-       `http://localhost:8080/api/${survey}`,
-       valuesWithUser
-     );
-     //console.log(`${survey} saved to db: `, response.data);
+    
+    try {
+      if (!user) {
+        throw new Error("User not found");
+      }
 
-     // Scroll to the top of the page
-     window.scrollTo({ top: 0, behavior: "smooth" });
-     toggleModal();
+      // Include the user's email in the values object
+      const valuesWithUser = {
+        ...values,
+        reported_by: `${user.first_name} ${user.last_name}`,
+      };
 
-     actions.resetForm();
-     actions.setSubmitting(false);
-   } catch (error) {
-     console.error("Error saving data:", error);
+      const response = await axiosInstance.post(apiUrl, valuesWithUser);
+  
 
-     // Display an error message to the user
-     actions.setStatus({ error: "An error occurred while submitting data!" });
-     actions.setSubmitting(false);
-   }
- };
+      // Scroll to the top of the page
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      toggleModal();
 
-  //const pathname = usePathname();
-  //const isDashboard = pathname === "/dashboard";
+      actions.resetForm();
+      actions.setSubmitting(false);
+    } catch (error) {
+      console.error("Error saving data:", error);
+
+      // Display an error message to the user
+      actions.setStatus({ error: "An error occurred while submitting data!" });
+      actions.setSubmitting(false);
+    }
+  };
+
 
   return (
     <FormContext.Provider
