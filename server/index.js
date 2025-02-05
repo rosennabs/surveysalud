@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const PORT = 8080;
+const PORT = process.env.PORT || 8080; //vercel automatically provides PORT in production
+
 
 const server = express();
 
