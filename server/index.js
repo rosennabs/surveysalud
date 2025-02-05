@@ -7,6 +7,7 @@ const server = express();
 
 const corsOptions = {
   origin: function (origin, callback) {
+
     const allowedOrigins = [
       "http://localhost:3000", // local frontend
       process.env.NEXT_PUBLIC_FRONTEND_URL ||
