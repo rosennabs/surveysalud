@@ -1,5 +1,5 @@
-require("dotenv").config({ path: "../.env" }); //  path to point to your root directory
-
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "../.env") }); //point to the env file 
 const { Pool } = require("pg"); //run npm install pg
 const postgres = require("postgres");
 
@@ -8,7 +8,7 @@ const isDevelopment = process.env.NODE_ENV === "development";
 
 // Setup the database connection localhost || Supabase connection
 const db = isDevelopment
-  ? new Pool ({
+  ? new Pool({
       host: process.env.DB_HOST,
       port: process.env.DB_PORT,
       user: process.env.DB_USER,
@@ -20,4 +20,3 @@ const db = isDevelopment
     });
 
 module.exports = db;
-
